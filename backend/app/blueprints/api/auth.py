@@ -13,9 +13,9 @@ def login():
     password = data.get('password')
     
     if validate_login(username, password):
-        return jsonify({"message": "Login successful!"}), 200
+        return jsonify({"success": True}), 200
     else:
-        return jsonify({"message": "Invalid credentials!"}), 401
+        return jsonify({"success": False}), 401
     
     
 @auth.route("/register", methods=["POST"])
@@ -25,7 +25,7 @@ def register():
     password = data.get("password")
     
     if create_login(username, password):
-        return jsonify({"message": "Registration successful!"}), 200
+        return jsonify({"success": True}), 200
     else:
-        return jsonify({"message": "Registration failed!"}), 401
+        return jsonify({"success": False}), 401
     

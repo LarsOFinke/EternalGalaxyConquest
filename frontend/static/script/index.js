@@ -19,8 +19,13 @@ document.querySelector(".wrapper form").addEventListener("submit", e => {
         })
         .then(response => response.json())
         .then(data => {
-            let message = data.message;
-            console.log(message);
+            let success = data.success;
+            if (success) {
+                // Login confirmed
+            } else {
+                // Login failed
+                createErrorBox("Login fehlgeschlagen!");
+            }
         })
         .catch(error => {
             console.error('Error:', error);
@@ -28,7 +33,7 @@ document.querySelector(".wrapper form").addEventListener("submit", e => {
     } else {
         const password_confirm = document.getElementById("password2").value;
         if (password == password_confirm) {
-            // Send register request to Flask backend
+            // Send registration request to Flask backend
             fetch("http://127.0.0.1:5000/api/auth/register", {
                 method: "POST",
                 headers: {
@@ -38,20 +43,38 @@ document.querySelector(".wrapper form").addEventListener("submit", e => {
             })
             .then(response => response.json())
             .then(data => {
-                let message = data.message;
-                console.log(message);
+                let success = data.success;
+                if (success) {
+                    // Registration confirmed
+                    toggleForms();
+                    // Clear input fields
+                } else {
+                    // Registration failed
+                    createErrorBox("Registrierung fehlgeschlagen!");
+                }
             })
             .catch(error => {
                 console.error('Error:', error);
             });
         } else {
             // Throw an error, passwords don't match
-            console.log("Passwörter stimmen nicht überein")
+            createErrorBox("Passwörter stimmen nicht überein");
         }
         
     }
     
 });
+
+
+function createErrorBox(message) {
+    const error_box = document.createElement("div");
+    error_box.id = "error_box";
+    const error_message = document.createElement("p");
+    error_message.textContent = message;
+    error_box.insertAdjacentElement("afterbegin", error_message);
+    const error_anchor = document.querySelector("form h1");
+    error_anchor.insertAdjacentElement("afterend", error_box);
+};
 
 
 function toggleShowPasswords() {

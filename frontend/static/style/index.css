@@ -1,3 +1,7 @@
+:root {
+    --dark-red: #E30613;
+}
+
 /* ### LOGIN-FORM ### */
 
 .wrapper {
@@ -88,4 +92,22 @@
 
 .register-link p a:hover {
     text-decoration: underline;
+}
+
+#error_box {
+    position: relative;
+    width: 100%;
+    height: 24px;
+    margin: 24px 0;
+    text-align: center;
+}
+#error_box p {
+    width: 60%;
+    margin: auto;
+    padding: .25rem;
+    border: 2px solid gray;
+    border-radius: 4px;
+    background-color: #fff;
+    color: var(--dark-red);
+    font-weight: bold;
 }
