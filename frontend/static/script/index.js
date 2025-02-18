@@ -1,6 +1,31 @@
 "use strict";
 
 
+document.querySelector(".wrapper form").addEventListener("submit", e => {
+    e.preventDefault();
+    const username = document.getElementById("username").value;
+    const password = document.getElementById("password").value;
+    const loginData = {username, password};
+
+    // Send login request to Flask backend
+    fetch('http://127.0.0.1:5000/api/auth/login', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(loginData)
+    })
+    .then(response => response.json())
+    .then(data => {
+        let message = data.message;
+        console.log(message);
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+});
+
+
 function toggleShowPasswords() {
     const passwordInput = document.getElementById('password');
     const passwordConfirm = document.getElementById('password2')
@@ -10,7 +35,7 @@ function toggleShowPasswords() {
     if (passwordConfirm !== null) {
         passwordConfirm.type = showPasswordCheckbox.checked === true ? "text" : "password";
     }
-}
+};
 
 
 function toggleForms() {
@@ -45,4 +70,4 @@ function toggleForms() {
         anchor.textContent = "Noch nicht registriert?";
         document.getElementById("pw2_box").remove();
     }
-}
+};
