@@ -44,11 +44,14 @@ document.querySelector(".wrapper form").addEventListener("submit", e => {
             .then(data => {
                 let success = data.success;
                 if (success) {
-                    // Registration confirmed
                     toggleForms();
-                    // Clear input fields
+                    document.getElementById("username").value = "";
+                    document.getElementById("password").value = "";
+                    const errorbox = document.getElementById("error_box");
+                    if (errorbox !== null) {
+                        errorbox.remove();
+                    }
                 } else {
-                    // Registration failed
                     createErrorBox("Registrierung fehlgeschlagen!");
                 }
             })
