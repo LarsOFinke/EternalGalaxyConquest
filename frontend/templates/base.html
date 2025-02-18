@@ -4,9 +4,45 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Eternal Galaxy Conquest</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style/base.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style/index.css') }}">
 </head>
 <body>
     
+    <!-- NAVBAR -->
+    
+    <nav class="header-nav">
+
+        <div class="container desktop-nav">
+            <div class="row">
+                <div class="col-6">
+
+                    <ul>
+                        <li class="active"><a href="index.html">Startseite</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container mobile-nav">
+            <div class="row">
+                <div class="col-6">
+
+                    <div class="mobile-nav-dropdown clearfix">
+                        <div class="mobile-nav-button">&equiv;</div>
+            
+                        <div class="mobile-nav-content cleafix">
+                            <ul>
+                                <li class="active"><a href="index.html">Startseite</a></li>
+                            </ul> 
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        
+    </nav>
 
     {% block content %}
     {% endblock %}
