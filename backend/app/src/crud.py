@@ -1,7 +1,7 @@
 import sqlite3, os, sys # FOR DB
 from typing import Any, List, Tuple, Optional   # FOR "execute_query" FUNCTIONS
-from ... import logging  # GET .ENV CONSTANTS AND LOGGING
-from ..utils.utility import image_to_binary
+from .. import logging  # GET .ENV CONSTANTS AND LOGGING
+from .utils.utility import image_to_binary
 from werkzeug.security import generate_password_hash, check_password_hash # LOGIN-SYSTEM SECURITY
 
 
@@ -79,7 +79,7 @@ def execute_query_get_all(sql: str, connectionstring: str) -> dict:
 ### SET UP DATABASES ###
 
 ## SET DB-Connection Strings ##
-CONNECTIONSTRING_LOGIN = os.path.join(os.path.dirname(__file__), "LoginDB.db")
+CONNECTIONSTRING_LOGIN = os.path.join(os.path.dirname(__file__), "db" ,"LoginDB.db")
 
 
 def create_login_db() -> bool:
