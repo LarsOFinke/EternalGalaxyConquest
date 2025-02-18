@@ -55,6 +55,25 @@ body {
 }
 
 
+/* LINK STYLE */
+a {
+    text-decoration: none;
+    font-size: 1.3rem;
+}
+a:link {
+    color: var(--gold);
+}
+a:visited {
+    color: var(--gold);
+}
+a:hover {
+    color: var(--light-red);
+}
+a:active {
+    color: var(--dark-red);
+}
+
+
 
 /* ### NAVBAR GENERAL ### */
 
@@ -67,23 +86,6 @@ nav {
     opacity: .9;
 }
 
-/* LINK STYLE */
-a {
-    text-decoration: none;
-    font-size: 1.3rem;
-}
-a:link {
-    color: var(--gold);
-}
-a:hover {
-    color: var(--light-red);
-}
-a:active {
-    color: var(--dark-red);
-}
-a:visited {
-    color: var(--gold);
-}
 
 /* VIEWPORT SWITCH */
 .mobile-nav {
