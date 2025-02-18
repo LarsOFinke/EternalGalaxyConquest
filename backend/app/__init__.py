@@ -1,6 +1,5 @@
 from flask import Flask
 from flask_session import Session
-from dotenv import load_dotenv
 from os import getenv, path, mkdir
 from datetime import timedelta
 import logging
