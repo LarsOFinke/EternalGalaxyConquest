@@ -14,7 +14,7 @@
             <input type="password" id="password" placeholder="Passwort" required>
         </div>
 
-        <div class="show-password">
+        <div id="show-password">
             <label>Passwort anzeigen
                 <input type="checkbox" id="showPassword" onchange="toggleShowPasswords()">
             </label>
@@ -23,7 +23,7 @@
         <button type="submit" id="login" class="btn">Einloggen</button>
 
         <div class="register-link">
-            <p><a href="register">Noch nicht registriert?</a></p>
+            <p><a onclick="toggleForms()">Noch nicht registriert?</a></p>
         </div>
     </form>
 </div>
