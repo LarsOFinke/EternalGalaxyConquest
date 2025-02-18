@@ -1,6 +1,6 @@
 import sqlite3, os, sys # FOR DB
 from typing import Any, List, Tuple, Optional   # FOR "execute_query" FUNCTIONS
-from ...app import logging  # GET .ENV CONSTANTS AND LOGGING
+from ... import logging  # GET .ENV CONSTANTS AND LOGGING
 from ..utils.utility import image_to_binary
 from werkzeug.security import generate_password_hash, check_password_hash # LOGIN-SYSTEM SECURITY
 
