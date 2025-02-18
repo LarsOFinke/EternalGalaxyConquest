@@ -15,7 +15,7 @@ if not path.exists("./logs"):
 
 # Set up the config #
 logging.basicConfig(
-    filename='logs/error_log.txt',                          # Specify the log file path
+    filename='logs/backend_error_log.txt',                  # Specify the log file path
     level=logging.ERROR,                                    # Set the logging level to ERROR
     format='%(asctime)s - %(levelname)s - %(message)s',     # Customize the log format
 )
@@ -23,8 +23,7 @@ logging.basicConfig(
 
 ### Create the Flask-Application ###
 def create_app():
-    app = Flask(__name__)
-    load_dotenv()
+    app = Flask("Eternal Galaxy Conquest", static_folder="frontend/static", template_folder="frontend/templates")
     
     
     ## Import Blueprints (routing) ##
