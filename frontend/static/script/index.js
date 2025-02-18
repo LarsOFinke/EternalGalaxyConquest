@@ -109,4 +109,11 @@ function toggleForms() {
         anchor.textContent = "Noch nicht registriert?";
         document.getElementById("pw2_box").remove();
     }
+
+    document.getElementById("username").value = "";
+    document.getElementById("password").value = "";
+    const errorbox = document.getElementById("error_box");
+    if (errorbox !== null) {
+        errorbox.remove();
+    }
 };
