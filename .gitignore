@@ -1,6 +1,6 @@
 ### PRIVATE ONES ###
 */sessions/*
-*/logs/*log.txt
+*log.txt
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
