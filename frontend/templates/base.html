@@ -48,7 +48,8 @@
     {% endblock %}
 
 
-    <script src="{{ url_for('static', filename='script/index.js') }}" defer></script>
-    
+    <!-- ### SCRIPTS ### -->
+    {% block scripts %}
+    {% endblock %}
 </body>
 </html>
