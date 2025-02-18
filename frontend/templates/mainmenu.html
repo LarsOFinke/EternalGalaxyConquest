@@ -2,15 +2,31 @@
 
 
 {% block stylesheets %}
-
+<link rel="stylesheet" href="{{ url_for('static', filename='style/mainmenu.css') }}">
 {% endblock %}
 
 
 {% block content %}
+<div class="wrapper">
+    <form>
 
+        <div>
+            <button class="menu-btn" id="start">Start</button>
+        </div>
+
+        <div>
+            <button class="menu-btn" id="profile">Profil</button>
+        </div>
+
+        <div>
+            <button class="menu-btn" id="settings">Einstellungen</button>
+        </div>
+        
+    </form>
+</div>
 {% endblock %}
 
 
 {% block scripts %}
-
+<script src="{{ url_for('static', filename='script/mainmenu.js') }}" defer></script>
 {% endblock %}

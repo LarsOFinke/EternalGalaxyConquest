@@ -17,3 +17,8 @@ def mainmenu():
         return redirect(url_for("views.home"))
     
     return render_template("mainmenu.html")
+
+
+@views.route("/profile")
+def profile():
+    return render_template("profile.html")
