@@ -48,25 +48,16 @@
     font-size: 20px;
 }
 
-.wrapper .remember-forgot {
+.wrapper .show-password {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
     font-size: 14.5px;
     margin: -15px 0 15px;
 }
 
-.remember-forgot label input {
+.show-password label input {
     accent-color: #fff;
     margin-right: 3px;
-}
-
-.remember-forgot a {
-    color: #fff;
-    text-decoration: none;
-}
-
-.remember-forgot a:hover {
-    text-decoration: underline;
 }
 
 .wrapper .btn {
@@ -86,7 +77,7 @@
 .wrapper .register-link {
     font-size: 14.5px;
     text-align: center;
-    margin-top: 20px 0 15px;
+    margin: 20px 0 15px;
 }
 
 .register-link p a {

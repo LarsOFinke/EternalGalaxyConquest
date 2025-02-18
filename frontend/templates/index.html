@@ -8,21 +8,22 @@
     <form action="">
         <h1>Login</h1>
         <div class="input-box">
-            <input type="text" placeholder="Username" required>
+            <input type="text" id="username" placeholder="Nutzername" required>
         </div>
         <div class="input-box">
-            <input type="password" placeholder="Password" required>
+            <input type="password" id="password" placeholder="Passwort" required>
         </div>
 
-        <div class="remember-forgot">
-            <!-- <label><input type="checkbox"></label> -->
-            <a href="#">Passwort vergessen?</a>
+        <div class="show-password">
+            <label>Passwort anzeigen
+                <input type="checkbox" id="showPassword" onchange="toggleShowPasswords()">
+            </label>
         </div>
 
-        <button type="submit" class="btn">Login</button>
+        <button type="submit" class="btn">Einloggen</button>
 
         <div class="register-link">
-            <p>Noch nicht registriert? <a href="#">Registrieren</a></p>
+            <p><a href="#">Noch nicht registriert?</a></p>
         </div>
     </form>
 </div>
