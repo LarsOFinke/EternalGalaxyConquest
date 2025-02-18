@@ -13,35 +13,28 @@
 <body>
     
     <!-- ### NAVBAR ### -->
-    <nav class="header-nav">
+    <nav>
 
         <!-- DESKTOP -->
-        <div class="container desktop-nav">
-            <div class="row">
-                <div class="col-6">
+        <div class="desktop-nav">
+            <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Das Logo der Webseite.">
 
-                    <ul>
-                        <li class="active"><a href="/">Startseite</a></li>
-                    </ul>
-                </div>
-            </div>
+            <ul>
+                <li><a href="/">Startseite</a></li>
+            </ul>
         </div>
 
         <!-- MOBILE -->
-        <div class="container mobile-nav">
-            <div class="row">
-                <div class="col-6">
-
-                    <div class="mobile-nav-dropdown clearfix">
-                        <div class="mobile-nav-button">&equiv;</div>
+        <div class="mobile-nav">
+            <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Das Logo der Webseite.">
             
-                        <div class="mobile-nav-content cleafix">
-                            <ul>
-                                <li class="active"><a href="/">Startseite</a></li>
-                            </ul> 
-                        </div>
-                    </div>
-
+            <div class="mobile-nav-dropdown clearfix">
+                <div class="mobile-nav-button">&equiv;</div>
+    
+                <div class="mobile-nav-content clearfix">
+                    <ul>
+                        <li><a href="/">Startseite</a></li>
+                    </ul> 
                 </div>
             </div>
         </div>
