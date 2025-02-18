@@ -131,14 +131,14 @@ if not os.path.exists(CONNECTIONSTRING_LOGIN):
 
 #-- CRUD FUNCTIONALITY LOGIN --#
 
-def add_login(username: str, password: str) -> bool:
+def create_login(username: str, password: str) -> bool:
     """
     Returns:
         True: if successfully added
         False: if error happened
     """
     hashed_password = generate_password_hash(password, method='pbkdf2:sha256')
-    sql: str = "INSERT INTO tblLogin(LoginUsername, LoginPassword, LoginType) VALUES (?, ?, user)"
+    sql: str = "INSERT INTO tblLogin(LoginUsername, LoginPassword, LoginType) VALUES (?, ?, 'user')"
     return execute_query(sql, (username, hashed_password), CONNECTIONSTRING_LOGIN)
     
 

@@ -5,24 +5,52 @@ document.querySelector(".wrapper form").addEventListener("submit", e => {
     e.preventDefault();
     const username = document.getElementById("username").value;
     const password = document.getElementById("password").value;
-    const loginData = {username, password};
+    const formData = {username, password};
 
-    // Send login request to Flask backend
-    fetch('http://127.0.0.1:5000/api/auth/login', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(loginData)
-    })
-    .then(response => response.json())
-    .then(data => {
-        let message = data.message;
-        console.log(message);
-    })
-    .catch(error => {
-        console.error('Error:', error);
-    });
+    const submit_button = document.querySelector(".wrapper form button");
+    if (submit_button.id === "login") {
+        // Send login request to Flask backend
+        fetch('http://127.0.0.1:5000/api/auth/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(formData)
+        })
+        .then(response => response.json())
+        .then(data => {
+            let message = data.message;
+            console.log(message);
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    } else {
+        const password_confirm = document.getElementById("password2").value;
+        if (password == password_confirm) {
+            // Send register request to Flask backend
+            fetch("http://127.0.0.1:5000/api/auth/register", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(formData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                let message = data.message;
+                console.log(message);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        } else {
+            // Throw an error, passwords don't match
+            console.log("Passwörter stimmen nicht überein")
+        }
+        
+    }
+    
 });
 
 
