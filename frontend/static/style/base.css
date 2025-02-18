@@ -67,9 +67,8 @@ nav {
     position: relative;
 }
 .mobile-nav-content {
+    background-color: black;
     display: none;
-    background-color: var(--light-navy-blue);
-    border-top: 2px solid var(--navy-blue);
     width: fit-content;
     height: fit-content;
     padding-right: 1rem;
@@ -79,9 +78,8 @@ nav {
 }
 .mobile-nav-content li {
     list-style-type: none;
-    padding: .3rem;
+    padding: .3rem .3rem .3rem 1.3rem;
     margin-bottom: .7rem;
-    background-color: var(--navy-blue);
     text-align: center;
 }
 .mobile-nav-dropdown:hover > .mobile-nav-content {
