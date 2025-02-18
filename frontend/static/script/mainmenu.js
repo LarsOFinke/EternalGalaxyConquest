@@ -3,7 +3,7 @@
 
 document.getElementById("start").addEventListener("click", e => {
     e.preventDefault();
-
+    window.location.href = "/game";
 })
 
 
@@ -15,5 +15,5 @@ document.getElementById("profile").addEventListener("click", e => {
 
 document.getElementById("settings").addEventListener("click", e => {
     e.preventDefault();
-    
+    window.location.href = "/settings";
 })

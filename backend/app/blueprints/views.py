@@ -19,6 +19,16 @@ def mainmenu():
     return render_template("mainmenu.html")
 
 
+@views.route("/game")
+def game():
+    return render_template("game.html")
+
+
 @views.route("/profile")
 def profile():
     return render_template("profile.html")
+
+
+@views.route("/settings")
+def settings():
+    return render_template("settings.html")
