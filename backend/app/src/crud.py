@@ -79,7 +79,10 @@ def execute_query_get_all(sql: str, connectionstring: str) -> dict:
 ### SET UP DATABASES ###
 
 ## SET DB-Connection Strings ##
-CONNECTIONSTRING_LOGIN = os.path.join(os.path.dirname(__file__), "db" ,"LoginDB.db")
+DB_DIRECTORY = os.path.join(os.path.dirname(__file__), "db")
+if not os.path.exists(DB_DIRECTORY):
+    os.mkdir(DB_DIRECTORY)
+CONNECTIONSTRING_LOGIN = os.path.join(os.path.dirname(DB_DIRECTORY), "db", "LoginDB.db")
 
 
 def create_login_db() -> bool:
