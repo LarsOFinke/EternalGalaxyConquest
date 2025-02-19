@@ -1,9 +1,9 @@
 
 
 class Human():
-    def __init__(self, name: str, alive: bool = True):
+    def __init__(self, name: str, category, alive: bool = True):
         self.name: str = name
-        
+        self.category: str = category
         self.alive: bool = alive
         
 

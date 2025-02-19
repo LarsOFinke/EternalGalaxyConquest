@@ -2,7 +2,8 @@ from Human import Human
 
 
 class Commander(Human):
-    pass
+    def __init__(self, name):
+        super().__init__(name=name, category="leader")
 
 
 

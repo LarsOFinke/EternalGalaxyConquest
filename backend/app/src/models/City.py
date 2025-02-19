@@ -1,3 +1,6 @@
+from Worker import Worker
+
+
 ## GEBÄUDELISTE ## --> später als Import für die Stadt-Klasse
 building_list: list = [
     {
@@ -90,16 +93,47 @@ class City():
         self.__iron: float = iron
         self.__buildings: list = buildings
         self.__population: list = population
+        self.__free_workers: list = [person for person in self.__population if person.category == "worker" and person.employed == False]
+        self.__free_builders: list = [person for person in self.__population if person.category == "builder" and person.working == False]
+        
         
     def get_resources(self):
         return f"Gold: {self.__gold} | Food: {self.__food} | Wood: {self.__wood} | Iron: {self.__iron}"
     
+    
     def get_buildings(self):
         return self.__buildings
     
+    def set_buildings(self, building, increase: bool = True):
+        if increase:
+            self.__buildings.append(building)
+        else:
+            self.__buildings.remove(building)
+    
+    
     def get_population(self):
         return self.__population
-        
+    
+    def set_population(self, person, increase: bool = True):
+        if increase:
+            self.__population.append(person)
+        else:
+            self.__population.remove(person)
+    
+    
+    def get_free_workers(self):
+        return self.__free_workers
+    
+    def set_free_workers(self, worker, increase: bool = True):
+        if increase:
+            self.__free_workers.append(worker)
+        else:
+            self.__free_workers.remove(worker)
+    
+    
+    def get_free_builders(self):
+        return self.__free_builders
+    
         
     def build(self, building_name: str) -> dict:
         """ 
@@ -119,7 +153,7 @@ class City():
                 return {"success": False, "message": f"Nicht genug {result["message"]}!"}
 
             self.subtract_costs(building_costs)
-            self.__buildings.append(building_name)  # --> ERSETZEN MIT DEM RICHTIGEN OBJEKT
+            self.set_buildings(building_name)  # --> ERSETZEN MIT DEM RICHTIGEN OBJEKT
             
             return {"success": True}
             
@@ -130,7 +164,6 @@ class City():
                     building_costs: dict = building["costs"]
                     
         return building_costs
-        
         
     def check_if_enough_resources(self, costs: dict) -> dict:
         """Checks whether the City has the resources required for the action or not.
@@ -159,7 +192,6 @@ class City():
             
         return {"success": True}
     
-    
     def subtract_costs(self, costs: dict) -> None:
         self.__gold -= costs["gold"]
         self.__food -= costs["food"]
@@ -167,7 +199,7 @@ class City():
         self.__iron -= costs["iron"]
     
     
-    def create_worker(self) -> dict:
+    def create_worker(self, name: str) -> dict:
         worker_costs: dict = {
             "gold": 100,
             "food": 200,
@@ -179,7 +211,10 @@ class City():
             return {"success": False, "message": "Nicht genug Resourcen für einen neuen Arbeiter!"}
         
         self.subtract_costs(worker_costs)
-        self.__population.append("Worker")    # --> ERSETZEN MIT DEM RICHTIGEN OBJEKT
+        
+        new_worker = Worker(name)
+        self.set_population(new_worker)
+        self.set_free_workers(new_worker)
         
         return {"success": True}
 

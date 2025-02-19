@@ -2,10 +2,13 @@ from Factory import Factory
 
 
 class BuildersHut(Factory):
-    def __init__(self):
+    def __init__(self, workers: list = []):
         super().__init__(worker_slots=2)
-        
-    # Method start building on a timer or general factory-method that takes workers etc as parameters? #
+        self.workers: list = workers
+    
+    # Method to convert a worker to a builder
+    
+
 
 
 

@@ -6,7 +6,7 @@ class Factory(Building):
         super().__init__(active=active)
         self.worker_slots: int = worker_slots
 
-
+    # Method that takes workers etc as parameters
 
 
 
