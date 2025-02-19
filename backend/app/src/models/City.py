@@ -3,13 +3,12 @@ from Commander import Commander; from Worker import Worker; from Builder import 
 from Woodcutter import Woodcutter; from Miner import Miner; from Blacksmith import Blacksmith
 
 ### IMPORT BUILDINGS ###
-from Headquarter import Headquarter; from ResidentialArea import ResidentialArea; from BuildersHut import BuildersHut; from Storage import Storage; from Bakery import Bakery 
+from ResidentialArea import ResidentialArea; from BuildersHut import BuildersHut; from Storage import Storage; from Bakery import Bakery 
 from Sawmill import Sawmill; from GoldMine import GoldMine; from IronMine import IronMine; from Forge import Forge
 
 
-
-## GEBÄUDELISTE ## --> später als Import für die Stadt-Klasse
-building_list: list = [
+class City():
+    building_list: list = [
     {
         "name": "Headquarter",
         "costs": {
@@ -83,15 +82,16 @@ building_list: list = [
         }
     }
 ]
-
-
-class City():
-    building_list: list = building_list
     build_options: dict = {
-            "Headquarter": Headquarter,
             "Builders hut": BuildersHut,
-            "Storage": Storage
+            "Storage": Storage,
+            "Bakery": Bakery,
+            "Sawmill": Sawmill,
+            "Gold mine": GoldMine,
+            "Iron mine": IronMine,
+            "Forge": Forge,
         }
+
     
     def __init__(self, name: str, 
                  gold: float, food: float, wood: float, iron: float, 
@@ -109,11 +109,16 @@ class City():
         self.__free_builders: list = [person for person in self.__population if person.category == "builder" and person.working == False]
         
         
-    def get_resources(self):
-        return f"Gold: {self.__gold} | Food: {self.__food} | Wood: {self.__wood} | Iron: {self.__iron}"
+    def get_resources(self) -> dict:
+        return {
+            "gold": self.__gold,
+            "food": self.__food,
+            "wood": self.__wood,
+            "iron": self.__iron
+        }
     
     
-    def get_buildings(self):
+    def get_buildings(self) -> list:
         return self.__buildings
     
     def __set_buildings(self, building, increase: bool = True):
@@ -123,29 +128,35 @@ class City():
             self.__buildings.remove(building)
     
     
-    def get_population(self):
+    def get_population(self) -> list:
         return self.__population
     
-    def __set_population(self, person, increase: bool = True):
+    def __set_population(self, person, increase: bool = True) -> None:
         if increase:
             self.__population.append(person)
         else:
             self.__population.remove(person)
     
     
-    def get_free_workers(self):
+    def get_free_workers(self) -> list:
         return self.__free_workers
     
-    def __set_free_workers(self, worker, increase: bool = True):
+    def __set_free_workers(self, worker, increase: bool = True) -> None:
         if increase:
             self.__free_workers.append(worker)
         else:
             self.__free_workers.remove(worker)
     
     
-    def get_free_builders(self):
+    def get_free_builders(self) -> list:
         return self.__free_builders
     
+    def __set_free_builders(self, builder, increase: bool = True) -> None:
+        if increase:
+            self.__free_builders.append(builder)
+        else:
+            self.__free_builders.remove(builder)
+        
         
     def build(self, building_name: str) -> dict:
         """ 
@@ -155,7 +166,11 @@ class City():
             else:
                 print(result["message"])
         """
-        if "Builders hut" not in self.__buildings:    # --> VERGLEICH ERSETZEN MIT DEM RICHTIGEN OBJEKT
+        has_builders_hut: bool = False
+        for building in self.__buildings:
+            if building.category == "Builders hut":
+                has_builders_hut: bool = True
+        if not has_builders_hut:
             return {"success": False, "message": "Zuerst eine Bauhütte bauen!"}
         
         else:
@@ -170,13 +185,17 @@ class City():
             
             return {"success": False, "message": f"'{building_name}' konnt nicht gebaut werden!"}
 
-    def build_building(self, building_name: str, *parameters):        
+    def build_building(self, building_name: str, *parameters) -> bool:        
         for option, Building in City.build_options.items():
             if option == building_name:
                 self.__set_buildings(Building((parameters)))
                 return True
         
         return False
+    
+    def remove_building(self, building):
+        self.__set_buildings(building, increase=False)
+        del building
     
             
     def fetch_building_costs(self, building_name: str) -> dict:
@@ -247,9 +266,15 @@ class City():
 
 
 if __name__ == "__main__":
-    ct = City("TestCT", 2000, 2000, 2000, 2000, buildings=["Builders hut"])
+    ct = City("TestCT", 2000, 2000, 2000, 2000, buildings=[BuildersHut()])
     # print(ct.build_building("Builders hut"))
-    print(ct.build("Builders hut"))
-    print(ct.get_buildings()[1].worker_slots)
+    # print(ct.build("Builders hut"))
+    # print(ct.get_buildings()[1].worker_slots)
     
+    # building = ct.get_buildings()[0]
+    # print(building)
+    # ct.remove_building(building)
+    # print(ct.get_buildings())
+    
+
     pass
