@@ -1,4 +1,11 @@
-from Worker import Worker
+### IMPORT PERSONS ###
+from Commander import Commander; from Worker import Worker; from Builder import Builder; from WarehouseWorker import WarehouseWorker; from Baker import Baker
+from Woodcutter import Woodcutter; from Miner import Miner; from Blacksmith import Blacksmith
+
+### IMPORT BUILDINGS ###
+from Headquarter import Headquarter; from ResidentialArea import ResidentialArea; from BuildersHut import BuildersHut; from Storage import Storage; from Bakery import Bakery 
+from Sawmill import Sawmill; from GoldMine import GoldMine; from IronMine import IronMine; from Forge import Forge
+
 
 
 ## GEBÄUDELISTE ## --> später als Import für die Stadt-Klasse
@@ -80,6 +87,11 @@ building_list: list = [
 
 class City():
     building_list: list = building_list
+    build_options: dict = {
+            "Headquarter": Headquarter,
+            "Builders hut": BuildersHut,
+            "Storage": Storage
+        }
     
     def __init__(self, name: str, 
                  gold: float, food: float, wood: float, iron: float, 
@@ -104,7 +116,7 @@ class City():
     def get_buildings(self):
         return self.__buildings
     
-    def set_buildings(self, building, increase: bool = True):
+    def __set_buildings(self, building, increase: bool = True):
         if increase:
             self.__buildings.append(building)
         else:
@@ -114,7 +126,7 @@ class City():
     def get_population(self):
         return self.__population
     
-    def set_population(self, person, increase: bool = True):
+    def __set_population(self, person, increase: bool = True):
         if increase:
             self.__population.append(person)
         else:
@@ -124,7 +136,7 @@ class City():
     def get_free_workers(self):
         return self.__free_workers
     
-    def set_free_workers(self, worker, increase: bool = True):
+    def __set_free_workers(self, worker, increase: bool = True):
         if increase:
             self.__free_workers.append(worker)
         else:
@@ -150,13 +162,22 @@ class City():
             building_costs: dict = self.fetch_building_costs(building_name)
             result: dict = self.check_if_enough_resources(building_costs)
             if not result["success"]:
-                return {"success": False, "message": f"Nicht genug {result["message"]}!"}
+                return {"success": False, "message": f"Nicht genug '{result["message"]}'!"}
 
-            self.subtract_costs(building_costs)
-            self.set_buildings(building_name)  # --> ERSETZEN MIT DEM RICHTIGEN OBJEKT
+            if self.build_building(building_name):
+                self.subtract_costs(building_costs)
+                return {"success": True}
             
-            return {"success": True}
-            
+            return {"success": False, "message": f"'{building_name}' konnt nicht gebaut werden!"}
+
+    def build_building(self, building_name: str, *parameters):        
+        for option, Building in City.build_options.items():
+            if option == building_name:
+                self.__set_buildings(Building((parameters)))
+                return True
+        
+        return False
+    
             
     def fetch_building_costs(self, building_name: str) -> dict:
         for building in City.building_list:
@@ -213,8 +234,8 @@ class City():
         self.subtract_costs(worker_costs)
         
         new_worker = Worker(name)
-        self.set_population(new_worker)
-        self.set_free_workers(new_worker)
+        self.__set_population(new_worker)
+        self.__set_free_workers(new_worker)
         
         return {"success": True}
 
@@ -226,4 +247,9 @@ class City():
 
 
 if __name__ == "__main__":
+    ct = City("TestCT", 2000, 2000, 2000, 2000, buildings=["Builders hut"])
+    # print(ct.build_building("Builders hut"))
+    print(ct.build("Builders hut"))
+    print(ct.get_buildings()[1].worker_slots)
+    
     pass
