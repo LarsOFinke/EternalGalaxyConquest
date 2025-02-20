@@ -24,7 +24,7 @@
 - Hauptquartier     class Headquarter(MilitaryBuilding)
 - Wohnbezirk        class ResidentialArea(CivilianBuilding)
 - Bauarbeiterhütte  class BuildersHut(Factory)
-- Speicher          class Storage(Factory)
+- Speicher          class Warehouse(Factory)
 - Bäckerei          class Bakery(Factory)
 - Sägewerk          class Sawmill(Factory)
 - Minen              

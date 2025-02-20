@@ -1,7 +1,7 @@
 from Factory import Factory
 
 
-class Storage(Factory):
+class Warehouse(Factory):
     pass
 
 

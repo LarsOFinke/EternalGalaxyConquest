@@ -1,7 +1,7 @@
 from City import City
-from Headquarter import Headquarter
-from Commander import Commander
-from Worker import Worker
+from ..buildings.Headquarter import Headquarter
+from ..persons.Commander import Commander
+from ..persons.Worker import Worker
 
 
 class MainCity(City):
@@ -30,14 +30,14 @@ if __name__ == "__main__":
     # print(mc.get_population())
     # print(mc.get_free_workers()[0].name)
     
-    print(mc.build("Builders hut"))
-    print(mc.get_buildings())
-    bh = mc.get_buildings()[1]
-    w = mc.get_free_workers()[0]
-    bh.convert_worker_to_builder(w, mc)
-    print(mc.get_free_builders()[0].name) 
-    print(mc.get_free_workers())
-    print(mc.get_population())
+    # print(mc.build("Builders hut"))
+    # print(mc.get_buildings())
+    # bh = mc.get_buildings()[1]
+    # w = mc.get_free_workers()[0]
+    # bh.convert_worker_to_builder(w, mc)
+    # print(mc.get_free_builders()[0].name) 
+    # print(mc.get_free_workers())
+    # print(mc.get_population())
     
     pass
     

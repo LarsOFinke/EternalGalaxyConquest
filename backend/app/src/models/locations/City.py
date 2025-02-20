@@ -1,10 +1,10 @@
 ### IMPORT PERSONS ###
-from Commander import Commander; from Worker import Worker; from Builder import Builder; from WarehouseWorker import WarehouseWorker; from Baker import Baker
-from Woodcutter import Woodcutter; from Miner import Miner; from Blacksmith import Blacksmith
+from ..persons.Commander import Commander; from ..persons.Worker import Worker; from ..persons.Builder import Builder; from ..persons.WarehouseWorker import WarehouseWorker; from ..persons.Baker import Baker
+from ..persons.Woodcutter import Woodcutter; from ..persons.Miner import Miner; from ..persons.Blacksmith import Blacksmith
 
 ### IMPORT BUILDINGS ###
-from ResidentialArea import ResidentialArea; from BuildersHut import BuildersHut; from Storage import Storage; from Bakery import Bakery 
-from Sawmill import Sawmill; from GoldMine import GoldMine; from IronMine import IronMine; from Forge import Forge
+from ..buildings.ResidentialArea import ResidentialArea; from ..buildings.BuildersHut import BuildersHut; from ..buildings.Warehouse import Warehouse; from ..buildings.Bakery import Bakery 
+from ..buildings.Sawmill import Sawmill; from ..buildings.GoldMine import GoldMine; from ..buildings.IronMine import IronMine; from ..buildings.Forge import Forge
 
 
 class City():
@@ -84,7 +84,7 @@ class City():
 ]
     build_options: dict = {
             "Builders hut": BuildersHut,
-            "Storage": Storage,
+            "Storage": Warehouse,
             "Bakery": Bakery,
             "Sawmill": Sawmill,
             "Gold mine": GoldMine,
@@ -137,10 +137,10 @@ class City():
         else:
             self.__population.remove(person)
     
-    def add_population(self, person):
+    def add_population(self, person) -> None:
         self.__set_population(person)
     
-    def remove_population(self, person):
+    def remove_population(self, person) -> None:
         self.__set_population(person, increase=False)
     
     
@@ -153,10 +153,10 @@ class City():
         else:
             self.__free_workers.remove(worker)
     
-    def add_free_worker(self, worker: Worker):
+    def add_free_worker(self, worker: Worker) -> None:
         self.__set_free_workers(worker)
     
-    def remove_free_worker(self, worker: Worker):
+    def remove_free_worker(self, worker: Worker) -> None:
         self.__set_free_workers(worker, increase=False)
     
     
@@ -225,7 +225,7 @@ class City():
         
         return False
     
-    def remove_building(self, building):
+    def remove_building(self, building) -> None:
         self.__set_buildings(building, increase=False)
         del building
     
