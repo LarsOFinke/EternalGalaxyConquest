@@ -19,6 +19,7 @@
 - Außenposten       class 
 - Planet            class 
 -- Heimatplanet     class 
+- Orbitalstation
 
 ### GEBÄUDE ###
 - Hauptquartier     class Headquarter(MilitaryBuilding)
