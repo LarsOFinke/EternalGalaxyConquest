@@ -1,7 +1,8 @@
 from MilitaryBuilding import MilitaryBuilding
 
 class Headquarter(MilitaryBuilding):
-    pass
+    def __init__(self):
+        super().__init__(category="Headquarter")
 
 
 

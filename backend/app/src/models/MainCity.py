@@ -8,7 +8,7 @@ class MainCity(City):
     def __init__(self, name: str, 
                  gold = 2000, food = 1000, wood = 1500, iron = 500, 
                  buildings = [Headquarter()],
-                 population = [Commander("Gottfried", Worker("Abrams"))] 
+                 population = [Commander("Gottfried"), Worker("Abrams")] 
                  ) -> None:
         super().__init__(name=name, gold=gold, food=food, wood=wood, iron=iron, buildings=buildings, population=population)
      
@@ -17,7 +17,7 @@ class MainCity(City):
 
 
 if __name__ == "__main__":
-    mc = MainCity("TestMCs", buildings=["Test", "Test2", "Builders hut"])
+    mc = MainCity("TestMCs")
     
     # print(mc.get_buildings())
     # print(City.building_list)
@@ -32,7 +32,14 @@ if __name__ == "__main__":
     # print(mc.create_worker("Abrams"))
     # print(mc.get_free_workers()[0].name)
     
-    # print(mc.get_free_builders()[0].name)       # --> FIND A WAY TO CONVERT A WORKER TO A BUILDER
+    print(mc.build("Builders hut"))
+    print(mc.get_buildings())
+    bh = mc.get_buildings()[1]
+    w = mc.get_free_workers()[0]
+    bh.convert_worker_to_builder(w, mc)
+    print(mc.get_free_builders()[0].name) 
+    print(mc.get_free_workers())
+    print(mc.get_population())
     
     pass
     

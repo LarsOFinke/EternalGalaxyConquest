@@ -137,26 +137,44 @@ class City():
         else:
             self.__population.remove(person)
     
+    def add_population(self, person):
+        self.__set_population(person)
+    
+    def remove_population(self, person):
+        self.__set_population(person, increase=False)
+    
     
     def get_free_workers(self) -> list:
         return self.__free_workers
     
-    def __set_free_workers(self, worker, increase: bool = True) -> None:
+    def __set_free_workers(self, worker: Worker, increase: bool = True) -> None:
         if increase:
             self.__free_workers.append(worker)
         else:
             self.__free_workers.remove(worker)
     
+    def add_free_worker(self, worker: Worker):
+        self.__set_free_workers(worker)
+    
+    def remove_free_worker(self, worker: Worker):
+        self.__set_free_workers(worker, increase=False)
+    
     
     def get_free_builders(self) -> list:
         return self.__free_builders
     
-    def __set_free_builders(self, builder, increase: bool = True) -> None:
+    def __set_free_builders(self, builder: Builder, increase: bool = True) -> None:
         if increase:
             self.__free_builders.append(builder)
         else:
             self.__free_builders.remove(builder)
+    
+    def add_free_builder(self, builder: Builder) -> None:
+        self.__set_free_builders(builder)
         
+    def remove_free_builder(self, builder: Builder) -> None:
+        self.__set_free_builders(builder, increase=False)
+      
         
     def build(self, building_name: str) -> dict:
         """ 
@@ -166,7 +184,7 @@ class City():
             else:
                 print(result["message"])
         """
-        has_builders_hut: bool = False
+        has_builders_hut: bool = True if building_name == "Builders hut" else False
         for building in self.__buildings:
             if building.category == "Builders hut":
                 has_builders_hut: bool = True
