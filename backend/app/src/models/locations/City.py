@@ -105,8 +105,8 @@ class City():
         self.__iron: float = iron
         self.__buildings: list = buildings
         self.__population: list = population
-        self.__free_workers: list = [person for person in self.__population if person.category == "worker" and person.employed == False]
-        self.__free_builders: list = [person for person in self.__population if person.category == "builder" and person.working == False]
+        self.__free_workers: list = [person for person in self.__population if person.category == "Worker" and person.employed == False]
+        self.__free_builders: list = [person for person in self.__population if person.category == "Worker" and person.field_of_work == "Builder" and person.working == False]
         
         
     def get_resources(self) -> dict:

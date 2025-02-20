@@ -1,38 +1,32 @@
 from .Factory import Factory
-from ..persons.WarehouseWorker import WarehouseWorker
 
 
 class Warehouse(Factory):
-    def __init__(self, workers: list = []) -> None:
-        super().__init__(category="Warehouse", worker_slots=2)
-        self.__workers: list = workers
+    def __init__(self, workers: list = [], 
+                    storage_capacity = {
+                        "gold": 2000,
+                        "food": 2000,
+                        "wood": 2000,
+                        "iron": 2000
+                    },
+                    current_stock = {
+                        "gold": 0,
+                        "food": 0,
+                        "wood": 0,
+                        "iron": 0
+                    }
+                 ) -> None:
+        super().__init__(category="Warehouse", worker_slots=2, workers=workers)
+        self.storage_capacity: dict = storage_capacity
+        self.__current_stock: dict = current_stock
     
     
-    def get_workers(self) -> list:
-        return self.__workers
-    
-    def __set_workers(self, worker: WarehouseWorker, increase: bool = True) -> None:
-        if increase:
-            self.__workers.append(worker)
-        else:
-            self.__workers.remove(worker)
-    
-    def add_worker(self, worker: WarehouseWorker) -> None:
-        self.__set_workers(worker)
-    
-    def remove_worker(self, worker: WarehouseWorker) -> None:
-        self.__set_workers(worker, increase=False)
+    def get_current_stock(self) -> dict:
+        return self.__current_stock
     
     
-    def convert_worker_to_wh_worker(self, worker: WarehouseWorker, location) -> bool:
-        if isinstance(worker, WarehouseWorker):
-            new_wh_worker = WarehouseWorker(worker.name)
-            location.remove_population(worker)
-            location.remove_free_worker(worker)
-            del worker
-            location.add_population(new_wh_worker)
-            location.add_free_builder(new_wh_worker)
-            
+    def convert_worker_to_wh_worker(self, worker, location) -> bool:
+        if self.convert_worker_to_craftsman("Warehouse", worker, location):
             return True
 
         return False
