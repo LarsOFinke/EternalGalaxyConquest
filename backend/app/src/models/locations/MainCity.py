@@ -30,7 +30,7 @@ if __name__ == "__main__":
     # print(mc.get_population())
     # print(mc.get_free_workers()[0].name)
     
-    # print(mc.build("Builders hut"))
+    # print(mc.build("Builders Hut"))
     # print(mc.get_buildings())
     # bh = mc.get_buildings()[1]
     # w = mc.get_free_workers()[0]

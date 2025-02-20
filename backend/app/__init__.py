@@ -14,7 +14,7 @@ if not path.exists("./logs"):
 
 # Set up the config #
 logging.basicConfig(
-    filename='logs/backend_error_log.txt',                  # Specify the log file path
+    filename='./logs/backend_error_log.txt',                  # Specify the log file path
     level=logging.ERROR,                                    # Set the logging level to ERROR
     format='%(asctime)s - %(levelname)s - %(message)s',     # Customize the log format
 )

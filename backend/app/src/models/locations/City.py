@@ -28,7 +28,7 @@ class City():
         }
     },
     {
-        "name": "Storage",
+        "name": "Warehouse",
         "costs": {
             "gold": 200,
             "food": 200,
@@ -84,7 +84,7 @@ class City():
 ]
     build_options: dict = {
             "Builders hut": BuildersHut,
-            "Storage": Warehouse,
+            "Warehouse": Warehouse,
             "Bakery": Bakery,
             "Sawmill": Sawmill,
             "Gold mine": GoldMine,
