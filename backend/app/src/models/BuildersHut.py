@@ -8,7 +8,7 @@ class BuildersHut(Factory):
         super().__init__(category="Builders hut", worker_slots=2)
         self.workers: list = workers
     
-    # Method to convert a worker to a builder
+    
     def convert_worker_to_builder(self, worker: Worker, location) -> bool:
         if isinstance(worker, Worker):
             new_builder = Builder(worker.name)

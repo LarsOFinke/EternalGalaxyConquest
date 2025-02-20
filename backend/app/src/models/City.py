@@ -184,24 +184,38 @@ class City():
             else:
                 print(result["message"])
         """
-        has_builders_hut: bool = True if building_name == "Builders hut" else False
-        for building in self.__buildings:
-            if building.category == "Builders hut":
-                has_builders_hut: bool = True
+        has_builders_hut: bool = True if building_name == "Builders hut" else self.check_if_has_builders_hut()
         if not has_builders_hut:
             return {"success": False, "message": "Zuerst eine Bauhütte bauen!"}
         
-        else:
-            building_costs: dict = self.fetch_building_costs(building_name)
-            result: dict = self.check_if_enough_resources(building_costs)
-            if not result["success"]:
-                return {"success": False, "message": f"Nicht genug '{result["message"]}'!"}
+        builder_available: bool = self.check_if_builder_available()
+        if not builder_available:
+            return {"success": False, "message": "Kein verfügbarer Baumeister!"}
 
-            if self.build_building(building_name):
-                self.subtract_costs(building_costs)
-                return {"success": True}
-            
-            return {"success": False, "message": f"'{building_name}' konnt nicht gebaut werden!"}
+        building_costs: dict = self.fetch_building_costs(building_name)
+        result: dict = self.check_if_enough_resources(building_costs)
+        if not result["success"]:
+            return {"success": False, "message": f"Nicht genug '{result["message"]}'!"}
+
+        if self.build_building(building_name):
+            self.subtract_costs(building_costs)
+            return {"success": True}
+        
+        return {"success": False, "message": f"'{building_name}' konnt nicht gebaut werden!"}
+
+    def check_if_has_builders_hut(self) -> bool:
+        has_builders_hut: bool = False
+        for building in self.__buildings:
+            if building.category == "Builders hut":
+                has_builders_hut: bool = True
+        
+        return has_builders_hut
+    
+    def check_if_builder_available(self) -> bool:
+        if len(self.__free_workers) > 0:
+            return True
+        
+        return False
 
     def build_building(self, building_name: str, *parameters) -> bool:        
         for option, Building in City.build_options.items():

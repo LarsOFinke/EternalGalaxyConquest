@@ -26,10 +26,8 @@ if __name__ == "__main__":
     # print(mc.build("Gold mine"))
     # print(mc.get_resources())
     
-    # print(mc.create_worker())
-    # print(mc.get_population())
-    
     # print(mc.create_worker("Abrams"))
+    # print(mc.get_population())
     # print(mc.get_free_workers()[0].name)
     
     print(mc.build("Builders hut"))
