@@ -1,4 +1,4 @@
-from Mine import Mine
+from .Mine import Mine
 
 
 class GoldMine(Mine):

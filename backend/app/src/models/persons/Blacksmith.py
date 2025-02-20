@@ -1,4 +1,4 @@
-from Worker import Worker
+from .Worker import Worker
 
 
 class Blacksmith(Worker):

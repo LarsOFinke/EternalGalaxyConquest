@@ -1,4 +1,4 @@
-from Factory import Factory
+from .Factory import Factory
 
 
 class Forge(Factory):

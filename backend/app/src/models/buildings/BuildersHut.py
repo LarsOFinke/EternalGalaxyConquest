@@ -1,6 +1,6 @@
-from Factory import Factory
-from Worker import Worker
-from Builder import Builder
+from .Factory import Factory
+from ..persons.Worker import Worker
+from ..persons.Builder import Builder
 
 
 class BuildersHut(Factory):

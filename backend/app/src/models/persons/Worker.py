@@ -1,4 +1,4 @@
-from Human import Human
+from .Human import Human
 
 
 class Worker(Human):

@@ -1,4 +1,4 @@
-from CivilianBuilding import CivilianBuilding
+from .CivilianBuilding import CivilianBuilding
 
 
 class ResidentialArea(CivilianBuilding):
