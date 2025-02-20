@@ -83,12 +83,13 @@ class City():
     }
 ]
     build_options: dict = {
-            "Builders hut": BuildersHut,
+            "Builders Hut": BuildersHut,
+            "Residential Area": ResidentialArea,
             "Warehouse": Warehouse,
             "Bakery": Bakery,
             "Sawmill": Sawmill,
-            "Gold mine": GoldMine,
-            "Iron mine": IronMine,
+            "Gold Mine": GoldMine,
+            "Iron Mine": IronMine,
             "Forge": Forge,
         }
 
@@ -299,7 +300,7 @@ class City():
 
 if __name__ == "__main__":
     ct = City("TestCT", 2000, 2000, 2000, 2000, buildings=[BuildersHut()])
-    # print(ct.build_building("Builders hut"))
+    # print(ct.build_building("Builders Hut"))
     # print(ct.build("Builders hut"))
     # print(ct.get_buildings()[1].worker_slots)
     
