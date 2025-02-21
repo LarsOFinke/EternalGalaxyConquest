@@ -3,8 +3,7 @@ from datetime import timedelta
 import logging
 from flask import Flask
 from flask_session import Session
-from flask_socketio import SocketIO, emit
-
+from flask_socketio import SocketIO
 
 
 
@@ -60,7 +59,7 @@ def create_app():
     
     ## Initialize the websocket ##
     global socketio
-    socketio = SocketIO(app)
+    socketio = SocketIO(app, cors_allowed_origins="*")
     # Websocket-events #
     from .blueprints.api import events
     
