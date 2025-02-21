@@ -51,7 +51,6 @@ class Game:
             return 1
 
     def next_turn(self) -> None:
-        print(self.current_player)
         self.current_player = self.check_next_player()
         self.game_state['current_player'] = self.current_player
         

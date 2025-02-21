@@ -8,6 +8,8 @@ from ...src.models.Game import Game
 games: dict = {}
 players: list = []
 
+
+
 @socketio.on('connect') # Handle WebSocket connection to the game (Frontend will connect to this)
 def handle_connect(): 
     emit('welcome', {'message': f'Welcome to the game!'})
@@ -55,5 +57,4 @@ def handle_player_input(data):
 
 @socketio.on('disconnect')
 def handle_disconnect():
-    print('Client disconnected')
-    
+    games.clear()
