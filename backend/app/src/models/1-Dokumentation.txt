@@ -6,14 +6,8 @@
 - Holz        wood: float
 - Eisen       iron: float
 
-### ORTE ###
-- Blueprint-classes
--- Building
--- CivilianBuilding(Building)
--- Factory(Building)
--- Mine(Factory)
--- MilitaryBuilding(Building)
 
+### ORTE ###
 - Stadt             class City()
 -- Hauptstadt       class MainCity(City)
 - Außenposten       class 
@@ -21,7 +15,15 @@
 -- Heimatplanet     class 
 - Orbitalstation
 
+
 ### GEBÄUDE ###
+- Blueprint-classes
+-- Building
+-- CivilianBuilding(Building)
+-- Factory(Building)
+-- Mine(Factory)
+-- MilitaryBuilding(Building)
+
 - Hauptquartier     class Headquarter(MilitaryBuilding)
 - Wohnbezirk        class ResidentialArea(CivilianBuilding)
 - Bauarbeiterhütte  class BuildersHut(Factory)
@@ -32,6 +34,7 @@
 -- Gold             class GoldMine(Mine)
 -- Eisen            class IronMine(Mine)
 - Schmiede          class Forge(Factory)
+
 
 ### CHARAKTERE ###
 - Blueprint-classes
@@ -46,8 +49,10 @@
 - Minenarbeiter     class Miner(Worker)
 - Schmied           class Blacksmith(Worker)
 
+
 ### FAHRZEUGE ###
 - Transporter
+
 
 ### ITEMS ###
 

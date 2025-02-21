@@ -1,8 +1,10 @@
-from flask import Flask
-from flask_session import Session
 from os import getenv, path, mkdir
 from datetime import timedelta
 import logging
+from flask import Flask
+from flask_session import Session
+from flask_socketio import SocketIO, emit
+
 
 
 
@@ -44,7 +46,7 @@ def create_app():
     app.config["SECRET_KEY"] = getenv("SECRET_KEY")
 
     # Session management #
-    app.config['SESSION_USE_SIGNER'] = True
+    # app.config['SESSION_USE_SIGNER'] = True   # REMOVED BC IT MESSES WITH WEBSOCKET APPARENTLY #
     app.config['SESSION_TYPE'] = 'filesystem'   # Save sessions server-sided
     if not path.exists("./backend/sessions"):   # Create directory, if neccessary
         mkdir("./backend/sessions")
@@ -54,5 +56,12 @@ def create_app():
     ## Initialize the session for the app ##
     app.permanent_session_lifetime = timedelta(minutes=5000)
     Session(app)
+    
+    
+    ## Initialize the websocket ##
+    global socketio
+    socketio = SocketIO(app)
+    # Websocket-events #
+    from .blueprints.api import events
     
     return app

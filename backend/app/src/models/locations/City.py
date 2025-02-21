@@ -196,7 +196,7 @@ class City():
         building_costs: dict = self.fetch_building_costs(building_name)
         result: dict = self.check_if_enough_resources(building_costs)
         if not result["success"]:
-            return {"success": False, "message": f"Nicht genug '{result["message"]}'!"}
+            return result
 
         if self.build_building(building_name):
             self.subtract_costs(building_costs)
@@ -213,7 +213,7 @@ class City():
         return has_builders_hut
     
     def check_if_builder_available(self) -> bool:
-        if len(self.__free_workers) > 0:
+        if len(self.__free_builders) > 0:
             return True
         
         return False
@@ -279,9 +279,9 @@ class City():
             "wood": 50,
             "iron": 0
         }
-        
-        if not self.check_if_enough_resources(worker_costs):
-            return {"success": False, "message": "Nicht genug Resourcen für einen neuen Arbeiter!"}
+        result: dict = self.check_if_enough_resources(worker_costs)
+        if not result["success"]:
+            return result
         
         self.subtract_costs(worker_costs)
         
