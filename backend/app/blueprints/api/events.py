@@ -1,4 +1,5 @@
 from ... import socketio
+from flask import session
 from flask_socketio import emit
 from ...src.models.Game import Game
 
@@ -13,6 +14,7 @@ game = Game()
 @socketio.on('connect')
 def handle_connect():
     print("Player connected!")
+    game.add_player(session["username"])
     emit('welcome', {'message': 'Welcome to the game!'})
     
 
