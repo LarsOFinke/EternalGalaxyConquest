@@ -1,9 +1,10 @@
+from .Player import Player
+
 
 
 class Game:
     def __init__(self) -> None:
-        self.player_list: list[str] = ["AI"]
-        self.players: list[dict] = [{"id": 1, "name": "AI"}]
+        self.players: list[Player] = [Player("AI", 1)]
         self.player_count: int = 1
         self.total_player_count: int = 0
         self.current_player: int = 1
@@ -12,17 +13,13 @@ class Game:
 
 
     def add_player(self, player: str) -> None:
-        self.player_list.append(player)
         self.player_count += 1
-        self.players.append({
-                                "id": self.player_count,
-                                "name": player
-                            })
+        new_player = Player(player, self.player_count)
+        self.players.append(new_player)
 
     def start(self) -> None:
-        self.total_player_count = len(self.player_list)
+        self.total_player_count = len(self.players)
         self.game_state={
-                            "players": self.players, 
                             "current_player": self.current_player
                         }
         self.running = True

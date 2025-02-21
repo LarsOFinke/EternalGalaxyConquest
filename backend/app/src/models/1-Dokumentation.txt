@@ -11,8 +11,8 @@
 - Stadt             class City()
 -- Hauptstadt       class MainCity(City)
 - Außenposten       class 
-- Planet            class 
--- Heimatplanet     class 
+- Planet            class Planet()
+-- Heimatplanet     class HomePlanet(Planet)
 - Orbitalstation
 
 

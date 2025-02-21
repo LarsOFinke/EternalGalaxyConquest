@@ -14,7 +14,7 @@ game = Game()
 def handle_connect():
     user: str = session.get("username")
     game.add_player(user)
-    emit('welcome', {'message': f'Welcome to the game, {user}!', "user_id": game.players[-1]["id"]})
+    emit('welcome', {'message': f'Welcome to the game, {user}!', "user_id": game.players[-1].player_id})
     
 
 @socketio.on('start_game')  # Handle the start of the game (called when the game begins)
