@@ -102,8 +102,25 @@ function toggleForms() {
         pw2_input.required = true;
         pw2_box.insertAdjacentElement("afterbegin", pw2_input);
         document.getElementById("show-password").insertAdjacentElement("beforebegin", pw2_box);
+
+        const spacer_list = document.querySelectorAll(".spacer")
+        spacer_list.forEach(e => e.remove());
     } else {
         header.textContent = "Login";
+
+        const spacer_1 = document.createElement("br")
+        const spacer_2 = document.createElement("br")
+        const spacer_3 = document.createElement("br")
+        const spacer_4 = document.createElement("br")
+        spacer_1.classList.add("spacer");
+        spacer_2.classList.add("spacer");
+        spacer_3.classList.add("spacer");
+        spacer_4.classList.add("spacer");
+        document.querySelector("h1").insertAdjacentElement("beforebegin", spacer_1);
+        document.querySelector("h1").insertAdjacentElement("afterend", spacer_2);
+        document.getElementById("show-password").insertAdjacentElement("beforebegin", spacer_3);
+        document.getElementById("show-password").insertAdjacentElement("afterend", spacer_4);
+
         button.textContent = "Einloggen";
         button.id = "login";
         anchor.textContent = "Noch nicht registriert?";

@@ -22,12 +22,11 @@ def start_game():
     game.start()
     game_state = game.get_game_state()
     emit('game_update', game_state)
-    emit('your_turn', {'player': game.current_player}) # --> implement JS check if its players turn and in the routes here
+    emit('your_turn', {'player': game.current_player})
 
 
 @socketio.on('player_input')    # Handle player input (this event is triggered by frontend input)
 def handle_player_input(data):
-    print(f"Received player input: {data}")
     if data["user_id"] == game.current_player:
         action = data.get('action')
         

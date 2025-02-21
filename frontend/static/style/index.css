@@ -1,4 +1,8 @@
 /* ### LOGIN-FORM ### */
+.wrapper {
+    min-height: 500px;
+}
+
 #show-password {
     display: flex;
     justify-content: flex-end;

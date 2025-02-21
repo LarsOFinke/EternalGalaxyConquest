@@ -39,7 +39,6 @@ function startGame() {
 
 // Listen for 'your_turn' event
 socket.on('your_turn', function(data) {
-    console.log(window.user_id)
     if (parseInt(data.player) === window.user_id) {
         alert(data.player + ", it's your turn!");
         // Enable game input UI for this player
