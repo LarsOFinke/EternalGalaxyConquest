@@ -10,34 +10,30 @@ game = Game()
 
 
 
-# Handle WebSocket connection to the game (Frontend will connect to this)
-@socketio.on('connect')
+@socketio.on('connect') # Handle WebSocket connection to the game (Frontend will connect to this)
 def handle_connect():
-    print("Player connected!")
-    game.add_player(session["username"])
-    emit('welcome', {'message': 'Welcome to the game!'})
+    user: str = session.get("username")
+    game.add_player(user)
+    emit('welcome', {'message': f'Welcome to the game, {user}!', "user_id": game.players[-1]["id"]})
     
 
-# Handle the start of the game (called when the game begins)
-@socketio.on('start_game')
+@socketio.on('start_game')  # Handle the start of the game (called when the game begins)
 def start_game():
-    game.start_game()  # Start the game logic
-    game_state = game.get_game_state()
-    emit('game_update', game_state)  # Send the initial game state to the client
-
-
-# Handle player input (this event is triggered by frontend input)
-@socketio.on('player_input')
-def handle_player_input(data):
-    print(f"Received player input: {data}")
-    
-    action = data.get('action')
-    
-    # Process the player action in the game logic
-    game.process_player_action(action)
-    
-    # Emit the updated game state back to the frontend
+    game.start()
     game_state = game.get_game_state()
     emit('game_update', game_state)
+    emit('your_turn', {'player': game.current_player}) # --> implement JS check if its players turn and in the routes here
 
+
+@socketio.on('player_input')    # Handle player input (this event is triggered by frontend input)
+def handle_player_input(data):
+    print(f"Received player input: {data}")
+    if data["user_id"] == game.current_player:
+        action = data.get('action')
+        
+        game.process_player_action(action)
+        
+        game_state = game.get_game_state()
+        emit('game_update', game_state)
+        emit('your_turn', {'player': game.current_player})
 

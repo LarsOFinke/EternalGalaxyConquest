@@ -2,6 +2,9 @@
 
 {% block stylesheets %}
 <link rel="stylesheet" href="{{ url_for('static', filename='style/game.css') }}">
+<script>
+    const username = "{{ session.username }}"
+</script>
 {% endblock %}
 
 
