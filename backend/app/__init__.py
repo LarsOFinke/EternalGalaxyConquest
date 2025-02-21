@@ -1,6 +1,7 @@
 from os import getenv, path, mkdir
 from datetime import timedelta
 import logging
+from dotenv import load_dotenv
 from flask import Flask
 from flask_session import Session
 from flask_socketio import SocketIO
@@ -42,10 +43,11 @@ def create_app():
     
     
     ## Set up Configuration ##
+    load_dotenv()
     app.config["SECRET_KEY"] = getenv("SECRET_KEY")
 
     # Session management #
-    # app.config['SESSION_USE_SIGNER'] = True   # REMOVED BC IT MESSES WITH WEBSOCKET APPARENTLY #
+    app.config['SESSION_USE_SIGNER'] = True   # REMOVED BC IT MESSES WITH WEBSOCKET APPARENTLY #
     app.config['SESSION_TYPE'] = 'filesystem'   # Save sessions server-sided
     if not path.exists("./backend/sessions"):   # Create directory, if neccessary
         mkdir("./backend/sessions")

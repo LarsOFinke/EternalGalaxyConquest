@@ -4,13 +4,16 @@
 
 // ### INITIALIZATION ### //
 
-// Connect to the Flask-SocketIO server
-const socket = io('http://localhost:5000');
+// Connect to the Flask-SocketIO server with credentials (cookies)
+const socket = io('http://localhost:5000', {
+    withCredentials: true  // Ensure the session cookie is sent with the WebSocket connection
+  });
+  
 
 // Listen for the 'welcome' message from the server
 socket.on('welcome', (data) => {
-    window.user_id = data.user_id;
-
+    // window.user_id = data.user_id;
+    register_player()
     const start_button = document.createElement("button");
     start_button.id = "start_button";
     start_button.textContent = "Start Game";
@@ -22,9 +25,14 @@ socket.on('welcome', (data) => {
 
 // ### GAME COMMUNICATION ### //
 
+// Register Player
+function register_player() {
+    socket.emit("register_player", { user: username })
+}
+
 // Start the game
 function startGame() {
-    socket.emit('start_game');  // Notify the backend to start the game
+    socket.emit('start_game', { user: username });  // Notify the backend to start the game
 
     const start_button = document.getElementById("start_button");
     start_button.remove();
@@ -36,12 +44,25 @@ function startGame() {
     document.getElementById('gameState').insertAdjacentElement("afterend", send_data_button);
 }
 
+//  Listen for host assignment
+socket.on("host", data => {
+    window.host = data.host;
+})
+
+//  Listen for player_id assignment
+socket.on("players", data => {
+    data.forEach(e => {
+        if (e.name === username) {
+            window.user_id = e.player_id;
+        }
+    });
+})
+
 
 // Listen for 'your_turn' event
-socket.on('your_turn', function(data) {
+socket.on('your_turn', data => {
     if (parseInt(data.player) === window.user_id) {
-        alert(data.player + ", it's your turn!");
-        // Enable game input UI for this player
+        alert(username + ", it's your turn!");
     }
     
 });
@@ -61,5 +82,5 @@ function getPlayerInput() {
 
 // Send player input (action) to the server
 function sendPlayerInput(action) {
-    socket.emit('player_input', { action: action, user_id: window.user_id });  // Send player action to the backend
+    socket.emit('player_input', { action: action, host: window.host, user_id: window.user_id });  // Send player action to the backend
 }
