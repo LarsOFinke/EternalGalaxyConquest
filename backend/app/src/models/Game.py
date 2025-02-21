@@ -1,4 +1,4 @@
-# game.py
+
 
 class Game:
     def __init__(self, current_player_id: int = 1, 

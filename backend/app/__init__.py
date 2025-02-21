@@ -59,7 +59,7 @@ def create_app():
     
     ## Initialize the websocket ##
     global socketio
-    socketio = SocketIO(app, cors_allowed_origins="*")
+    socketio = SocketIO(app, cors_allowed_origins="*", async_mode='eventlet')
     # Websocket-events #
     from .blueprints.api import events
     

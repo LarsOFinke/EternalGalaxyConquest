@@ -12,7 +12,8 @@ socket.on('welcome', (data) => {
     console.log(data.message);  // Logs: "Welcome to the game!"
     const button = document.createElement("button");
     button.textContent = "Start Game";
-    button.onclick = startGame();
+    button.onclick = startGame;
+    document.getElementById('gameState').insertAdjacentElement("afterend", button);
 })
 
 // Start the game
