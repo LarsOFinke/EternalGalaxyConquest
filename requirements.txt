@@ -1,0 +1,5 @@
+pip install:
+- flask
+- flask_session
+- flask_socketio
+- eventlet

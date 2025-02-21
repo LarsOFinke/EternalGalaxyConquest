@@ -10,7 +10,7 @@
 ### ORTE ###
 - Stadt             class City()
 -- Hauptstadt       class MainCity(City)
-- Außenposten       class 
+- Außenposten       class Outpost()
 - Planet            class Planet()
 -- Heimatplanet     class HomePlanet(Planet)
 - Orbitalstation

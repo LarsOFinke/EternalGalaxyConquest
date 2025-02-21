@@ -1,0 +1,8 @@
+
+
+
+
+class Outpost():
+    pass
+
+
