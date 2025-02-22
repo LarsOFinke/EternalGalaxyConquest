@@ -6,7 +6,7 @@ from ...src.crud import validate_login, create_login
 auth = Blueprint("auth", __name__)
 
 
-@auth.route("/login", methods=["POST"])
+@auth.route("/login", methods=["GET", "POST"])
 def login():
     data = request.get_json()
     username = data.get('username')
