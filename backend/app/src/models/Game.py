@@ -32,12 +32,12 @@ class Game:
         return self.game_state
     
 
-    def process_player_action(self, payload):
+    def process_player_action(self, payload) -> dict:
         """ Payload example:
         {
             "player": 2,
             "category": "locations",
-            "target": "bases",
+            "target": ["bases",],
             "target_name": "Heimatplanet",
             "action": "Build City",
             "context": ["New Citto", 1000, 1000, 1000, 1000]
@@ -46,15 +46,19 @@ class Game:
         ############################################################
         # Player -> bases -> settlements -> buildings / population #
         ############################################################
-        self.process_payload(payload)
+        result = self.process_payload(payload)
+        result.update({"player": payload["player"]})
         
         self.next_turn()
+        return result
 
 
-    def process_payload(self, payload):
+    def process_payload(self, payload) -> dict:
         match payload["category"]:
             case "locations":
-                self.match_locations(payload) 
+                target = self.fetch_location((payload["player"] - 1), payload["target"], payload["target_name"])["result"]
+                result = target.match_payload_action(payload["action"], payload["context"])
+                return result
                 
             # case "buildings":
             #     self.match_buildings(payload)
@@ -63,10 +67,20 @@ class Game:
             #     self.match_persons(payload)
 
                 
-    def match_locations(self, payload):
-        match payload["target"]:
+    def fetch_location(self, player, location: list, target: str) -> dict:
+        """Fetch the target location-object for further processing like calling methods.
+
+        Args:
+            player: The Player's ID in the game.
+            location (list): A list of locations where the target is to find.
+            target: The target's name.
+
+        Returns:
+            dict: {"success": bool, "result": result}
+        """
+        match location[0]:  # The list-attribute where the object is in
             case "bases":
-                self.players[payload["player"] - 1].process_base_action(payload)
+                return self.players[player].match_payload_action(action="Select Base", context=[target,])
                         
             case "settlements":
                 pass

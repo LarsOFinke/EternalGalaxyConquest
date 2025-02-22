@@ -48,10 +48,12 @@ def handle_player_input(data):
     game = games.get(host)
     
     if data.get("user_id") == game.current_player:
-        action = data.get('action')
-        game.process_player_action(action)
-        game_state = game.get_game_state()
+        payload = data.get('payload')
+        result: dict = game.process_player_action(payload)
+        game_state: dict = game.get_game_state()
+        
         emit('game_update', game_state)
+        emit('result', result)
         emit('your_turn', {'player': game.current_player})
 
 

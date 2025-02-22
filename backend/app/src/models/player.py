@@ -7,8 +7,8 @@ class Player():
     def __init__(self, name: str, player_id: int, bases: list = [HomePlanet("Heimatplanet")]):
         self.action_list: list[dict] = [
                                             {
-                                                "name": "",
-                                                "action": 0,
+                                                "name": "Select Base",
+                                                "action": self.select_base,
                                             }
                                         ]
         self.name: str = name
@@ -16,13 +16,21 @@ class Player():
         self.bases: list = bases
 
 
+    def match_payload_action(self, action: str, context: list) -> dict:
+        for act in self.action_list:
+            if act["name"] == action:
+                return act["action"](*context)
 
-    def process_base_action(self, payload):
-        target = self.select_base(payload)
-        target.match_payload_action(payload)
 
-
-    def select_base(self, payload):
+    def select_base(self, target) -> dict:
         for base in self.bases:
-            if base.name == payload["target_name"]:
-                return base
+            if base.name == target:
+                return  {
+                            "success": True, 
+                            "result": base
+                        }
+        
+        return  {
+                    "success": False, 
+                    "result": f"{target} not found!"
+                }

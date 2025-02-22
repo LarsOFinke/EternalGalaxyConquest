@@ -11,12 +11,6 @@ class MainCity(City):
                  population = [Commander("Gottfried"), Worker("Abrams")] 
                  ) -> None:
         super().__init__(name=name, gold=gold, food=food, wood=wood, iron=iron, buildings=buildings, population=population)
-        self.action_list: list[dict] = [
-                                            {
-                                                "name": "",
-                                                "action": 0,
-                                            }
-                                        ]
      
     
     
