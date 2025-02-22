@@ -100,62 +100,20 @@ class City():
                  population: list = []
                  ) -> None:
         self.action_list: list[dict] = [
-                                            {
-                                                "name": "Build",
-                                                "action": self.build
-                                            },
-                                            {
-                                                "name": "Create Worker",
-                                                "action": self.create_worker
-                                            },
-                                            {
-                                                "name": "Remove Building",
-                                                "action": self.remove_building
-                                            },
-                                            {
-                                                "name": "Get Resources",
-                                                "action": self.get_resources
-                                            },
-                                            {
-                                                "name": "Get Buildings",
-                                                "action": self.get_buildings
-                                            },
-                                            {
-                                                "name": "Get Population",
-                                                "action": self.get_population
-                                            },
-                                            {
-                                                "name": "Add_population",
-                                                "action": self.add_population
-                                            },
-                                            {
-                                                "name": "Remove_population",
-                                                "action": self.remove_population
-                                            },
-                                            {
-                                                "name": "Get Free Workers",
-                                                "action": self.get_free_workers
-                                            },
-                                            {
-                                                "name": "Add Free Worker",
-                                                "action": self.add_free_worker
-                                            },
-                                            {
-                                                "name": "Remove Free Worker",
-                                                "action": self.remove_free_worker
-                                            },
-                                            {
-                                                "name": "Get Free Builders",
-                                                "action": self.get_free_builders
-                                            },
-                                            {
-                                                "name": "Add Free Builders",
-                                                "action": self.add_free_builders
-                                            },
-                                            {
-                                                "name": "Remove Free Builders",
-                                                "action": self.remove_free_builders
-                                            }
+                                            { "name": "Build", "action": self.build },
+                                            { "name": "Create Worker", "action": self.create_worker },
+                                            { "name": "Remove Building", "action": self.remove_building },
+                                            { "name": "Get Resources", "action": self.get_resources },
+                                            { "name": "Get Buildings", "action": self.get_buildings },
+                                            { "name": "Get Population", "action": self.get_population },
+                                            { "name": "Add_population", "action": self.add_population },
+                                            { "name": "Remove_population", "action": self.remove_population },
+                                            { "name": "Get Free Workers", "action": self.get_free_workers },
+                                            { "name": "Add Free Worker", "action": self.add_free_worker },
+                                            { "name": "Remove Free Worker", "action": self.remove_free_worker },
+                                            { "name": "Get Free Builders", "action": self.get_free_builders },
+                                            { "name": "Add Free Builders", "action": self.add_free_builders },
+                                            { "name": "Remove Free Builders", "action": self.remove_free_builders }
                                         ]
         self.name: str = name
         self.__gold: float = gold
