@@ -26,6 +26,12 @@ logging.basicConfig(
 def create_app():
     app = Flask("Eternal Galaxy Conquest", static_folder="frontend/static", template_folder="frontend/templates")
     
+    # Set the Flask app's log level
+    app.logger.setLevel(logging.ERROR)
+
+    # Suppress the Werkzeug log level to prevent connection request logs
+    log = logging.getLogger('werkzeug')
+    log.setLevel(logging.ERROR)
     
     ## Import Blueprints (routing) ##
     
