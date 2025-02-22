@@ -111,6 +111,50 @@ class City():
                                             {
                                                 "name": "Remove Building",
                                                 "action": self.remove_building
+                                            },
+                                            {
+                                                "name": "Get Resources",
+                                                "action": self.get_resources
+                                            },
+                                            {
+                                                "name": "Get Buildings",
+                                                "action": self.get_buildings
+                                            },
+                                            {
+                                                "name": "Get Population",
+                                                "action": self.get_population
+                                            },
+                                            {
+                                                "name": "Add_population",
+                                                "action": self.add_population
+                                            },
+                                            {
+                                                "name": "Remove_population",
+                                                "action": self.remove_population
+                                            },
+                                            {
+                                                "name": "Get Free Workers",
+                                                "action": self.get_free_workers
+                                            },
+                                            {
+                                                "name": "Add Free Worker",
+                                                "action": self.add_free_worker
+                                            },
+                                            {
+                                                "name": "Remove Free Worker",
+                                                "action": self.remove_free_worker
+                                            },
+                                            {
+                                                "name": "Get Free Builders",
+                                                "action": self.get_free_builders
+                                            },
+                                            {
+                                                "name": "Add Free Builders",
+                                                "action": self.add_free_builders
+                                            },
+                                            {
+                                                "name": "Remove Free Builders",
+                                                "action": self.remove_free_builders
                                             }
                                         ]
         self.name: str = name
@@ -131,26 +175,35 @@ class City():
     
         
     def get_resources(self) -> dict:
-        return {
-            "gold": self.__gold,
-            "food": self.__food,
-            "wood": self.__wood,
-            "iron": self.__iron
-        }
+        return  {
+                    "success": True,
+                    "resources": {
+                                    "gold": self.__gold,
+                                    "food": self.__food,
+                                    "wood": self.__wood,
+                                    "iron": self.__iron
+                                }
+                }
     
     
-    def get_buildings(self) -> list:
-        return self.__buildings
+    def get_buildings(self) -> dict:
+        return  {
+                    "success": True,
+                    "buildings": self.__buildings
+                }
     
-    def __set_buildings(self, building, increase: bool = True):
+    def __set_buildings(self, building, increase: bool = True) -> None:
         if increase:
             self.__buildings.append(building)
         else:
             self.__buildings.remove(building)
     
     
-    def get_population(self) -> list:
-        return self.__population
+    def get_population(self) -> dict:
+        return  {
+                    "success": True,
+                    "population": self.__population
+                }
     
     def __set_population(self, person, increase: bool = True) -> None:
         if increase:
@@ -158,15 +211,20 @@ class City():
         else:
             self.__population.remove(person)
     
-    def add_population(self, person) -> None:
+    def add_population(self, person) -> dict:
         self.__set_population(person)
+        return  { "success": True }
     
-    def remove_population(self, person) -> None:
+    def remove_population(self, person) -> dict:
         self.__set_population(person, increase=False)
+        return  { "success": True }
     
     
-    def get_free_workers(self) -> list:
-        return self.__free_workers
+    def get_free_workers(self) -> dict:
+        return  {
+                    "success": True,
+                    "free_workers": self.__free_workers
+                }
     
     def __set_free_workers(self, worker: Worker, increase: bool = True) -> None:
         if increase:
@@ -174,15 +232,20 @@ class City():
         else:
             self.__free_workers.remove(worker)
     
-    def add_free_worker(self, worker: Worker) -> None:
+    def add_free_worker(self, worker: Worker) -> dict:
         self.__set_free_workers(worker)
+        return  { "success": True }
     
-    def remove_free_worker(self, worker: Worker) -> None:
+    def remove_free_worker(self, worker: Worker) -> dict:
         self.__set_free_workers(worker, increase=False)
+        return  { "success": True }
     
     
-    def get_free_builders(self) -> list:
-        return self.__free_builders
+    def get_free_builders(self) -> dict:
+        return  {
+                    "success": True,
+                    "free_builders": self.__free_builders
+                }
     
     def __set_free_builders(self, builder: Builder, increase: bool = True) -> None:
         if increase:
@@ -190,11 +253,13 @@ class City():
         else:
             self.__free_builders.remove(builder)
     
-    def add_free_builder(self, builder: Builder) -> None:
+    def add_free_builder(self, builder: Builder) -> dict:
         self.__set_free_builders(builder)
+        return  { "success": True }
         
-    def remove_free_builder(self, builder: Builder) -> None:
+    def remove_free_builder(self, builder: Builder) -> dict:
         self.__set_free_builders(builder, increase=False)
+        return  { "success": True }
       
         
     def build(self, building_name: str) -> dict:
