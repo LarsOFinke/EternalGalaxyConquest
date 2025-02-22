@@ -1,5 +1,7 @@
 ###---### DOKUMENTATION ###---###
 
+### - initialer Install - ##
+Damit das Frontend funktioniert nach dem klonen npm i (npm install) im Terminal ausführen.
 ###- API -###
 
 ## Beispiele ##
