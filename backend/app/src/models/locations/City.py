@@ -101,8 +101,8 @@ class City():
                  ) -> None:
         self.action_list: list[dict] = [
                                             {
-                                                "name": "",
-                                                "action": 0,
+                                                "name": "Build",
+                                                "action": self.build,
                                             }
                                         ]
         self.name: str = name
@@ -114,7 +114,13 @@ class City():
         self.__population: list = population
         self.__free_workers: list = [person for person in self.__population if person.category == "Worker" and person.employed == False]
         self.__free_builders: list = [person for person in self.__population if person.category == "Worker" and person.field_of_work == "Builder" and person.working == False]
-        
+    
+    
+    def match_payload_action(self, action: str, context: list) -> dict:
+        for act in self.action_list:
+            if act["name"] == action:
+                return act["action"](*context)    
+    
         
     def get_resources(self) -> dict:
         return {
@@ -193,11 +199,17 @@ class City():
         """
         has_builders_hut: bool = True if building_name == "Builders hut" else self.check_if_has_builders_hut()
         if not has_builders_hut:
-            return {"success": False, "message": "Zuerst eine Bauhütte bauen!"}
+            return  {
+                        "success": False, 
+                        "message": "Zuerst eine Bauhütte bauen!"
+                    }
         
         builder_available: bool = self.check_if_builder_available()
         if not builder_available:
-            return {"success": False, "message": "Kein verfügbarer Baumeister!"}
+            return  {
+                        "success": False, 
+                        "message": "Kein verfügbarer Baumeister!"
+                    }
 
         building_costs: dict = self.fetch_building_costs(building_name)
         result: dict = self.check_if_enough_resources(building_costs)
@@ -206,9 +218,14 @@ class City():
 
         if self.build_building(building_name):
             self.subtract_costs(building_costs)
-            return {"success": True}
+            return  {
+                        "success": True
+                    }
         
-        return {"success": False, "message": f"'{building_name}' konnt nicht gebaut werden!"}
+        return  {
+                    "success": False, 
+                    "message": f"'{building_name}' konnt nicht gebaut werden!"
+                }
 
     def check_if_has_builders_hut(self) -> bool:
         has_builders_hut: bool = False

@@ -56,13 +56,16 @@ class Game:
     def process_payload(self, payload) -> dict:
         match payload["category"]:
             case "locations":
-                target = self.fetch_location((payload["player"] - 1), payload["target"], payload["target_name"])["result"]
-                result = target.match_payload_action(payload["action"], payload["context"])
+                result = self.fetch_location((payload["player"] - 1), payload["location"], payload["target"])
+                if result["success"]:
+                    target = result["target"]
+                    payload_return = target.match_payload_action(payload["action"], payload["context"])
+                    return payload_return
+                
                 return result
                 
             # case "buildings":
             #     self.match_buildings(payload)
-            
             # case "population":
             #     self.match_persons(payload)
 
@@ -83,7 +86,8 @@ class Game:
                 return self.players[player].match_payload_action(action="Select Base", context=[target,])
                         
             case "settlements":
-                pass
+                base = self.players[player].match_payload_action(action="Select Base", context=[location[1],])["target"]
+                return base.match_payload_action(action="Select Settlement", context=[target,])
         
                 
     # def match_buildings(self, payload):

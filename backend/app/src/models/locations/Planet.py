@@ -7,6 +7,10 @@ class Planet():
     def __init__(self, name: str, settlements: list = []):
         self.action_list: list[dict] = [
                                             {
+                                                "name": "Select Settlement",
+                                                "action": self.select_settlement
+                                            },
+                                            {
                                                 "name": "Build City",
                                                 "action": self.build_city
                                             },
@@ -23,6 +27,20 @@ class Planet():
         for act in self.action_list:
             if act["name"] == action:
                 return act["action"](*context)
+    
+    
+    def select_settlement(self, target) -> dict:
+        for settlement in self.settlements:
+            if settlement.name == target:
+                return  {
+                            "success": True, 
+                            "target": settlement
+                        }
+        
+        return  {
+                    "success": False, 
+                    "message": f"{target} not found!"
+                }
     
     
     def build_outpost(self) -> dict:

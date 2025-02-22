@@ -85,13 +85,13 @@ function getPlayerInput() {
 // Send player input (action) to the server
 function sendPlayerInput(action) {
     socket.emit('player_input', 
-                { payload: {
+                { payload:  {
                                 "player": window.user_id,
                                 "category": "locations",
-                                "target": ["bases",],
-                                "target_name": "Heimatplanet",
-                                "action": "Build City",
-                                "context": ["New Citto", 1000, 1000, 1000, 1000]
+                                "location": ["settlements", "Heimatplanet"],
+                                "target": "Hauptstadt",
+                                "action": "Build",
+                                "context": ["Builders Hut",]
                             },
      host: window.host, user_id: window.user_id });  // Send player action to the backend
 }

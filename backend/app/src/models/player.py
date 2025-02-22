@@ -27,10 +27,10 @@ class Player():
             if base.name == target:
                 return  {
                             "success": True, 
-                            "result": base
+                            "target": base
                         }
         
         return  {
                     "success": False, 
-                    "result": f"{target} not found!"
+                    "message": f"{target} not found!"
                 }
