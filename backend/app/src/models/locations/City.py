@@ -99,6 +99,12 @@ class City():
                  buildings: list = [], 
                  population: list = []
                  ) -> None:
+        self.action_list: list[dict] = [
+                                            {
+                                                "name": "",
+                                                "action": 0,
+                                            }
+                                        ]
         self.name: str = name
         self.__gold: float = gold
         self.__food: float = food

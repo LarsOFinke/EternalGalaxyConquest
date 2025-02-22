@@ -7,3 +7,4 @@ class HomePlanet(Planet):
     def __init__(self, name, settlements = [MainCity("Hauptstadt")]):
         super().__init__(name=name, settlements=settlements)
 
+

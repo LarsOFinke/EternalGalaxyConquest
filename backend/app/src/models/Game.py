@@ -33,56 +33,52 @@ class Game:
     
 
     def process_player_action(self, payload):
-        """Process the player's action (this would be triggered by player input)."""
-        ############################################################
-        # Player -> bases -> settlements -> buildings / population #
-        # --> select_xxx Methoden? #
-        ############################################################
-        self.match_payload_category(payload)
-        self.next_turn()
-
-
-    def match_payload_category(self, payload):
         """ Payload example:
         {
             "player": 2,
-            "category": "base",
-            "target": "settlements",
+            "category": "locations",
+            "target": "bases",
             "target_name": "Heimatplanet",
             "action": "Build City",
             "context": ["New Citto", 1000, 1000, 1000, 1000]
         }
         """
+        ############################################################
+        # Player -> bases -> settlements -> buildings / population #
+        ############################################################
+        self.process_payload(payload)
+        
+        self.next_turn()
+
+
+    def process_payload(self, payload):
         match payload["category"]:
-            case "base":
-                self.match_payload_base(payload) 
-            # case "settlement":
-            #     self.match_payload_settlement(payload)
-            # case "building":
-            #     self.match_payload_building(payload)
+            case "locations":
+                self.match_locations(payload) 
+                
+            # case "buildings":
+            #     self.match_buildings(payload)
+            
             # case "population":
-            #     self.match_payload_person(payload)
+            #     self.match_persons(payload)
+
                 
-    def match_payload_base(self, payload):
+    def match_locations(self, payload):
         match payload["target"]:
+            case "bases":
+                self.players[payload["player"] - 1].process_base_action(payload)
+                        
             case "settlements":
-                for base in self.players[payload["player"] - 1].bases:
-                    if base.name == payload["target_name"]:
-                        print(payload["context"])
-                        base.build_city(*payload["context"])
-                        print(base.settlements)
+                pass
+        
                 
-    # def match_payload_settlement(self, payload):
-    #     match payload["settlement"]:
-    #         case "Main City":
+    # def match_buildings(self, payload):
+    #     match payload["target"]:
+    #         case "Headquarter":
     #             pass
-    
-    # def match_payload_building(self, payload):
-    #     match payload["building"]:
-    #         case "Builders Hut":
-    #             pass
-                
-    # def match_payload_person(self, payload):
+          
+              
+    # def match_persons(self, payload):
     #     match payload["person"]:
     #         case "Worker":
     #             pass

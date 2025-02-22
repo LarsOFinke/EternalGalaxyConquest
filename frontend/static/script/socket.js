@@ -12,7 +12,9 @@ const socket = io('http://localhost:5000', {
 
 // Listen for the 'welcome' message from the server
 socket.on('welcome', (data) => {
-    // window.user_id = data.user_id;
+    let msg = data["message"]
+    document.getElementById("welcome-msg").textContent = msg
+
     register_player()
     const start_button = document.createElement("button");
     start_button.id = "start_button";
@@ -34,8 +36,8 @@ function register_player() {
 function startGame() {
     socket.emit('start_game', { user: username });  // Notify the backend to start the game
 
-    const start_button = document.getElementById("start_button");
-    start_button.remove();
+    document.getElementById("start_button").remove();
+    document.getElementById("welcome-msg").remove();
 
     const send_data_button = document.createElement("button");
     send_data_button.id = "send_data_button";
@@ -85,8 +87,8 @@ function sendPlayerInput(action) {
     socket.emit('player_input', 
                 { action: {
                                 "player": window.user_id,
-                                "category": "base",
-                                "target": "settlements",
+                                "category": "locations",
+                                "target": "bases",
                                 "target_name": "Heimatplanet",
                                 "action": "Build City",
                                 "context": ["New Citto", 1000, 1000, 1000, 1000]
