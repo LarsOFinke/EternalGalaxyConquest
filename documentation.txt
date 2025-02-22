@@ -23,6 +23,16 @@
     "context": ["Builders Hut",]
 }
 
+# Nr3 #
+{
+    "player": 2,
+    "category": "buildings",
+    "location": ["factory", "Hauptstadt", "Heimatplanet"],
+    "target": "Builders Hut",
+    "action": "Get Workers",
+    "context": ["dump",]
+}
+
 ## ERGEBNIS ##
 Wenn Erfolg:
 { "success": True [, "message": ...]  }
@@ -100,8 +110,8 @@ sonst:
 
 - Bauarbeiterhütte  class BuildersHut(Factory)
 -- action_list: list[dict] =    [
-                                    { "Convert Worker To Builder": "", "action": self.convert_worker_to_builder },
-                                    { "Get Workers": self.get_workers }
+                                    { "name": "Convert Worker To Builder", "action": self.convert_worker_to_builder },
+                                    { "name": "Get Workers", "action": self.get_workers }
                                 ]
                                 
 - Speicher          class Warehouse(Factory)

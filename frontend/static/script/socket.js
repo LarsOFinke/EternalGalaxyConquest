@@ -84,6 +84,7 @@ socket.on("result_player_action", data => {
         const result_box = document.createElement("div");
         result_box.id = "result_box";
         document.querySelector("h1").insertAdjacentElement("afterend", result_box);
+        result_box.textContent = data["message"];
     }
     result_box.textContent = data["message"];
 })

@@ -21,7 +21,7 @@ class Factory(Building):
     
     
     def get_workers(self, dump) -> list:
-        return  { "success": True, "buildings": self.__workers }
+        return  { "success": True, "workers": self.__workers }
     
     def __set_workers(self, worker: Builder, increase: bool = True) -> None:
         if increase:
@@ -53,7 +53,7 @@ class Factory(Building):
 
         return False
 
-    # Method that takes workers etc as parameters
+    # Method that takes workers etc as parameters to occupy them during work
 
 
 
