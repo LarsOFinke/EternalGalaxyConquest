@@ -99,7 +99,7 @@ class City():
                  buildings: list = [], 
                  population: list = []
                  ) -> None:
-        self.action_list: list[dict] = [
+        self.action_list: list[dict] =  [
                                             { "name": "Build", "action": self.build },
                                             { "name": "Create Worker", "action": self.create_worker },
                                             { "name": "Remove Building", "action": self.remove_building },

@@ -21,7 +21,10 @@ class Factory(Building):
     
     
     def get_workers(self) -> list:
-        return self.__workers
+        return  {
+                    "success": True,
+                    "buildings": self.__workers
+                }
     
     def __set_workers(self, worker: Builder, increase: bool = True) -> None:
         if increase:
@@ -31,12 +34,14 @@ class Factory(Building):
     
     def add_worker(self, worker: Builder) -> None:
         self.__set_workers(worker)
+        return  { "success": True }
     
     def remove_worker(self, worker: Builder) -> None:
         self.__set_workers(worker, increase=False)
+        return  { "success": True }
     
     
-    def convert_worker_to_craftsman(self, building: str, worker: Worker, location) -> bool:
+    def __convert_worker_to_craftsman(self, building: str, worker: Worker, location) -> bool:
         if isinstance(worker, Worker):
             new_craftsman = Factory.build_options[building](worker.name)
             location.remove_population(worker)

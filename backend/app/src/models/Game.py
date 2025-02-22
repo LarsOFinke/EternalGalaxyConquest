@@ -83,11 +83,19 @@ class Game:
         """
         match location[0]:  # The list-attribute where the object is in
             case "bases":
-                return self.players[player].match_payload_action(action="Select Base", context=[target,])
+                try:
+                    return self.players[player].match_payload_action(action="Select Base", context=[target,])
+                
+                except Exception as e:
+                    return  { "success": False, "message": e }
                         
             case "settlements":
-                base = self.players[player].match_payload_action(action="Select Base", context=[location[1],])["target"]
-                return base.match_payload_action(action="Select Settlement", context=[target,])
+                try:
+                    base = self.players[player].match_payload_action(action="Select Base", context=[location[1],])["target"]
+                    return base.match_payload_action(action="Select Settlement", context=[target,])
+                
+                except Exception as e:
+                    return  { "success": False, "message": e }
         
                 
     # def match_buildings(self, payload):

@@ -5,7 +5,7 @@ from .City import City
 
 class Planet():
     def __init__(self, name: str, settlements: list = []):
-        self.action_list: list[dict] = [
+        self.action_list: list[dict] =  [
                                             { "name": "Select Settlement", "action": self.select_settlement },
                                             { "name": "Found City", "action": self.found_city },
                                             { "name": "Found Outpost", "action": self.found_outpost }
