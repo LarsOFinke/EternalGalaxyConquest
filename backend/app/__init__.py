@@ -8,30 +8,31 @@ from flask_socketio import SocketIO
 
 
 
-### SET UP LOGGING ###
-
-# Create directory, if neccessary #
-if not path.exists("./logs"):                               
-    mkdir("./logs")
-
-# Set up the config #
-logging.basicConfig(
-    filename='./logs/backend_error_log.txt',                  # Specify the log file path
-    level=logging.ERROR,                                    # Set the logging level to ERROR
-    format='%(asctime)s - %(levelname)s - %(message)s',     # Customize the log format
-)
-
-
 ### Create the Flask-Application ###
 def create_app():
     app = Flask("Eternal Galaxy Conquest", static_folder="frontend/static", template_folder="frontend/templates")
     
+    
+    ## SET UP LOGGING ##
+
+    # Create directory, if neccessary #
+    if not path.exists("./logs"):                               
+        mkdir("./logs")
+
+    # Set up the config #
+    logging.basicConfig(
+        filename='./logs/backend_error_log.txt',                  # Specify the log file path
+        level=logging.ERROR,                                    # Set the logging level to ERROR
+        format='%(asctime)s - %(levelname)s - %(message)s',     # Customize the log format
+    )
+
     # Set the Flask app's log level
     app.logger.setLevel(logging.ERROR)
 
     # Suppress the Werkzeug log level to prevent connection request logs
     log = logging.getLogger('werkzeug')
     log.setLevel(logging.ERROR)
+    
     
     ## Import Blueprints (routing) ##
     
