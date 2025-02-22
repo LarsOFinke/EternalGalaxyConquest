@@ -32,5 +32,5 @@ class Player():
         
         return  {
                     "success": False, 
-                    "message": f"{target} not found!"
+                    "message": f"{target} nicht gefunden!"
                 }

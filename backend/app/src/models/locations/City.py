@@ -102,7 +102,15 @@ class City():
         self.action_list: list[dict] = [
                                             {
                                                 "name": "Build",
-                                                "action": self.build,
+                                                "action": self.build
+                                            },
+                                            {
+                                                "name": "Create Worker",
+                                                "action": self.create_worker
+                                            },
+                                            {
+                                                "name": "Remove Building",
+                                                "action": self.remove_building
                                             }
                                         ]
         self.name: str = name
@@ -219,7 +227,8 @@ class City():
         if self.build_building(building_name):
             self.subtract_costs(building_costs)
             return  {
-                        "success": True
+                        "success": True,
+                        "message": f"{building_name} erfolgreich gebaut!"
                     }
         
         return  {
@@ -250,8 +259,19 @@ class City():
         return False
     
     def remove_building(self, building) -> None:
-        self.__set_buildings(building, increase=False)
-        del building
+        try:
+            self.__set_buildings(building, increase=False)
+            del building
+            return  {
+                        "success": True,
+                        "message": f"{building} erfolgreich entfernt!"
+                    }
+        
+        except Exception as e:
+            return  {
+                        "success": False,
+                        "message": f"{building} konnte nicht entfernt werden!\n{e}"
+                    }
     
             
     def fetch_building_costs(self, building_name: str) -> dict:
@@ -273,7 +293,7 @@ class City():
             }
 
         Returns:
-            bool: True if enough resources, false if not.
+            dict: {"success": True} if everything worked, else {"success": False, "message": ...}
         """
         planet_resources: dict = {
             "gold": self.__gold,
@@ -284,9 +304,14 @@ class City():
         
         for resource, stock in planet_resources.items():
             if stock - costs[resource] < 0:
-                return {"success": False, "message": f"Nicht genug {resource}"}
+                return  {
+                            "success": False, 
+                            "message": f"Nicht genug {resource}"
+                        }
             
-        return {"success": True}
+        return  {
+                    "success": True
+                }
     
     def subtract_costs(self, costs: dict) -> None:
         self.__gold -= costs["gold"]
@@ -312,7 +337,10 @@ class City():
         self.__set_population(new_worker)
         self.__set_free_workers(new_worker)
         
-        return {"success": True}
+        return  {
+                    "success": True,
+                    "message": "Neuer Arbeiter erfolgreich angeheuert!"
+                }
 
 
 

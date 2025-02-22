@@ -77,6 +77,19 @@ socket.on('game_update', (gameState) => {
 });
 
 
+// Listen for the result of the player action
+socket.on("result_player_action", data => {
+    const result_box = document.getElementById("result_box");
+    if (result_box === null) {
+        const result_box = document.createElement("div");
+        result_box.id = "result_box";
+        document.querySelector("h1").insertAdjacentElement("afterend", result_box);
+    }
+    result_box.textContent = data["message"];
+})
+
+
+// Get Player input from buttons, forms etc
 function getPlayerInput() {
     sendPlayerInput("test");
 }

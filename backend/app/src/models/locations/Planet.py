@@ -39,7 +39,7 @@ class Planet():
         
         return  {
                     "success": False, 
-                    "message": f"{target} not found!"
+                    "message": f"{target} nicht gefunden!"
                 }
     
     
@@ -49,13 +49,13 @@ class Planet():
             self.settlements.append(new_outpost)
             return  {
                         "success": True, 
-                        "message": f"New outpost successfully founded on {self.name}!"
+                        "message": f"Neuer Außenposten erfolgreich gegründet auf: {self.name}!"
                     }
         
         except Exception as e:
             return  { 
                         "success": False, 
-                        "message": f"New outpost could NOT be founded on {self.name}!\n{e}"
+                        "message": f"Neuer Außenposten konnte nicht gegründet werden auf: {self.name}!\n{e}"
                     }
 
 
@@ -69,11 +69,11 @@ class Planet():
             self.settlements.append(new_city)
             return  {
                         "success": True, 
-                        "message": f"New city successfully founded on {self.name}!"
+                        "message": f"Neue Stadt erfolgreich gegründet auf: {self.name}!"
                     }
         
         except Exception as e:
             return  { 
                         "success": False, 
-                        "message": f"New outpost could NOT be founded on {self.name}!\n{e}"
+                        "message": f"Neue Stadt konnte nicht gegründet werden auf: {self.name}!\n{e}"
                     }

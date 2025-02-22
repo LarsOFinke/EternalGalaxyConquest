@@ -53,7 +53,7 @@ def handle_player_input(data):
         game_state: dict = game.get_game_state()
         
         emit('game_update', game_state)
-        emit('result', result)
+        emit('result_player_action', result)
         emit('your_turn', {'player': game.current_player})
 
 
