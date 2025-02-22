@@ -6,18 +6,9 @@ from .City import City
 class Planet():
     def __init__(self, name: str, settlements: list = []):
         self.action_list: list[dict] = [
-                                            {
-                                                "name": "Select Settlement",
-                                                "action": self.select_settlement
-                                            },
-                                            {
-                                                "name": "Build City",
-                                                "action": self.build_city
-                                            },
-                                            {
-                                                "name": "Build Outpost",
-                                                "action": self.build_outpost
-                                            }
+                                            { "name": "Select Settlement", "action": self.select_settlement },
+                                            { "name": "Found City", "action": self.found_city },
+                                            { "name": "Found Outpost", "action": self.found_outpost }
                                         ]
         self.name: str = name
         self.settlements: list = settlements
@@ -43,7 +34,7 @@ class Planet():
                 }
     
     
-    def build_outpost(self) -> dict:
+    def found_outpost(self) -> dict:
         try:
             new_outpost = Outpost()
             self.settlements.append(new_outpost)
@@ -59,7 +50,7 @@ class Planet():
                     }
 
 
-    def build_city(self, name: str, 
+    def found_city(self, name: str, 
                    gold: float, food: float, wood: float, iron: float, 
                    buildings: list = [], 
                    population: list = []

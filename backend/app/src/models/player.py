@@ -6,10 +6,7 @@ from .locations.Planet import Planet
 class Player():
     def __init__(self, name: str, player_id: int, bases: list = [HomePlanet("Heimatplanet")]):
         self.action_list: list[dict] = [
-                                            {
-                                                "name": "Select Base",
-                                                "action": self.select_base,
-                                            }
+                                            { "name": "Select Base", "action": self.select_base, }
                                         ]
         self.name: str = name
         self.player_id: int = player_id

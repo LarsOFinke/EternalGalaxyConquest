@@ -39,7 +39,7 @@ class Game:
             "category": "locations",
             "target": ["bases",],
             "target_name": "Heimatplanet",
-            "action": "Build City",
+            "action": "Found City",
             "context": ["New Citto", 1000, 1000, 1000, 1000]
         }
         """

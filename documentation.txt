@@ -1,0 +1,136 @@
+###---### DOKUMENTATION ###---###
+
+###- API -###
+
+## Beispiele ##
+# Nr1 #
+{
+    "player": 2,
+    "category": "locations",
+    "location": ["bases",],
+    "target": "Heimatplanet",
+    "action": "Found City",
+    "context": ["New Citto", 1000, 1000, 1000, 1000]
+}
+
+# Nr2 #
+{
+    "player": 2,
+    "category": "locations",
+    "location": ["settlements", "Heimatplanet"],
+    "target": "Hauptstadt",
+    "action": "Build",
+    "context": ["Builders Hut",]
+}
+
+## ERGEBNIS ##
+Wenn Erfolg:
+{ "success": True [, "message": ...]  }
+
+sonst:
+{ "success": False [, "message": ...] }
+
+
+
+
+###- SPIEL -###
+
+## ALLGEMEIN ##
+- Spiel     class Game
+
+- Spieler   class Player
+-- action_list: list[dict] =    [
+                                    { "name": "Select Base", "action": self.select_base, }
+                                ]
+
+
+## Ressourcen ##
+- Gold        gold: float
+- Nahrung     food: float
+- Holz        wood: float
+- Eisen       iron: float
+
+
+
+## ORTE (locations) ##
+- Stadt             class City()
+-- action_list: list[dict] =    [
+                                    { "name": "Build", "action": self.build },
+                                    { "name": "Create Worker", "action": self.create_worker },
+                                    { "name": "Remove Building", "action": self.remove_building },
+                                    { "name": "Get Resources", "action": self.get_resources },
+                                    { "name": "Get Buildings", "action": self.get_buildings },
+                                    { "name": "Get Population", "action": self.get_population },
+                                    { "name": "Add_population", "action": self.add_population },
+                                    { "name": "Remove_population", "action": self.remove_population },
+                                    { "name": "Get Free Workers", "action": self.get_free_workers },
+                                    { "name": "Add Free Worker", "action": self.add_free_worker },
+                                    { "name": "Remove Free Worker", "action": self.remove_free_worker },
+                                    { "name": "Get Free Builders", "action": self.get_free_builders },
+                                    { "name": "Add Free Builders", "action": self.add_free_builders },
+                                    { "name": "Remove Free Builders", "action": self.remove_free_builders }
+                                ]
+
+-- Hauptstadt       class MainCity(City)
+- Außenposten       class Outpost()
+
+- Planet            class Planet()
+-- action_list: list[dict] =    [
+                                    { "name": "Select Settlement", "action": self.select_settlement },
+                                    { "name": "Found City", "action": self.found_city },
+                                    { "name": "Found Outpost", "action": self.found_outpost }
+                                ]
+
+-- Heimatplanet     class HomePlanet(Planet)
+- Orbitalstation
+
+
+
+## GEBÄUDE (buildings) ##
+- Blueprint-Klassen
+-- Building
+-- CivilianBuilding(Building)
+-- Factory(Building)
+-- Mine(Factory)
+-- MilitaryBuilding(Building)
+
+- Hauptquartier     class Headquarter(MilitaryBuilding)
+- Wohnbezirk        class ResidentialArea(CivilianBuilding)
+- Bauarbeiterhütte  class BuildersHut(Factory)
+- Speicher          class Warehouse(Factory)
+- Bäckerei          class Bakery(Factory)
+- Sägewerk          class Sawmill(Factory)
+- Minen              
+-- Gold             class GoldMine(Mine)
+-- Eisen            class IronMine(Mine)
+- Schmiede          class Forge(Factory)
+
+
+
+## CHARAKTERE (persons) ##
+- Blueprint-Klassen
+-- Human
+
+- Kommandeur        class Commander(Human)
+- Arbeiter          class Worker(Human)
+- Baumeister        class Builder(Worker)
+- Lagerverwalter    class WarehouseWorker(Worker)
+- Bäcker            class Baker(Worker)
+- Holzfäller        class Woodcutter(Worker)
+- Minenarbeiter     class Miner(Worker)
+- Schmied           class Blacksmith(Worker)
+
+
+
+## FAHRZEUGE ##
+- Transporter
+
+
+
+## ITEMS ##
+
+
+
+
+
+
