@@ -15,39 +15,30 @@ class Planet():
         
     
     def match_payload_action(self, action: str, context: list) -> dict:
-        for act in self.action_list:
-            if act["name"] == action:
-                return act["action"](*context)
+        try:
+            for act in self.action_list:
+                if act["name"] == action:
+                    return act["action"](*context)
+        except Exception as e:
+            return  { "success": False, "message": e }
     
     
     def select_settlement(self, target) -> dict:
         for settlement in self.settlements:
             if settlement.name == target:
-                return  {
-                            "success": True, 
-                            "target": settlement
-                        }
+                return  { "success": True, "target": settlement }
         
-        return  {
-                    "success": False, 
-                    "message": f"{target} nicht gefunden!"
-                }
+        return  { "success": False, "message": f"{target} nicht gefunden!" }
     
     
     def found_outpost(self) -> dict:
         try:
             new_outpost = Outpost()
             self.settlements.append(new_outpost)
-            return  {
-                        "success": True, 
-                        "message": f"Neuer Außenposten erfolgreich gegründet auf: {self.name}!"
-                    }
+            return  { "success": True, "message": f"Neuer Außenposten erfolgreich gegründet auf: {self.name}!" }
         
         except Exception as e:
-            return  { 
-                        "success": False, 
-                        "message": f"Neuer Außenposten konnte nicht gegründet werden auf: {self.name}!\n{e}"
-                    }
+            return  { "success": False, "message": f"Neuer Außenposten konnte nicht gegründet werden auf: {self.name}!\n{e}" }
 
 
     def found_city(self, name: str, 
@@ -58,13 +49,7 @@ class Planet():
         try:
             new_city = City(name, gold, food, wood, iron, buildings, population)
             self.settlements.append(new_city)
-            return  {
-                        "success": True, 
-                        "message": f"Neue Stadt erfolgreich gegründet auf: {self.name}!"
-                    }
+            return  { "success": True, "message": f"Neue Stadt erfolgreich gegründet auf: {self.name}!" }
         
         except Exception as e:
-            return  { 
-                        "success": False, 
-                        "message": f"Neue Stadt konnte nicht gegründet werden auf: {self.name}!\n{e}"
-                    }
+            return  { "success": False, "message": f"Neue Stadt konnte nicht gegründet werden auf: {self.name}!\n{e}" }

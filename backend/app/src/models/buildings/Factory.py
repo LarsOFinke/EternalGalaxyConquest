@@ -4,15 +4,15 @@ from ..persons.Woodcutter import Woodcutter; from ..persons.Miner import Miner; 
 
 
 class Factory(Building):
-    build_options: dict = {
-            "Builders Hut": Builder,
-            "Warehouse": WarehouseWorker,
-            "Bakery": Baker,
-            "Sawmill": Woodcutter,
-            "Gold Mine": Miner,
-            "Iron Mine": Miner,
-            "Forge": Blacksmith,
-        }
+    build_options: dict =   {
+                                "Builders Hut": Builder,
+                                "Warehouse": WarehouseWorker,
+                                "Bakery": Baker,
+                                "Sawmill": Woodcutter,
+                                "Gold Mine": Miner,
+                                "Iron Mine": Miner,
+                                "Forge": Blacksmith,
+                            }
     
     def __init__(self, category: str, worker_slots: int = 0, workers = [], active: bool = True):
         super().__init__(category=category, active=active)
@@ -20,11 +20,8 @@ class Factory(Building):
         self.__workers: list = workers
     
     
-    def get_workers(self) -> list:
-        return  {
-                    "success": True,
-                    "buildings": self.__workers
-                }
+    def get_workers(self, dump) -> list:
+        return  { "success": True, "buildings": self.__workers }
     
     def __set_workers(self, worker: Builder, increase: bool = True) -> None:
         if increase:

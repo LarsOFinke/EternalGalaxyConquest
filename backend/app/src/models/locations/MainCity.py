@@ -2,6 +2,7 @@ from .City import City
 from ..buildings.Headquarter import Headquarter
 from ..persons.Commander import Commander
 from ..persons.Worker import Worker
+from ..buildings.BuildersHut import BuildersHut
 
 
 class MainCity(City):

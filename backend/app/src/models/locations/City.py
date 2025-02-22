@@ -8,98 +8,97 @@ from ..buildings.Sawmill import Sawmill; from ..buildings.GoldMine import GoldMi
 
 
 class City():
-    building_list: list = [
-    {
-        "name": "Headquarter",
-        "costs": {
-            "gold": 0,
-            "food": 0,
-            "wood": 0,
-            "iron": 0
-        }
-    },
-    {
-        "name": "Builders hut",
-        "costs": {
-            "gold": 200,
-            "food": 150,
-            "wood": 200,
-            "iron": 50
-        }
-    },
-    {
-        "name": "Warehouse",
-        "costs": {
-            "gold": 200,
-            "food": 200,
-            "wood": 400,
-            "iron": 100
-        }
-    },
-    {
-        "name": "Bakery",
-        "costs": {
-            "gold": 300,
-            "food": 200,
-            "wood": 300,
-            "iron": 50
-        }
-    },
-    {
-        "name": "Sawmill",
-        "costs": {
-            "gold": 300,
-            "food": 150,
-            "wood": 200,
-            "iron": 50
-        }
-    },
-    {
-        "name": "Gold mine",
-        "costs": {
-            "gold": 200,
-            "food": 100,
-            "wood": 200,
-            "iron": 50
-        }
-    },
-    {
-        "name": "Iron mine",
-        "costs": {
-            "gold": 200,
-            "food": 100,
-            "wood": 200,
-            "iron": 50
-        }
-    },
-    {
-        "name": "Forge",
-        "costs": {
-            "gold": 300,
-            "food": 200,
-            "wood": 150,
-            "iron": 200
-        }
-    }
-]
-    build_options: dict = {
-            "Builders Hut": BuildersHut,
-            "Residential Area": ResidentialArea,
-            "Warehouse": Warehouse,
-            "Bakery": Bakery,
-            "Sawmill": Sawmill,
-            "Gold Mine": GoldMine,
-            "Iron Mine": IronMine,
-            "Forge": Forge,
-        }
-
-    
     def __init__(self, name: str, 
                  gold: float, food: float, wood: float, iron: float, 
                  buildings: list = [], 
                  population: list = []
                  ) -> None:
+        self.building_list: list = [
+            {
+                "name": "Headquarter",
+                "costs": {
+                    "gold": 0,
+                    "food": 0,
+                    "wood": 0,
+                    "iron": 0
+                }
+            },
+            {
+                "name": "Builders hut",
+                "costs": {
+                    "gold": 200,
+                    "food": 150,
+                    "wood": 200,
+                    "iron": 50
+                }
+            },
+            {
+                "name": "Warehouse",
+                "costs": {
+                    "gold": 200,
+                    "food": 200,
+                    "wood": 400,
+                    "iron": 100
+                }
+            },
+            {
+                "name": "Bakery",
+                "costs": {
+                    "gold": 300,
+                    "food": 200,
+                    "wood": 300,
+                    "iron": 50
+                }
+            },
+            {
+                "name": "Sawmill",
+                "costs": {
+                    "gold": 300,
+                    "food": 150,
+                    "wood": 200,
+                    "iron": 50
+                }
+            },
+            {
+                "name": "Gold mine",
+                "costs": {
+                    "gold": 200,
+                    "food": 100,
+                    "wood": 200,
+                    "iron": 50
+                }
+            },
+            {
+                "name": "Iron mine",
+                "costs": {
+                    "gold": 200,
+                    "food": 100,
+                    "wood": 200,
+                    "iron": 50
+                }
+            },
+            {
+                "name": "Forge",
+                "costs": {
+                    "gold": 300,
+                    "food": 200,
+                    "wood": 150,
+                    "iron": 200
+                }
+            }
+        ]
+        self.build_options: dict = {
+                "Builders Hut": BuildersHut,
+                "Residential Area": ResidentialArea,
+                "Warehouse": Warehouse,
+                "Bakery": Bakery,
+                "Sawmill": Sawmill,
+                "Gold Mine": GoldMine,
+                "Iron Mine": IronMine,
+                "Forge": Forge,
+        }
         self.action_list: list[dict] =  [
+                                            { "name": "Select Building", "action": self.select_building },
                                             { "name": "Build", "action": self.build },
                                             { "name": "Create Worker", "action": self.create_worker },
                                             { "name": "Remove Building", "action": self.remove_building },
@@ -127,12 +126,23 @@ class City():
     
     
     def match_payload_action(self, action: str, context: list) -> dict:
-        for act in self.action_list:
-            if act["name"] == action:
-                return act["action"](*context)    
+        try:
+            for act in self.action_list:
+                if act["name"] == action:
+                    return act["action"](*context)
+        except Exception as e:
+            return { "success": False, "message": e }
+    
+    
+    def select_building(self, target) -> dict:
+        for building in self.__buildings:
+            if building.category == target:
+                return  { "success": True, "target": building }
+        
+        return { "success": False, "message": f"{target} nicht gefunden!" }
     
         
-    def get_resources(self) -> dict:
+    def get_resources(self, dump) -> dict:
         return  {
                     "success": True,
                     "resources": {
@@ -144,11 +154,8 @@ class City():
                 }
     
     
-    def get_buildings(self) -> dict:
-        return  {
-                    "success": True,
-                    "buildings": self.__buildings
-                }
+    def get_buildings(self, dump) -> dict:
+        return  { "success": True, "buildings": self.__buildings }
     
     def __set_buildings(self, building, increase: bool = True) -> None:
         if increase:
@@ -157,11 +164,8 @@ class City():
             self.__buildings.remove(building)
     
     
-    def get_population(self) -> dict:
-        return  {
-                    "success": True,
-                    "population": self.__population
-                }
+    def get_population(self, dump) -> dict:
+        return { "success": True, "population": self.__population }
     
     def __set_population(self, person, increase: bool = True) -> None:
         if increase:
@@ -179,10 +183,7 @@ class City():
     
     
     def get_free_workers(self) -> dict:
-        return  {
-                    "success": True,
-                    "free_workers": self.__free_workers
-                }
+        return { "success": True, "free_workers": self.__free_workers }
     
     def __set_free_workers(self, worker: Worker, increase: bool = True) -> None:
         if increase:
@@ -199,11 +200,8 @@ class City():
         return  { "success": True }
     
     
-    def get_free_builders(self) -> dict:
-        return  {
-                    "success": True,
-                    "free_builders": self.__free_builders
-                }
+    def get_free_builders(self, dump) -> dict:
+        return  { "success": True, "free_builders": self.__free_builders }
     
     def __set_free_builders(self, builder: Builder, increase: bool = True) -> None:
         if increase:
@@ -211,11 +209,11 @@ class City():
         else:
             self.__free_builders.remove(builder)
     
-    def add_free_builder(self, builder: Builder) -> dict:
+    def add_free_builders(self, builder: Builder) -> dict:
         self.__set_free_builders(builder)
         return  { "success": True }
         
-    def remove_free_builder(self, builder: Builder) -> dict:
+    def remove_free_builders(self, builder: Builder) -> dict:
         self.__set_free_builders(builder, increase=False)
         return  { "success": True }
       
@@ -230,17 +228,11 @@ class City():
         """
         has_builders_hut: bool = True if building_name == "Builders hut" else self.check_if_has_builders_hut()
         if not has_builders_hut:
-            return  {
-                        "success": False, 
-                        "message": "Zuerst eine Bauhütte bauen!"
-                    }
+            return  { "success": False, "message": "Zuerst eine Bauhütte bauen!" }
         
         builder_available: bool = self.check_if_builder_available()
         if not builder_available:
-            return  {
-                        "success": False, 
-                        "message": "Kein verfügbarer Baumeister!"
-                    }
+            return  { "success": False, "message": "Kein verfügbarer Baumeister!" }
 
         building_costs: dict = self.fetch_building_costs(building_name)
         result: dict = self.check_if_enough_resources(building_costs)
@@ -249,15 +241,9 @@ class City():
 
         if self.build_building(building_name):
             self.subtract_costs(building_costs)
-            return  {
-                        "success": True,
-                        "message": f"{building_name} erfolgreich gebaut!"
-                    }
+            return  { "success": True, "message": f"{building_name} erfolgreich gebaut!" }
         
-        return  {
-                    "success": False, 
-                    "message": f"'{building_name}' konnt nicht gebaut werden!"
-                }
+        return  { "success": False, "message": f"'{building_name}' konnt nicht gebaut werden!" }
 
     def check_if_has_builders_hut(self) -> bool:
         has_builders_hut: bool = False
@@ -274,7 +260,7 @@ class City():
         return False
 
     def build_building(self, building_name: str, *parameters) -> bool:        
-        for option, Building in City.build_options.items():
+        for option, Building in self.build_options.items():
             if option == building_name:
                 self.__set_buildings(Building((parameters)))
                 return True
@@ -298,7 +284,7 @@ class City():
     
             
     def fetch_building_costs(self, building_name: str) -> dict:
-        for building in City.building_list:
+        for building in self.building_list:
                 if building["name"] == building_name:
                     building_costs: dict = building["costs"]
                     
@@ -360,10 +346,7 @@ class City():
         self.__set_population(new_worker)
         self.__set_free_workers(new_worker)
         
-        return  {
-                    "success": True,
-                    "message": "Neuer Arbeiter erfolgreich angeheuert!"
-                }
+        return  { "success": True, "message": "Neuer Arbeiter erfolgreich angeheuert!" }
 
 
 

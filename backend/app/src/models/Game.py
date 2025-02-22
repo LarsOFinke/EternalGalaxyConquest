@@ -56,16 +56,29 @@ class Game:
     def process_payload(self, payload) -> dict:
         match payload["category"]:
             case "locations":
-                result = self.fetch_location((payload["player"] - 1), payload["location"], payload["target"])
-                if result["success"]:
+                result = self.fetch_location((payload["player"] - 1), payload.get("location"), payload.get("target"))
+                if result == None:
+                    return { "success": False, "message": f"{payload.get("target")} konnte nicht gefunden werden." } 
+                
+                elif result["success"]:
                     target = result["target"]
-                    payload_return = target.match_payload_action(payload["action"], payload["context"])
+                    payload_return = target.match_payload_action(payload.get("action"), payload.get("context"))
                     return payload_return
                 
                 return result
                 
-            # case "buildings":
-            #     self.match_buildings(payload)
+            case "buildings":
+                result = self.fetch_building((payload["player"] - 1), payload.get("location"), payload.get("target"))
+                if result == None:
+                    return { "success": False, "message": f"{payload.get("target")} konnte nicht gefunden werden." } 
+                
+                elif result["success"]:
+                    target = result["target"]
+                    payload_return = target.match_payload_action(payload.get("action"), payload.get("context"))
+                    return payload_return
+                
+                return result
+            
             # case "population":
             #     self.match_persons(payload)
 
@@ -98,13 +111,20 @@ class Game:
                     return  { "success": False, "message": e }
         
                 
-    # def match_buildings(self, payload):
-    #     match payload["target"]:
-    #         case "Headquarter":
-    #             pass
+    def fetch_building(self, player, location: list, target: str) -> dict:
+        match location[0]:
+            case "factory":
+                base = self.players[player].match_payload_action(action="Select Base", context=[location[2],])["target"]
+                settlement = base.match_payload_action(action="Select Settlement", context=[location[1],])["target"]
+                result = settlement.match_payload_action(action="Select Building", context=[target,])
+                if result == None:
+                    return  { "success": False, "message": f"{target} konnte nicht gefunden werden." } 
+                
+                return result
+                
           
               
-    # def match_persons(self, payload):
+    # def fetch_person(self, payload):
     #     match payload["person"]:
     #         case "Worker":
     #             pass

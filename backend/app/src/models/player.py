@@ -14,20 +14,17 @@ class Player():
 
 
     def match_payload_action(self, action: str, context: list) -> dict:
-        for act in self.action_list:
-            if act["name"] == action:
-                return act["action"](*context)
+        try:
+            for act in self.action_list:
+                if act["name"] == action:
+                    return act["action"](*context)
+        except Exception as e:
+            return  { "success": False, "message": e }
 
 
     def select_base(self, target) -> dict:
         for base in self.bases:
             if base.name == target:
-                return  {
-                            "success": True, 
-                            "target": base
-                        }
+                return  { "success": True, "target": base }
         
-        return  {
-                    "success": False, 
-                    "message": f"{target} nicht gefunden!"
-                }
+        return  { "success": False, "message": f"{target} nicht gefunden!" }
