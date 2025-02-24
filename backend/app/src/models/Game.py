@@ -58,7 +58,7 @@ class Game:
             case "locations":
                 result = self.fetch_location((payload["player"] - 1), payload.get("location"), payload.get("target"))
                 if result == None:
-                    return { "success": False, "message": f"{payload.get("target")} konnte nicht gefunden werden." } 
+                    return { "success": False, "message": f"{payload.get('target')} konnte nicht gefunden werden." } 
                 
                 elif result["success"]:
                     target = result["target"]
@@ -70,7 +70,7 @@ class Game:
             case "buildings":
                 result = self.fetch_building((payload["player"] - 1), payload.get("location"), payload.get("target"))
                 if result == None:
-                    return { "success": False, "message": f"{payload.get("target")} konnte nicht gefunden werden." } 
+                    return { "success": False, "message": f"{payload.get('target')} konnte nicht gefunden werden." } 
                 
                 elif result["success"]:
                     target = result["target"]
