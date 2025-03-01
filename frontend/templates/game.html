@@ -2,6 +2,7 @@
 
 {% block stylesheets %}
 <link rel="stylesheet" href="{{ url_for('static', filename='style/game.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='style/honeycomb.css') }}">
 <script>
     const username = "{{ session.username }}"
 </script>
@@ -11,11 +12,95 @@
 {% block content %}
     <!-- GAME -->
 
-    <div class="wrapper">
+    <!-- <div class="wrapper">
         <h1>Eternal Galaxy Conquest</h1>
         <h2 id="welcome-msg"></h2>
         <div id="gameState"></div>
-    </div>
+    </div> -->
+
+
+    <!-- ### TESTING ### -->
+     <div class="game-wrapper centered">
+        <div class="grid">
+            <div class="hex color1"></div>
+            <div class="hex color2"></div>
+            <div class="hex color3"></div>
+            <div class="hex color1"></div>
+            <div class="hex color1"></div>
+            <div class="hex color1"></div>
+            <div class="hex color1"></div>
+            <div class="hex color1"></div>
+            <div class="hex color1"></div>
+            <div class="hex color1"></div>
+            <div class="hex color1"></div>
+            <div class="hex color1"></div>
+            <div class="hex color1"></div>
+            <div class="hex color1"></div>
+            <div class="hex color1"></div>
+            <div class="hex color1"></div>
+            <div class="hex color1"></div>
+            <div class="hex color1"></div>
+            <div class="hex color1"></div>
+            <div class="hex color1"></div>
+            <div class="hex color1"></div>
+            <div class="hex color1"></div>
+            <div class="hex color1"></div>
+            <div class="hex color1"></div>
+            <div class="hex color1"></div>
+            <div class="hex color1"></div>
+            <div class="hex color1"></div>
+            <div class="hex color1"></div>
+            <div class="hex color1"></div>
+            <div class="hex color1"></div>
+            <div class="hex color1"></div>
+            <div class="hex color1"></div>
+            <div class="hex color1"></div>
+            <div class="hex color1"></div>
+            <div class="hex color1"></div>
+            <div class="hex color1"></div>
+            <div class="hex color1"></div>
+            <div class="hex color1"></div>
+            <div class="hex color1"></div>
+            <div class="hex color1"></div>
+            <div class="hex color1"></div>
+            <div class="hex color1"></div>
+            <div class="hex color1"></div>
+            <div class="hex color1"></div>
+            <div class="hex color1"></div>
+            <div class="hex color1"></div>
+            <div class="hex color1"></div>
+            <div class="hex color1"></div>
+            <div class="hex color1"></div>
+            <div class="hex color1"></div>
+            <div class="hex color1"></div>
+            <div class="hex color1"></div>
+            <div class="hex color1"></div>
+            <div class="hex color1"></div>
+            <div class="hex color1"></div>
+            <div class="hex color1"></div>
+            <div class="hex color1"></div>
+            <div class="hex color1"></div>
+            <div class="hex color1"></div>
+            <div class="hex color1"></div>
+            <div class="hex color1"></div>
+            <div class="hex color1"></div>
+            <div class="hex color1"></div>
+            <div class="hex color1"></div>
+            <div class="hex color1"></div>
+            <div class="hex color1"></div>
+            <div class="hex color1"></div>
+            <div class="hex color1"></div>
+            <div class="hex color1"></div>
+            <div class="hex color1"></div>
+            <div class="hex color1"></div>
+            <div class="hex color1"></div>
+            <div class="hex color1"></div>
+            <div class="hex color1"></div>
+            <div class="hex color1"></div>
+            <div class="hex color1"></div>
+            <div class="hex color1"></div>
+        </div>
+     </div>
 
 {% endblock %}
 
