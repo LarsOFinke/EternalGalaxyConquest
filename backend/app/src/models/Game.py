@@ -54,27 +54,27 @@ class Game:
 
 
     def process_payload(self, payload) -> dict:
-        match payload["category"]:
+        match payload['payload']["category"]:
             case "locations":
-                result = self.fetch_location((payload["player"] - 1), payload.get("location"), payload.get("target"))
+                result = self.fetch_location((payload["player"] - 1), payload["payload"].get("location"), payload["payload"].get("target"))
                 if result == None:
-                    return { "success": False, "message": f"{payload.get('target')} konnte nicht gefunden werden." } 
+                    return { "success": False, "message": f"{payload['payload'].get('target')} konnte nicht gefunden werden." } 
                 
                 elif result["success"]:
                     target = result["target"]
-                    payload_return = target.match_payload_action(payload.get("action"), payload.get("context"))
+                    payload_return = target.match_payload_action(payload["payload"].get("action"), payload["payload"].get("context"))
                     return payload_return
                 
                 return result
                 
             case "buildings":
-                result = self.fetch_building((payload["player"] - 1), payload.get("location"), payload.get("target"))
+                result = self.fetch_building((payload["player"] - 1), payload["payload"].get("location"), payload["payload"].get("target"))
                 if result == None:
-                    return { "success": False, "message": f"{payload.get('target')} konnte nicht gefunden werden." } 
+                    return { "success": False, "message": f"{payload['payload'].get('target')} konnte nicht gefunden werden." } 
                 
                 elif result["success"]:
                     target = result["target"]
-                    payload_return = target.match_payload_action(payload.get("action"), payload.get("context"))
+                    payload_return = target.match_payload_action(payload["payload"].get("action"), payload["payload"].get("context"))
                     return payload_return
                 
                 return result

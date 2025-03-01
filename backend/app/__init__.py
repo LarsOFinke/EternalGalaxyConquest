@@ -37,15 +37,15 @@ def create_app():
     ## Import Blueprints (routing) ##
     
     # HTML-Templates #
-    from .blueprints.views import views 
+    from .routes.views import views 
     app.register_blueprint(views, url_prefix='/')
     
     # General API #
-    from .blueprints.api.api import api     
+    from .routes.api.api import api     
     app.register_blueprint(api, url_prefix='/api')    
     
     # Login-System API #
-    from .blueprints.api.auth import auth    
+    from .routes.api.auth import auth    
     app.register_blueprint(auth, url_prefix='/api/auth')
     
     
@@ -70,6 +70,6 @@ def create_app():
     global socketio
     socketio = SocketIO(app, cors_allowed_origins="*", async_mode='eventlet')
     # Websocket-events #
-    from .blueprints.api import events
+    from .routes.api import events
     
     return app
