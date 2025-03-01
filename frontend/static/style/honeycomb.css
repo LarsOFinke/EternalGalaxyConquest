@@ -2,8 +2,8 @@
     --rows: 7;
     --cols: 11;
     --color1: #3498db;
-    --color2: #1eff00;
-    --color3: orange;
+    --color2: orange;
+    --color3: #1eff00;
     --gap: 5px;
     --hexagon-size: 2.3vw;
     display: grid;
@@ -57,8 +57,9 @@
 .hex.color1 { background-color: var(--color1); }
 .color1:hover { background-color: #0012b1; }
 
-.hex.color2 { background-color: var(--color2); }
-.color2:hover { background-color: #17c200; }
+.hex.color2 { background-color: var(--color3); }
+.hex.color2:hover { background-color: rgb(182, 118, 0); }
 
-.hex.color3 { background-color: var(--color3); }
-.hex.color3:hover { background-color: rgb(182, 118, 0); }
+.hex.color3 { background-color: var(--color2); }
+.color3:hover { background-color: #17c200; }
+
