@@ -79,22 +79,25 @@ socket.on("result_player_action", data => {
 
 // Get Player input from buttons, forms etc
 function getPlayerInput() {
-    sendPlayerInput("test");
+    sendPlayerInput({
+        "category": "buildings",
+        "location": ["factory", "Hauptstadt", "Heimatplanet"],
+        "target": "Builders Hut",
+        "action": "Get Workers",
+        "context": ["dump",]
+    });
 }
 
 
 // Send player input (action) to the server
 function sendPlayerInput(action) {
     socket.emit('player_input', 
-                { payload:  {
+                { 
+                    host: window.host, 
+                    user_id: window.user_id,
+                    payload:  {
                                 "player": window.user_id,
-                                "payload":{
-                                    "category": "buildings",
-                                    "location": ["factory", "Hauptstadt", "Heimatplanet"],
-                                    "target": "Builders Hut",
-                                    "action": "Get Workers",
-                                    "context": ["dump",]
-                                }
-                            },
-     host: window.host, user_id: window.user_id });  // Send player action to the backend
+                                "payload": action   // Send player action to the backend
+                              }
+                });  
 }

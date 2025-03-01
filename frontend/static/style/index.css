@@ -3,6 +3,10 @@
     min-height: 500px;
 }
 
+#login, #register {
+    width: 100%;
+}
+
 #show-password {
     display: flex;
     justify-content: flex-end;
