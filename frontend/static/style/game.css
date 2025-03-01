@@ -16,8 +16,8 @@ body {
 
 
 .game-wrapper {
-    height: 800px;
-    width: 1100px;
+    width: 63%;
+    height: 83vh;
     background: transparent;
     border: 2px solid rgba(255, 255, 255, .2);
     backdrop-filter: blur(20px);

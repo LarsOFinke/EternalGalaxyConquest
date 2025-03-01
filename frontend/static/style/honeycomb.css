@@ -5,7 +5,7 @@
     --color2: #1eff00;
     --color3: orange;
     --gap: 5px;
-    --hexagon-size: 50px;
+    --hexagon-size: 2.3vw;
     display: grid;
     grid-template-columns: repeat(var(--cols), calc(var(--hexagon-size) * 1.732 + var(--gap)));
     grid-template-rows: repeat(var(--rows), calc(var(--hexagon-size) * 1.5 + var(--gap)));
