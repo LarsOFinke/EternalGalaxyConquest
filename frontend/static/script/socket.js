@@ -12,15 +12,11 @@ const socket = io('http://localhost:5000', {
 
 // Listen for the 'welcome' message from the server
 socket.on('welcome', (data) => {
-    let msg = data["message"]
-    document.getElementById("welcome-msg").textContent = msg
+    let msg = data["message"];
+    document.getElementById("welcome-msg").textContent = msg;
 
-    register_player()
-    const start_button = document.createElement("button");
-    start_button.id = "start_button";
-    start_button.textContent = "Start Game";
-    start_button.onclick = startGame;
-    document.getElementById('gameState').insertAdjacentElement("afterend", start_button);
+    register_player();
+    startGame();
 })
 
 
@@ -35,15 +31,7 @@ function register_player() {
 // Start the game
 function startGame() {
     socket.emit('start_game', { user: username });  // Notify the backend to start the game
-
-    document.getElementById("start_button").remove();
     document.getElementById("welcome-msg").remove();
-
-    const send_data_button = document.createElement("button");
-    send_data_button.id = "send_data_button";
-    send_data_button.textContent = "Send Data";
-    send_data_button.onclick = getPlayerInput;
-    document.getElementById('gameState').insertAdjacentElement("afterend", send_data_button);
 }
 
 //  Listen for host assignment
@@ -73,7 +61,6 @@ socket.on('your_turn', data => {
 // Listen for game updates from the server
 socket.on('game_update', (gameState) => {
     console.log('Updated game state:', gameState);
-    document.getElementById('gameState').innerHTML = JSON.stringify(gameState);
 });
 
 

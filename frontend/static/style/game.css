@@ -2,6 +2,19 @@ body {
     color: white;
 }
 
+
+#build-menu {
+    position: absolute;
+    align-self: flex-start;
+    top: 15px;
+}
+#next-round {
+    position: absolute;
+    align-self: flex-end;
+    bottom: 15px;
+}
+
+
 .game-wrapper {
     height: 800px;
     width: 1100px;
