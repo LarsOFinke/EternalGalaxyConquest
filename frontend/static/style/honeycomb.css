@@ -57,9 +57,9 @@
 .hex.color1 { background-color: var(--color1); }
 .color1:hover { background-color: #0012b1; }
 
-.hex.color2 { background-color: var(--color3); }
+.hex.color2 { background-color: var(--color2); }
 .hex.color2:hover { background-color: rgb(182, 118, 0); }
 
-.hex.color3 { background-color: var(--color2); }
+.hex.color3 { background-color: var(--color3); }
 .color3:hover { background-color: #17c200; }
 

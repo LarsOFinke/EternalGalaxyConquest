@@ -2,12 +2,16 @@
 
 
 
+import { Game } from "./models/Game.js";
+var game;
+
+
 function spawn_game_field() {
     const game_field = document.getElementById("game_field");
 
     for (let i=1; i<=77; i++) {
         let new_tile = document.createElement("div");
-        new_tile.id = `tile_${i}`;
+        new_tile.id = i;
         new_tile.addEventListener("click", event => inspectTile(event));
 
         if (i === 34) {
@@ -56,6 +60,7 @@ function register_player() {
 function startGame() {
     socket.emit('start_game', { user: username });  // Notify the backend to start the game
     document.getElementById("welcome-msg").remove();
+    game = new Game();
 }
 
 //  Listen for host assignment
@@ -114,7 +119,15 @@ function inspectTile(event) {
     tile_menu.insertAdjacentElement("afterbegin", close_btn);
     document.getElementById("next-round").insertAdjacentElement("afterend", tile_menu);
 
-    console.log(event.srcElement.id);
+    for (let tile of game.tile_list) {
+        if (parseInt(tile.tile_id) === parseInt(event.srcElement.id)) {
+            const planet_name = document.createElement("label");
+            planet_name.textContent = tile.tile_content.planet;
+            tile_menu.insertAdjacentElement("afterbegin", planet_name);
+        }
+    }
+
+    
 }
 
 
