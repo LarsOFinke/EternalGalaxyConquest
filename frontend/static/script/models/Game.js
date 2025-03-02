@@ -24,7 +24,7 @@ export class Game {
                     tile_type: "home_planet",
                     owner: this.players[0],
                     tile_content: {
-                        tile_name: "Home of 'AI'",
+                        tile_name: "Heimat von 'AI'",
                         planet_name: "'AIs' Planet"
                     }
                 });
@@ -34,7 +34,7 @@ export class Game {
                     tile_type: "home_planet",
                     owner: this.players[1],
                     tile_content: {
-                        tile_name: "Home of 'Player 1'",
+                        tile_name: "Heimat von 'Player 1'",
                         planet_name: "'Player 1s' Planet"
                     }
                 });

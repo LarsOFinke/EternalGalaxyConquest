@@ -22,7 +22,7 @@ function spawnHomePlanet(new_tile, color) {
 
     new_tile.insertAdjacentElement("afterbegin", home_planet_container);
 
-}
+};
 
 function spawn_game_field() {
     const game_field = document.getElementById("game_field");
@@ -51,7 +51,7 @@ spawn_game_field()
 // Connect to the Flask-SocketIO server with credentials (cookies) //
 const socket = io(`${socket_url}`, {
     withCredentials: true  // Ensure the session cookie is sent with the WebSocket connection
-  });
+});
 
 // Listen for the 'welcome' message from the server //
 socket.on('welcome', (data) => {
@@ -60,7 +60,7 @@ socket.on('welcome', (data) => {
 
     register_player();
     startGame();
-})
+});
 
 
 
@@ -69,19 +69,19 @@ socket.on('welcome', (data) => {
 // Register Player //
 function register_player() {
     socket.emit("register_player", { user: username })
-}
+};
 
 // Start the game //
 function startGame() {
     socket.emit('start_game', { user: username });  // Notify the backend to start the game
     document.getElementById("welcome-msg").remove();
     game = new Game();
-}
+};
 
 //  Listen for host assignment //
 socket.on("host", data => {
     window.host = data.host;
-})
+});
 
 //  Listen for player_id assignment //
 socket.on("players", data => {
@@ -90,7 +90,7 @@ socket.on("players", data => {
             window.user_id = e.player_id;
         }
     });
-})
+});
 
 // Listen for 'your_turn' event //
 socket.on('your_turn', data => {
@@ -115,7 +115,7 @@ socket.on("result_player_action", data => {
         result_box.textContent = data["message"];
     }
     result_box.textContent = data["message"];
-})
+});
 
 
 
@@ -123,6 +123,45 @@ socket.on("result_player_action", data => {
 //<div id="build-menu">
 //    <button class="btn">Baumenü</button>
 //</div>
+function changePlanetName(event) {
+    event.preventDefault();
+
+};
+
+function createHomePlanetTileContextMenu(tile_menu, tile) {
+    const planet_name_container = document.createElement("div");
+    planet_name_container.id = "planet-name-container";
+    planet_name_container.className = "centered";
+
+    const planet_name_label = document.createElement('label');
+    planet_name_label.setAttribute("for", "planet-name");
+    planet_name_label.textContent = "Name des Planeten:";
+    planet_name_container.insertAdjacentElement("beforeend", planet_name_label);
+
+    const planet_name_input_box = document.createElement("div");
+    planet_name_input_box.className = "small-input-box";
+    const planet_name_input = document.createElement('input');
+    planet_name_input.type = "text";
+    planet_name_input.id = "planet-name";
+    planet_name_input.value = tile.tile_content.planet_name;
+    planet_name_input_box.insertAdjacentElement("beforeend", planet_name_input);
+    const planet_name_btn = document.createElement("button");
+    planet_name_btn.className = "btn-small";
+    planet_name_btn.textContent = "Bestätigen";
+    planet_name_btn.addEventListener("click", event => changePlanetName(event));
+    planet_name_input_box.insertAdjacentElement("beforeend", planet_name_btn);
+    planet_name_container.insertAdjacentElement("beforeend", planet_name_input_box);
+
+    tile_menu.insertAdjacentElement("beforeend", planet_name_container);
+
+    const build_menu_btn = document.createElement("button");
+    build_menu_btn.id = "build-menu-btn";
+    build_menu_btn.className = "btn-small";
+    build_menu_btn.textContent = "Baumenü";
+    tile_menu.insertAdjacentElement("beforeend", build_menu_btn);
+
+};
+
 function spawnTileContextMenu(tile_menu, tile) {
     const tile_menu_header = document.createElement("h4");
     tile_menu_header.textContent = tile.tile_content.tile_name;
@@ -130,15 +169,11 @@ function spawnTileContextMenu(tile_menu, tile) {
 
     switch (tile.tile_type) {
         case "home_planet":
-            const planet_name = document.createElement('input');
-            planet_name.type = "text";
-            planet_name.value = tile.tile_content.planet_name;
-            tile_menu.insertAdjacentElement("beforeend", planet_name);
+            createHomePlanetTileContextMenu(tile_menu, tile) 
 
     }
     
-    
-}
+};
 
 
 function spawnTileMenu(event) {
@@ -165,14 +200,14 @@ function spawnTileMenu(event) {
             
         }
     }
-}
+};
 
 
 function inspectTile(event) {
     event.preventDefault();
     spawnTileMenu(event);
 
-}
+};
 
 
 // Get Player input from buttons, forms etc //
@@ -184,7 +219,7 @@ function nextRound() {
         "action": "Get Workers",
         "context": ["dump",]
     });
-}
+};
 
 // Send player input (actions) to the server //
 function sendPlayerActions(actions) {
@@ -197,5 +232,5 @@ function sendPlayerActions(actions) {
                                 "payload": actions   // Send player action to the backend
                               }
                 });  
-}
+};
 
