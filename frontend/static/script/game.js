@@ -16,7 +16,7 @@ function spawnHomePlanet(new_tile, color) {
     const home_planet = document.createElement("img");
     home_planet.id = new_tile.id;
     home_planet.classList = "home-planet-sprite";
-    home_planet.src = "/api/sprite/2";
+    home_planet.src = "/api/sprite/1";
     home_planet.addEventListener("click", event => inspectTile(event));
     home_planet_container.insertAdjacentElement("afterbegin", home_planet);
 
