@@ -117,10 +117,11 @@ socket.on("result_player_action", data => {
 //    <button class="btn">Baumenü</button>
 //</div>
 function spawnTileContextMenu(tile_menu, tile) {
+    const tile_menu_header = document.createElement("h4");
+    tile_menu_header.textContent = tile.tile_content.tile_name;
+
     switch (tile.tile_type) {
         case "home_planet":
-            const tile_menu_header = document.createElement("h4");
-            tile_menu_header.textContent = tile.tile_content.planet_name;
             tile_menu.insertAdjacentElement("afterbegin", tile_menu_header);
 
     }

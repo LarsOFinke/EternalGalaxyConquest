@@ -6,11 +6,7 @@ h1 {
 }
 
 
-#build-menu {
-    position: absolute;
-    align-self: flex-start;
-    top: 15px;
-}
+
 #next-round {
     position: absolute;
     align-self: flex-end;
@@ -25,10 +21,18 @@ h1 {
     width: 75%;
     z-index: 200;
 }
+#tile-menu > h4 {
+    margin-top: 4px;
+}
+#tile-menu > #build-menu {
+    position: absolute;
+    align-self: flex-start;
+    top: 15px;
+}
 #close-btn {
     position: absolute;
-    top: 8px;
-    right: 8px;
+    top: -0px;
+    right: -24px;
     background-color: red;
     color: #fff;
     width: 24px;
