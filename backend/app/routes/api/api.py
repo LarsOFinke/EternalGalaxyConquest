@@ -11,7 +11,7 @@ api = Blueprint("api", __name__)
 ### REQUIRES DB SET UP ###
 @api.route("/sprite/<sprite_id>")
 def serve_sprite(sprite_id: str):
-    """This route serves to return a sprite to HTML. Implement it as a src={{ url_for('serve_sprite', sprite_id=XXX) }}.
+    """This route serves to return a sprite to HTML. Implement it as a src="/api/sprite/xxx" --> xxx = ID of the sprite in the database.
 
     Args:
         image_id (str): String of the sprite_id from the database.

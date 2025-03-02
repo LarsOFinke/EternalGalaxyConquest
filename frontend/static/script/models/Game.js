@@ -5,14 +5,14 @@ import { Player } from "./player.js";
 
 export class Game {
 
-    constructor(player_list = [{"name": "AI", "player_id": 1}, {"name": "Player 1", "player_id": 2}], tile_list = []) {
+    constructor(player_list, tile_list = []) {
         this.players = this.addPlayers(player_list);
+        this.player_count = this.players.length;
+        this.current_player = 1;
         this.tile_list = tile_list;
         if (this.tile_list.length === 0) {
             this.insertDefaultTiles();
         }
-        this.player_count = this.players.length;
-        this.current_player = 1;
         this.game_state = {};
         this.running = false;
     }
