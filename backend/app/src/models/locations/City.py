@@ -226,7 +226,7 @@ class City():
             else:
                 print(result["message"])
         """
-        has_builders_hut: bool = True if building_name == "Builders hut" else self.check_if_has_builders_hut()
+        has_builders_hut: bool = True if building_name == "Builders Hut" else self.check_if_has_builders_hut()
         if not has_builders_hut:
             return  { "success": False, "message": "Zuerst eine Bauhütte bauen!" }
         

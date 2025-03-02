@@ -131,6 +131,21 @@ function changePlanetName(event) {
 };
 
 
+function buildBuildersHut(event) {
+    event.preventDefault();
+    const payload = {
+        "player": 2,
+        "category": "locations",
+        "location": ["settlements", "Heimatplanet"],
+        "target": "Hauptstadt",
+        "action": "Build",
+        "context": ["Builders Hut",]
+    };
+
+    sendPlayerActions(payload)
+};
+
+
 function spawnBuildMenu() {
     // SPAWN OVERLAY CONTAINER + CORE ELEMENTS //
     const build_menu_container = document.createElement("div");
@@ -157,9 +172,11 @@ function spawnBuildMenu() {
     build_builders_hut_btn.id = "build-builders-hut-btn";
     build_builders_hut_btn.className = "btn-small";
     build_builders_hut_btn.textContent = "Bauen";
+    build_builders_hut_btn.addEventListener("click", event => buildBuildersHut(event));
     build_builders_hut_input_box.insertAdjacentElement("beforeend", build_builders_hut_btn);
     build_menu_container.insertAdjacentElement("beforeend", build_builders_hut_input_box);
 
+    // APPEND BUILD-MENU TO THE FRONTEND //
     document.getElementById("next-round").insertAdjacentElement("afterend", build_menu_container);
 
 
