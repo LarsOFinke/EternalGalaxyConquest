@@ -6,6 +6,13 @@ var game;
 
 // ### INITIALIZATION ### //
 
+function spawnHomePlanet(new_tile, color) {
+    new_tile.classList = `hex ${color}`;
+    const home_planet = document.createElement("div");
+    home_planet.classList = "home_planet";
+    new_tile.insertAdjacentElement("afterbegin", home_planet);
+}
+
 function spawn_game_field() {
     const game_field = document.getElementById("game_field");
 
@@ -15,12 +22,11 @@ function spawn_game_field() {
         new_tile.addEventListener("click", event => inspectTile(event));
 
         if (i === 2) {
-            new_tile.classList = "hex color2";
-            const home_planet = document.createElement("div");
-            home_planet.classList = "home_planet";
-            new_tile.insertAdjacentElement("afterbegin", home_planet);
+            spawnHomePlanet(new_tile, "color2")
+
         } else if (i === 11) {
-            new_tile.classList = "hex color3";
+            spawnHomePlanet(new_tile, "color3")
+
         } else {
             new_tile.classList = "hex color1";
         }

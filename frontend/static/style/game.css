@@ -58,9 +58,10 @@ h1 {
 }
 
 
-/* .home_planet {
+.home_planet {
     background: url("../assets/Planet/1.png") no-repeat;
     background-size: cover;
     background-position: center;
-    z-index: 1000;
-} */
+    height: 100%;
+    z-index: 175;
+}
