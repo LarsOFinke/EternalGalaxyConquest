@@ -23,7 +23,7 @@ h1 {
     opacity: .975;
     height: 50%;
     width: 75%;
-    z-index: 1000;
+    z-index: 200;
 }
 #close-btn {
     position: absolute;

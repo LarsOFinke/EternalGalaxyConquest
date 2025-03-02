@@ -24,16 +24,16 @@ export class Game {
                     tile_type: "home_planet",
                     owner: this.players[0],
                     tile_content: {
-                        planet: "'AI' Home Planet"
+                        planet_name: "'AI' Home Planet"
                     }
                 });
             } else if (i === 11) {
                 this.tile_list.push({
-                    "tile_id": i,
-                    "tile_type": "home_planet",
-                    "owner": this.players[1],
-                    "tile_content": {
-                        "planet": "'Player 1' Home Planet"
+                    tile_id: i,
+                    tile_type: "home_planet",
+                    owner: this.players[1],
+                    tile_content: {
+                        planet_name: "'Player 1' Home Planet"
                     }
                 });
             } else {

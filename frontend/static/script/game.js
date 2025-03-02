@@ -1,10 +1,10 @@
 "use strict";
-
-
-
 import { Game } from "./models/Game.js";
 var game;
 
+
+
+// ### INITIALIZATION ### //
 
 function spawn_game_field() {
     const game_field = document.getElementById("game_field");
@@ -31,15 +31,12 @@ function spawn_game_field() {
 
 spawn_game_field()
 
-
-// ### INITIALIZATION ### //
-
-// Connect to the Flask-SocketIO server with credentials (cookies)
+// Connect to the Flask-SocketIO server with credentials (cookies) //
 const socket = io(`${socket_url}`, {
     withCredentials: true  // Ensure the session cookie is sent with the WebSocket connection
   });
 
-// Listen for the 'welcome' message from the server
+// Listen for the 'welcome' message from the server //
 socket.on('welcome', (data) => {
     let msg = data["message"];
     document.getElementById("welcome-msg").textContent = msg;
@@ -49,26 +46,27 @@ socket.on('welcome', (data) => {
 })
 
 
+
 // ### GAME COMMUNICATION ### //
 
-// Register Player
+// Register Player //
 function register_player() {
     socket.emit("register_player", { user: username })
 }
 
-// Start the game
+// Start the game //
 function startGame() {
     socket.emit('start_game', { user: username });  // Notify the backend to start the game
     document.getElementById("welcome-msg").remove();
     game = new Game();
 }
 
-//  Listen for host assignment
+//  Listen for host assignment //
 socket.on("host", data => {
     window.host = data.host;
 })
 
-//  Listen for player_id assignment
+//  Listen for player_id assignment //
 socket.on("players", data => {
     data.forEach(e => {
         if (e.name === username) {
@@ -77,7 +75,7 @@ socket.on("players", data => {
     });
 })
 
-// Listen for 'your_turn' event
+// Listen for 'your_turn' event //
 socket.on('your_turn', data => {
     if (parseInt(data.player) === window.user_id) {
         alert(username + ", it's your turn!");
@@ -85,12 +83,12 @@ socket.on('your_turn', data => {
     
 });
 
-// Listen for game updates from the server
+// Listen for game updates from the server //
 socket.on('game_update', (gameState) => {
     console.log('Updated game state:', gameState);
 });
 
-// Listen for the result of the player action
+// Listen for the result of the player action //
 socket.on("result_player_action", data => {
     const result_box = document.getElementById("result_box");
     if (result_box === null) {
@@ -103,12 +101,20 @@ socket.on("result_player_action", data => {
 })
 
 
-// ### FRONTEND FUNCTIONALITY ### //
 
+// ### FRONTEND FUNCTIONALITY ### //
+//<div id="build-menu">
+//    <button class="btn">Baumenü</button>
+//</div>
 function spawnTileContextMenu(tile_menu, tile) {
-    const planet_name = document.createElement("label");
-    planet_name.textContent = tile.tile_content.planet;
-    tile_menu.insertAdjacentElement("afterbegin", planet_name);
+    switch (tile.tile_type) {
+        case "home_planet":
+            const tile_menu_header = document.createElement("h4");
+            tile_menu_header.textContent = tile.tile_content.planet_name;
+            tile_menu.insertAdjacentElement("afterbegin", tile_menu_header);
+
+    }
+    
     
 }
 
@@ -119,6 +125,7 @@ function spawnTileMenu(event) {
         tile_menu.remove();
     }
 
+    // SPAWN OVERLAY CONTAINER + CORE ELEMENTS //
     tile_menu = document.createElement("div");
     tile_menu.id = "tile-menu";
     const close_btn = document.createElement("button");
@@ -129,6 +136,7 @@ function spawnTileMenu(event) {
     tile_menu.insertAdjacentElement("afterbegin", close_btn);
     document.getElementById("next-round").insertAdjacentElement("afterend", tile_menu);
 
+    // SEARCH THE SELECTED TILE IN THE GAME-OBJECT //
     for (let tile of game.tile_list) {
         if (parseInt(tile.tile_id) === parseInt(event.srcElement.id)) {
             spawnTileContextMenu(tile_menu, tile);
@@ -145,7 +153,7 @@ function inspectTile(event) {
 }
 
 
-// Get Player input from buttons, forms etc
+// Get Player input from buttons, forms etc //
 function nextRound() {
     sendPlayerActions({
         "category": "buildings",
@@ -156,7 +164,7 @@ function nextRound() {
     });
 }
 
-// Send player input (action) to the server
+// Send player input (actions) to the server //
 function sendPlayerActions(actions) {
     socket.emit('player_input', 
                 { 
