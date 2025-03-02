@@ -8,9 +8,13 @@ var game;
 
 function spawnHomePlanet(new_tile, color) {
     new_tile.classList = `hex ${color}`;
+
     const home_planet = document.createElement("div");
-    home_planet.classList = "home_planet";
+    home_planet.id = new_tile.id;
+    home_planet.classList = "home_planet centered";
+
     new_tile.insertAdjacentElement("afterbegin", home_planet);
+
 }
 
 function spawn_game_field() {

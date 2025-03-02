@@ -5,6 +5,7 @@ from dotenv import load_dotenv
 from flask import Flask
 from flask_session import Session
 from flask_socketio import SocketIO
+from flask_cors import CORS
 
 
 
@@ -65,6 +66,8 @@ def create_app():
     app.permanent_session_lifetime = timedelta(minutes=5000)
     Session(app)
     
+    
+    CORS(app)
     
     ## Initialize the websocket ##
     global socketio
