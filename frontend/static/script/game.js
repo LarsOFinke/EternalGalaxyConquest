@@ -9,17 +9,17 @@ var game;
 function spawn_game_field() {
     const game_field = document.getElementById("game_field");
 
-    for (let i=1; i<=77; i++) {
+    for (let i=1; i<=12; i++) {
         let new_tile = document.createElement("div");
         new_tile.id = i;
         new_tile.addEventListener("click", event => inspectTile(event));
 
-        if (i === 34) {
+        if (i === 2) {
             new_tile.classList = "hex color2";
             const home_planet = document.createElement("div");
             home_planet.classList = "home_planet";
             new_tile.insertAdjacentElement("afterbegin", home_planet);
-        } else if (i === 44) {
+        } else if (i === 11) {
             new_tile.classList = "hex color3";
         } else {
             new_tile.classList = "hex color1";
@@ -35,7 +35,7 @@ spawn_game_field()
 // ### INITIALIZATION ### //
 
 // Connect to the Flask-SocketIO server with credentials (cookies)
-const socket = io('http://localhost:5000', {
+const socket = io(`${socket_url}`, {
     withCredentials: true  // Ensure the session cookie is sent with the WebSocket connection
   });
 

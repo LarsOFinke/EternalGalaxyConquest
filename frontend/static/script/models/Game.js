@@ -17,8 +17,8 @@ export class Game {
 
 
     insertDefaultTiles() {
-        for (let i=1; i<=77; i++) {
-            if (i === 34) {
+        for (let i=1; i<=12; i++) {
+            if (i === 2) {
                 this.tile_list.push({
                     tile_id: i,
                     tile_type: "home_planet",
@@ -27,7 +27,7 @@ export class Game {
                         planet: "'AI' Home Planet"
                     }
                 });
-            } else if (i === 44) {
+            } else if (i === 11) {
                 this.tile_list.push({
                     "tile_id": i,
                     "tile_type": "home_planet",

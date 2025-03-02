@@ -1,6 +1,11 @@
 "use strict";
 
 
+
+const socket_url = "http://192.168.2.31:5000";
+const api_url = "http://192.168.2.31:5000/api/";
+
+
 function createErrorBox(message) {
     const errorbox = document.getElementById("error_box");
     if (errorbox !== null) {

@@ -1,6 +1,9 @@
 body {
     color: white;
 }
+h1 {
+    font-size: 1.45rem;
+}
 
 
 #build-menu {
@@ -24,8 +27,10 @@ body {
 
 
 .game-wrapper {
-    width: 63%;
-    height: 83vh;
+    width: 300px;
+    height: 540px;
+    /* width: 90vw;     REENABLE AFTER STYLING MOBILE DESIGN!?
+    height: 83vh; */
     background: transparent;
     border: 2px solid rgba(255, 255, 255, .2);
     backdrop-filter: blur(20px);
