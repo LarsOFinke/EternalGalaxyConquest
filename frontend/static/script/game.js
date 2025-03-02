@@ -133,6 +133,8 @@ function changePlanetName(event) {
 
 function buildBuildersHut(event) {
     event.preventDefault();
+
+    // ADD CITY SELECTION FOR PAYLOAD // 
     const payload = {
         "player": 2,
         "category": "locations",

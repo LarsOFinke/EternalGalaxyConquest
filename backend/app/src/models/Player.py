@@ -5,17 +5,43 @@ from .locations.Planet import Planet
 
 class Player():
     def __init__(self, name: str, player_id: int, bases: list = [HomePlanet("Heimatplanet")]):
-        self.action_list: list[dict] =  [
+        self.__action_list: list[dict] =  [
                                             { "name": "Select Base", "action": self.select_base, }
                                         ]
         self.name: str = name
         self.player_id: int = player_id
-        self.bases: list = bases
+        self.__bases: list = bases
+
+
+    def get_bases(self) -> list:
+        return self.__bases
+    
+    def get_bases_state(self) -> list[dict]:
+        bases_state = []
+        
+        for base in self.__bases:
+            base_status: dict = base.get_base_status()
+            
+            bases_state.append({
+                "name": base.name,
+                "base_status": base_status
+            })
+        
+        return bases_state
+    
+    def get_player_state(self) -> dict:
+        player_state: dict = {
+            "name": self.name,
+            "player_id": self.player_id,
+            "bases_state": self.get_bases_state()
+        }
+        
+        return player_state
 
 
     def match_payload_action(self, action: str, context: list) -> dict:
         try:
-            for act in self.action_list:
+            for act in self.__action_list:
                 if act["name"] == action:
                     return act["action"](*context)
         except Exception as e:
@@ -23,7 +49,7 @@ class Player():
 
 
     def select_base(self, target) -> dict:
-        for base in self.bases:
+        for base in self.__bases:
             if base.name == target:
                 return  { "success": True, "target": base }
         

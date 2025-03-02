@@ -123,6 +123,11 @@ class City():
         self.__population: list = population
         self.__free_workers: list = [person for person in self.__population if person.category == "Worker" and person.employed == False]
         self.__free_builders: list = [person for person in self.__population if person.category == "Worker" and person.field_of_work == "Builder" and person.working == False]
+ 
+    def get_settlement_status(self) -> list[dict]:
+        settlement_status: list[dict] = []
+        
+        return settlement_status
     
     
     def match_payload_action(self, action: str, context: list) -> dict:

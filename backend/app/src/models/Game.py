@@ -11,16 +11,25 @@ class Game:
         self.game_state: dict = {}
         self.running: bool = False
 
-
     def add_player(self, player: str) -> None:
         self.player_count += 1
         new_player = Player(player, self.player_count)
         self.players.append(new_player)
 
+    def get_player_states(self):
+        player_states: list = [player.get_player_state() for player in self.players]
+        
+        return player_states
+
+
     def start(self) -> None:
         self.total_player_count = len(self.players)
+        player_states: list = self.get_player_states()
         self.game_state={
-                            "current_player": self.current_player
+                            "current_player": self.current_player,
+                            "player_states": player_states,
+                            
+                            
                         }
         self.running = True
         self.ai_turn()

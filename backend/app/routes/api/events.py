@@ -36,6 +36,8 @@ def start_game(data):
     game.start()
     game_state = game.get_game_state()
     
+    print(game_state)
+    
     emit("players_connected", connected_players)
     emit("host", { "host": host })
     emit('game_update', game_state)

@@ -11,8 +11,21 @@ class Planet():
                                             { "name": "Found Outpost", "action": self.found_outpost }
                                         ]
         self.name: str = name
-        self.settlements: list = settlements
+        self.__settlements: list = settlements
         
+    def get_base_status(self) -> list[dict]:
+        base_status: list[dict] = []
+        
+        for settlement in self.__settlements:
+            settlement_status: dict = settlement.get_settlement_status()
+            
+            base_status.append({
+                "name": settlement.name,
+                "settlement_status": settlement_status
+            })
+        
+        return base_status
+            
     
     def match_payload_action(self, action: str, context: list) -> dict:
         try:
@@ -24,7 +37,7 @@ class Planet():
     
     
     def select_settlement(self, target) -> dict:
-        for settlement in self.settlements:
+        for settlement in self.__settlements:
             if settlement.name == target:
                 return  { "success": True, "target": settlement }
         
@@ -34,7 +47,7 @@ class Planet():
     def found_outpost(self) -> dict:
         try:
             new_outpost = Outpost()
-            self.settlements.append(new_outpost)
+            self.__settlements.append(new_outpost)
             return  { "success": True, "message": f"Neuer Außenposten erfolgreich gegründet auf: {self.name}!" }
         
         except Exception as e:
@@ -48,7 +61,7 @@ class Planet():
                    ) -> dict:
         try:
             new_city = City(name, gold, food, wood, iron, buildings, population)
-            self.settlements.append(new_city)
+            self.__settlements.append(new_city)
             return  { "success": True, "message": f"Neue Stadt erfolgreich gegründet auf: {self.name}!" }
         
         except Exception as e:
