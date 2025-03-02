@@ -30,12 +30,13 @@ h1 {
 }
 #close-btn {
     position: absolute;
-    top: -0px;
+    top: -2px;
     right: -24px;
     background-color: red;
     color: #fff;
     width: 24px;
     height: 24px;
+    margin-top: 0;
 
 }
 

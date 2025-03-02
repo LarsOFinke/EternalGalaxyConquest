@@ -185,6 +185,7 @@ function spawnTileMenu(event) {
     // SPAWN OVERLAY CONTAINER + CORE ELEMENTS //
     tile_menu = document.createElement("div");
     tile_menu.id = "tile-menu";
+    tile_menu.className = "bordered";
     const close_btn = document.createElement("button");
     close_btn.id = "close-btn";
     close_btn.className = "bordered";
