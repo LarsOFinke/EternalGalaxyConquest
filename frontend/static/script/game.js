@@ -9,11 +9,18 @@ var game;
 function spawnHomePlanet(new_tile, color) {
     new_tile.classList = `hex ${color}`;
 
-    const home_planet = document.createElement("div");
+    const home_planet_container = document.createElement("div");
+    home_planet_container.className = "home-planet";
+    home_planet_container.id = new_tile.id;
+    
+    const home_planet = document.createElement("img");
     home_planet.id = new_tile.id;
-    home_planet.classList = "home_planet centered";
+    home_planet.classList = "home-planet-sprite";
+    home_planet.src = "/api/sprite/1";
+    home_planet.addEventListener("click", event => inspectTile(event));
+    home_planet_container.insertAdjacentElement("afterbegin", home_planet);
 
-    new_tile.insertAdjacentElement("afterbegin", home_planet);
+    new_tile.insertAdjacentElement("afterbegin", home_planet_container);
 
 }
 
@@ -119,10 +126,14 @@ socket.on("result_player_action", data => {
 function spawnTileContextMenu(tile_menu, tile) {
     const tile_menu_header = document.createElement("h4");
     tile_menu_header.textContent = tile.tile_content.tile_name;
+    tile_menu.insertAdjacentElement("afterbegin", tile_menu_header);
 
     switch (tile.tile_type) {
         case "home_planet":
-            tile_menu.insertAdjacentElement("afterbegin", tile_menu_header);
+            const planet_name = document.createElement('input');
+            planet_name.type = "text";
+            planet_name.value = tile.tile_content.planet_name;
+            tile_menu.insertAdjacentElement("beforeend", planet_name);
 
     }
     

@@ -54,26 +54,6 @@ def execute_query(sql: str, params: Tuple[Any, ...], connectionstring: str, fetc
         logging.error(f"An error occurred: {e}")
         return None  # Return None in case of error
 
-# EXECUTE SQL WITHOUT PARAMS
-def execute_query_get_all(sql: str, connectionstring: str) -> dict:
-    results: dict = {}  # {"name": id} -> str: int
-    try:
-        with sqlite3.connect(connectionstring) as con:
-            cursor = con.cursor()
-            cursor.execute("PRAGMA foreign_keys = ON;")
-            con.commit()
-            cursor.execute(sql)
-            rows = cursor.fetchall()
-            
-            for row in rows:
-                results[row[1]] = row[0]
-                
-            return results
-        
-    except sqlite3.error as e:
-        logging.error(f"An error occured: {e}")
-        return results
-
 
 
 ### SET UP DATABASES ###
@@ -83,51 +63,59 @@ DB_DIRECTORY = os.path.join(os.path.dirname(__file__), "db")
 if not os.path.exists(DB_DIRECTORY):
     os.mkdir(DB_DIRECTORY)
 CONNECTIONSTRING_LOGIN = os.path.join(os.path.dirname(DB_DIRECTORY), "db", "LoginDB.db")
+CONNECTIONSTRING_GAME = os.path.join(os.path.dirname(DB_DIRECTORY), "db", "GameDB.db")
 
 
-def create_login_db() -> bool:
+def create_login_table() -> bool:
     try:
-        con = sqlite3.connect(CONNECTIONSTRING_LOGIN)
-        cursor = con.cursor()
-        with con:
-            sql: str = "CREATE TABLE tblLogin(" \
-                        "LoginID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE, " \
-                        "LoginUsername TEXT NOT NULL UNIQUE, " \
-                        "LoginPassword TEXT NOT NULL, " \
-                        "LoginType TEXT NOT NULL)"
-            cursor.execute(sql)
-            
+        sql: str = "CREATE TABLE tblLogin(" \
+                    "LoginID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE, " \
+                    "LoginUsername TEXT NOT NULL UNIQUE, " \
+                    "LoginPassword TEXT NOT NULL, " \
+                    "LoginType TEXT NOT NULL)"
+        execute_query(sql, (), CONNECTIONSTRING_LOGIN)
         return True
     
-    except:
-        logging.error("Could not create login-database!")
+    except sqlite3.Error as e:
+        logging.error(e)
         return False
     
 def create_admins() -> bool:
     try:
-        con = sqlite3.connect(CONNECTIONSTRING_LOGIN)
-        cursor = con.cursor()
-        with con:
-            hashed_password = generate_password_hash("admin", method='pbkdf2:sha256')
-            sql: str = "INSERT INTO tblLogin(LoginUsername, LoginPassword, LoginType) VALUES ('admin', ?, 'admin')"
-            cursor.execute(sql, (hashed_password,))
+        hashed_password = generate_password_hash("admin", method='pbkdf2:sha256')
+        sql: str = "INSERT INTO tblLogin(LoginUsername, LoginPassword, LoginType) VALUES ('admin', ?, 'admin')"
+        execute_query(sql, (hashed_password,), CONNECTIONSTRING_LOGIN)
         return True
 
     except sqlite3.Error as e:
         logging.error(e)
-
-    except:
-        logging.error("Could not create admins for some reason!")
-        return False
+        return False   
 
 if not os.path.exists(CONNECTIONSTRING_LOGIN):
-    if not create_login_db():
-        logging.error("Could not create login-database! Something went wrong...")
+    if not create_login_table():
+        logging.error("Could not create login-table! Something went wrong...")
         sys.exit()
     if not create_admins():
         logging.error("Could not create admins! Something went wrong...")
         sys.exit()
 
+
+def create_sprite_table() -> bool:
+    try:
+        sql: str = "CREATE TABLE tblSprite(" \
+                    "SpriteID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE, " \
+                    "SpriteBinary BLOB NOT NULL)"
+        execute_query(sql, (), CONNECTIONSTRING_GAME) 
+        return True
+    
+    except sqlite3.Error as e:
+        logging.error(e)
+        return False   
+
+if not os.path.exists(CONNECTIONSTRING_GAME):
+    if not create_sprite_table():
+        logging.error("Could not create sprite-table! Something went wrong...")
+        sys.exit()
 
 
 ### SET UP CRUD-FUNCTIONALITY ###
@@ -184,6 +172,62 @@ def get_all_usernames() -> list:
 
 
 
+#-- CRUD FUNCTIONALITY SPRITES --#
+def add_sprite(sprite_path: str) -> bool :
+    """Adds a sprite in binary form to the database.
+
+    Args:
+        sprite_path (str): Path of the sprite location to convert.
+
+    Returns:
+        True: if successfully deleted
+        False: if error happened
+    """
+    sql: str = "INSERT INTO tblSprite(SpriteBinary) VALUES (?)"
+    sprite_binary: bytes = image_to_binary(sprite_path)
+    return execute_query(sql=sql, params=(sprite_binary,), connectionstring=CONNECTIONSTRING_GAME)
+
+
+def get_sprite(sprite_id: int) -> bytes:
+    """Acces saved sprite in the SQLite3-database.
+
+    Args:
+        sprite_id (int): ID in the database the sprite belongs to.
+
+    Returns:
+        bytes: Returns the binary data of a sprite from the DB.
+    """
+    sql: str = "SELECT SpriteBinary FROM tblSprite WHERE SpriteID = ?"
+    return execute_query(sql=sql, params=(sprite_id,), connectionstring=CONNECTIONSTRING_GAME, fetch=True)[0][0]
+
+def edit_sprite(sprite_path: str, sprite_id: int) -> bool:
+    """Updates a sprite in the database.
+
+    Args:
+        sprite_path (str): Path of the sprite location to convert.
+        sprite_id (int): Sprite ID from the database.
+
+    Returns:
+        True: if successfully deleted
+        False: if error happened
+    """
+    sql: str = "UPDATE tblSprite SET SpriteBinary = ? WHERE SpriteID = ?"
+    sprite_binary: bytes = image_to_binary(sprite_path)
+    return execute_query(sql=sql, params=(sprite_binary, sprite_id), connectionstring=CONNECTIONSTRING_GAME)
+
+
+def delete_sprite(sprite_id: int) -> bool:
+    """Deletes a sprite in the database.
+
+    Args:
+        sprite_id (int): The Sprite ID from the database.
+
+    Returns:
+        True: if successfully deleted
+        False: if error happened
+    """
+    sql: str = "DELETE FROM tblSprite WHERE SpriteID = ?"
+    return execute_query(sql=sql, params=(sprite_id,), connectionstring=CONNECTIONSTRING_GAME)
 
 
 ### FOR TESTING FUNCTIONS ONLY ###
@@ -194,5 +238,7 @@ if __name__ == "__main__":
     # print(add_login("Name", "Password"))
     # print(validate_login("Name", "Password"))
     # print(get_all_usernames())
+    
+    # print(add_sprite("C:/Users/User/Desktop/CodingProjekte/Repositories/EternalGalaxyConquest/frontend/static/assets/Planet/sprite_planet.png"))
     
     pass

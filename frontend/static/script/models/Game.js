@@ -24,7 +24,8 @@ export class Game {
                     tile_type: "home_planet",
                     owner: this.players[0],
                     tile_content: {
-                        tile_name: "Home of 'AI'"
+                        tile_name: "Home of 'AI'",
+                        planet_name: "'AIs' Planet"
                     }
                 });
             } else if (i === 11) {
@@ -33,7 +34,8 @@ export class Game {
                     tile_type: "home_planet",
                     owner: this.players[1],
                     tile_content: {
-                        tile_name: "Home of 'Player 1'"
+                        tile_name: "Home of 'Player 1'",
+                        planet_name: "'Player 1s' Planet"
                     }
                 });
             } else {

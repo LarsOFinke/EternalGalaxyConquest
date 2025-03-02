@@ -62,12 +62,22 @@ h1 {
 }
 
 
-.home_planet {
-    background: url("../assets/Planet/1.png") no-repeat;
-    background-size: contain;
-    background-position: center;
-    height: 65%;
-    width: 65%;
+.home-planet {
+    height: 30px;
+    width: 30px;
     margin: 10px;
+    overflow: hidden;
     z-index: 175;
+}
+.home-planet-sprite {
+    animation: moveSpriteSheet 4.5s steps(60) infinite;
+}
+
+@keyframes moveSpriteSheet {
+    from {
+        transform: translate3d(0px, 0, 0);
+    }
+    to {
+        transform: translate3d(0, -100%, 0);
+    }
 }
