@@ -130,6 +130,21 @@ function changePlanetName(event) {
 
 };
 
+
+function spawnBuildMenu() {
+    // SPAWN OVERLAY CONTAINER + CORE ELEMENTS //
+    const build_menu = document.createElement("div");
+    build_menu.id = "build-menu";
+    build_menu.className = "bordered";
+    const close_btn = document.createElement("button");
+    close_btn.classList = "close-btn bordered";
+    close_btn.textContent = "X";
+    close_btn.addEventListener("click", e => document.getElementById("build-menu").remove());
+    build_menu.insertAdjacentElement("afterbegin", close_btn);
+    document.getElementById("next-round").insertAdjacentElement("afterend", build_menu);
+};
+
+
 function createHomePlanetTileContextMenu(tile_menu, tile) {
     const planet_name_container = document.createElement("div");
     planet_name_container.id = "planet-name-container";
@@ -160,6 +175,7 @@ function createHomePlanetTileContextMenu(tile_menu, tile) {
     build_menu_btn.id = "build-menu-btn";
     build_menu_btn.className = "btn-small";
     build_menu_btn.textContent = "Baumenü";
+    build_menu_btn.addEventListener("click", event => spawnBuildMenu(event));
     tile_menu.insertAdjacentElement("beforeend", build_menu_btn);
 
 };
@@ -189,8 +205,7 @@ function spawnTileMenu(event) {
     tile_menu.id = "tile-menu";
     tile_menu.className = "bordered";
     const close_btn = document.createElement("button");
-    close_btn.id = "close-btn";
-    close_btn.className = "bordered";
+    close_btn.classList = "close-btn bordered";
     close_btn.textContent = "X";
     close_btn.addEventListener("click", e => document.getElementById("tile-menu").remove());
     tile_menu.insertAdjacentElement("afterbegin", close_btn);

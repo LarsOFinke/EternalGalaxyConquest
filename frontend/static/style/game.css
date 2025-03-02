@@ -12,7 +12,7 @@ h1 {
     font-size: 1rem;
 }
 
-#tile-menu {
+#tile-menu, #build-menu {
     position: absolute;
     background-color: rgb(22, 22, 22);
     opacity: .975;
@@ -20,7 +20,10 @@ h1 {
     width: 75%;
     z-index: 200;
 }
-#tile-menu > h4 {
+#build-menu {
+    z-index: 225;
+}
+#tile-menu, #build-menu > h4 {
     margin-top: 4px;
 }
 #build-menu-btn {
@@ -29,7 +32,7 @@ h1 {
     bottom: 12px;
     left: 12px;
 }
-#close-btn {
+.close-btn {
     position: absolute;
     top: -2px;
     right: -2px;
