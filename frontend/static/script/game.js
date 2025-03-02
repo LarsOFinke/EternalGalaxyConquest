@@ -75,7 +75,7 @@ function register_player() {
 function startGame() {
     socket.emit('start_game', { user: username });  // Notify the backend to start the game
     document.getElementById("welcome-msg").remove();
-    game = new Game();
+
 };
 
 //  Listen for host assignment //
@@ -84,12 +84,14 @@ socket.on("host", data => {
 });
 
 //  Listen for player_id assignment //
-socket.on("players", data => {
+socket.on("players_connected", data => {
     data.forEach(e => {
-        if (e.name === username) {
+        if (e.player_name === username) {
             window.user_id = e.player_id;
         }
     });
+    game = new Game(data);
+
 });
 
 // Listen for 'your_turn' event //
@@ -113,16 +115,16 @@ socket.on("result_player_action", data => {
         result_box.id = "result_box";
         document.querySelector("h1").insertAdjacentElement("afterend", result_box);
         result_box.textContent = data["message"];
+    } else {
+        result_box.textContent = data["message"];
     }
-    result_box.textContent = data["message"];
+    
 });
 
 
 
 // ### FRONTEND FUNCTIONALITY ### //
-//<div id="build-menu">
-//    <button class="btn">Baumenü</button>
-//</div>
+
 function changePlanetName(event) {
     event.preventDefault();
 
@@ -221,6 +223,8 @@ function nextRound() {
         "context": ["dump",]
     });
 };
+document.getElementById("next-round").addEventListener("click", event => nextRound(event));
+
 
 // Send player input (actions) to the server //
 function sendPlayerActions(actions) {

@@ -136,8 +136,7 @@ class Game:
     def ai_turn(self):
         """Handle the AI's turn logic."""
         
-        # self.next_turn()
-        pass
+        self.next_turn()
 
 
     def check_next_player(self) -> int:

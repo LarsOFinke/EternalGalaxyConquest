@@ -116,7 +116,8 @@ if not os.path.exists(CONNECTIONSTRING_GAME):
     if not create_sprite_table():
         logging.error("Could not create sprite-table! Something went wrong...")
         sys.exit()
-
+        
+        
 
 ### SET UP CRUD-FUNCTIONALITY ###
 

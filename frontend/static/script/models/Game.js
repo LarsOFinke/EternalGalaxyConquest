@@ -1,20 +1,35 @@
 "use strict";
+import { Player } from "./player.js";
 
 
 
 export class Game {
-    constructor(players = ["AI", "Player 1"], tile_list = []) {
-        this.players = players;
+
+    constructor(player_list = [{"name": "AI", "player_id": 1}, {"name": "Player 1", "player_id": 2}], tile_list = []) {
+        this.players = this.addPlayers(player_list);
         this.tile_list = tile_list;
         if (this.tile_list.length === 0) {
             this.insertDefaultTiles();
         }
-        this.player_count = players.length;
+        this.player_count = this.players.length;
         this.current_player = 1;
         this.game_state = {};
         this.running = false;
     }
 
+    addPlayers(player_list) {
+        let players = [];
+
+        for (const player of player_list) {
+            const player_name = player["player_name"];
+            const player_id = player["player_id"];
+            const new_player = new Player(player_name, player_id);
+            players.push(new_player);
+
+          }
+
+        return players;
+    }
 
     insertDefaultTiles() {
         for (let i=1; i<=12; i++) {
@@ -24,8 +39,8 @@ export class Game {
                     tile_type: "home_planet",
                     owner: this.players[0],
                     tile_content: {
-                        tile_name: "Heimat von 'AI'",
-                        planet_name: "'AIs' Planet"
+                        tile_name: `Heimat von ${this.players[0].name}`,
+                        planet_name: `${this.players[0].name}'s Planet`
                     }
                 });
             } else if (i === 11) {
@@ -34,8 +49,8 @@ export class Game {
                     tile_type: "home_planet",
                     owner: this.players[1],
                     tile_content: {
-                        tile_name: "Heimat von 'Player 1'",
-                        planet_name: "'Player 1s' Planet"
+                        tile_name: `Heimat von ${this.players[1].name}`,
+                        planet_name: `${this.players[1].name}'s Planet`
                     }
                 });
             } else {

@@ -9,6 +9,7 @@ h1 {
     position: absolute;
     align-self: flex-end;
     bottom: 15px;
+    font-size: 1rem;
 }
 
 #tile-menu {
