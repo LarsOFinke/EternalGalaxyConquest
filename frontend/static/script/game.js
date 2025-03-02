@@ -103,9 +103,17 @@ socket.on("result_player_action", data => {
 })
 
 
+// ### FRONTEND FUNCTIONALITY ### //
 
-function inspectTile(event) {
-    event.preventDefault();
+function spawnTileContextMenu(tile_menu, tile) {
+    const planet_name = document.createElement("label");
+    planet_name.textContent = tile.tile_content.planet;
+    tile_menu.insertAdjacentElement("afterbegin", planet_name);
+    
+}
+
+
+function spawnTileMenu(event) {
     let tile_menu = document.getElementById("tile-menu");
     if (tile_menu !== null) {
         tile_menu.remove();
@@ -114,26 +122,32 @@ function inspectTile(event) {
     tile_menu = document.createElement("div");
     tile_menu.id = "tile-menu";
     const close_btn = document.createElement("button");
-    close_btn.textContent = "Close";
+    close_btn.id = "close-btn";
+    close_btn.className = "bordered";
+    close_btn.textContent = "X";
     close_btn.addEventListener("click", e => document.getElementById("tile-menu").remove());
     tile_menu.insertAdjacentElement("afterbegin", close_btn);
     document.getElementById("next-round").insertAdjacentElement("afterend", tile_menu);
 
     for (let tile of game.tile_list) {
         if (parseInt(tile.tile_id) === parseInt(event.srcElement.id)) {
-            const planet_name = document.createElement("label");
-            planet_name.textContent = tile.tile_content.planet;
-            tile_menu.insertAdjacentElement("afterbegin", planet_name);
+            spawnTileContextMenu(tile_menu, tile);
+            
         }
     }
+}
 
-    
+
+function inspectTile(event) {
+    event.preventDefault();
+    spawnTileMenu(event);
+
 }
 
 
 // Get Player input from buttons, forms etc
-function getPlayerInput() {
-    sendPlayerInput({
+function nextRound() {
+    sendPlayerActions({
         "category": "buildings",
         "location": ["factory", "Hauptstadt", "Heimatplanet"],
         "target": "Builders Hut",
@@ -143,14 +157,14 @@ function getPlayerInput() {
 }
 
 // Send player input (action) to the server
-function sendPlayerInput(action) {
+function sendPlayerActions(actions) {
     socket.emit('player_input', 
                 { 
                     host: window.host, 
                     user_id: window.user_id,
                     payload:  {
                                 "player": window.user_id,
-                                "payload": action   // Send player action to the backend
+                                "payload": actions   // Send player action to the backend
                               }
                 });  
 }

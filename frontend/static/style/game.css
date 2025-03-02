@@ -19,10 +19,21 @@ h1 {
 
 #tile-menu {
     position: absolute;
-    background-color: blue;
+    background-color: var(--light-navy-blue);
+    opacity: .975;
     height: 50%;
-    width: 50%;
+    width: 75%;
     z-index: 1000;
+}
+#close-btn {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background-color: red;
+    color: #fff;
+    width: 24px;
+    height: 24px;
+
 }
 
 
@@ -38,6 +49,12 @@ h1 {
     color: #fff;
     border-radius: 10px;
     padding: 10px 15px;
+}
+
+.btn {
+    font-size: .9rem;
+    height: fit-content;
+    padding: 8%;
 }
 
 
