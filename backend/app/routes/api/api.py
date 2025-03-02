@@ -1,6 +1,7 @@
-from flask import Blueprint, Response
+from flask import Blueprint, Response, request, jsonify
 from io import BytesIO
-from ...src.crud import get_sprite
+from ...src.crud import add_sprite, get_sprite
+import base64
 
 
 
@@ -8,7 +9,23 @@ api = Blueprint("api", __name__)
 
 
 
-### REQUIRES DB SET UP ###
+@api.route("/sprite/upload", methods=["POST"])
+def upload_sprite():
+    data = request.get_json()
+    file_data = data.get('fileData')
+    
+    if file_data.startswith('data:'):
+        file_data = file_data.split(',')[1]
+
+    # Decode the base64 data to binary data
+    file_binary_data = base64.b64decode(file_data)
+    if add_sprite(file_binary_data):
+        return jsonify({'message': 'File uploaded successfully'})
+    
+    return jsonify({'message': 'File upload failed'})
+
+
+
 @api.route("/sprite/<sprite_id>")
 def serve_sprite(sprite_id: str):
     """This route serves to return a sprite to HTML. Implement it as a src="/api/sprite/xxx" --> xxx = ID of the sprite in the database.

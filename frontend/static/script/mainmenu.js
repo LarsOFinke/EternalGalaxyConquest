@@ -17,3 +17,9 @@ document.getElementById("settings").addEventListener("click", e => {
     e.preventDefault();
     window.location.href = "/settings";
 })
+
+document.getElementById("admin-panel").addEventListener("click", e => {
+    e.preventDefault();
+    window.location.href = "/admin-panel";
+})
+

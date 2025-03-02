@@ -23,6 +23,12 @@
             <div>
                 <button class="menu-btn" id="settings">Einstellungen</button>
             </div>
+
+            {% if session.is_admin %}    
+                <div>
+                    <button class="menu-btn" id="admin-panel">Admin-Bereich</button>
+                </div>
+            {% endif %}
             
         </form>
     </div>

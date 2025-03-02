@@ -13,8 +13,8 @@ def home():
 
 @views.route("/mainmenu")
 def mainmenu():
-    # if "username" not in session:
-    #     return redirect(url_for("views.home"))
+    if "username" not in session:
+        return redirect(url_for("views.home"))
     
     return render_template("mainmenu.html")
 
@@ -32,3 +32,11 @@ def profile():
 @views.route("/settings")
 def settings():
     return render_template("settings.html")
+
+
+@views.route("/admin-panel")
+def admin_panel():
+    if "is_admin" not in session or not session["is_admin"]:
+        return redirect(url_for("views.home"))
+    
+    return render_template("admin_panel.html")

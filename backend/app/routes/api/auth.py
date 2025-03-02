@@ -10,9 +10,8 @@ auth = Blueprint("auth", __name__)
 def login():
     data = request.get_json()
     username = data.get('username')
-    password = data.get('password')
     
-    if validate_login(username, password):
+    if validate_login(username, data.get('password')):
         session["username"] = username
         if username == "admin":
             session["is_admin"] = True
@@ -25,10 +24,8 @@ def login():
 @auth.route("/register", methods=["POST"])
 def register():
     data = request.get_json()
-    username = data.get("username")
-    password = data.get("password")
     
-    if create_login(username, password):
+    if create_login(data.get("username"), data.get("password")):
         return jsonify({"success": True}), 200
     else:
         return jsonify({"success": False}), 401

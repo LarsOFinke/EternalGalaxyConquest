@@ -1,7 +1,7 @@
 import sqlite3, os, sys # FOR DB
 from typing import Any, List, Tuple, Optional   # FOR "execute_query" FUNCTIONS
 from .. import logging  # GET .ENV CONSTANTS AND LOGGING
-from .utils.utility import image_to_binary
+from .utils.utility import file_to_binary
 from werkzeug.security import generate_password_hash, check_password_hash # LOGIN-SYSTEM SECURITY
 
 
@@ -174,18 +174,17 @@ def get_all_usernames() -> list:
 
 
 #-- CRUD FUNCTIONALITY SPRITES --#
-def add_sprite(sprite_path: str) -> bool :
+def add_sprite(sprite_binary: bytes) -> bool :
     """Adds a sprite in binary form to the database.
 
     Args:
-        sprite_path (str): Path of the sprite location to convert.
+        sprite_binary (bytes): Bytes of the sprite to save.
 
     Returns:
         True: if successfully deleted
         False: if error happened
     """
     sql: str = "INSERT INTO tblSprite(SpriteBinary) VALUES (?)"
-    sprite_binary: bytes = image_to_binary(sprite_path)
     return execute_query(sql=sql, params=(sprite_binary,), connectionstring=CONNECTIONSTRING_GAME)
 
 
@@ -213,7 +212,7 @@ def edit_sprite(sprite_path: str, sprite_id: int) -> bool:
         False: if error happened
     """
     sql: str = "UPDATE tblSprite SET SpriteBinary = ? WHERE SpriteID = ?"
-    sprite_binary: bytes = image_to_binary(sprite_path)
+    sprite_binary: bytes = file_to_binary(sprite_path)
     return execute_query(sql=sql, params=(sprite_binary, sprite_id), connectionstring=CONNECTIONSTRING_GAME)
 
 
