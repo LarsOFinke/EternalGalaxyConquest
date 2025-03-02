@@ -13,7 +13,7 @@ h1 {
 
 #tile-menu {
     position: absolute;
-    background-color: var(--light-navy-blue);
+    background-color: rgb(22, 22, 22);
     opacity: .975;
     height: 50%;
     width: 75%;
@@ -31,7 +31,7 @@ h1 {
 #close-btn {
     position: absolute;
     top: -2px;
-    right: -24px;
+    right: -2px;
     background-color: red;
     color: #fff;
     width: 24px;
