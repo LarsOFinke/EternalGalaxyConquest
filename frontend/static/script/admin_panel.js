@@ -19,7 +19,10 @@ document.getElementById("sprite-upload").addEventListener("click", event => {
                 body: JSON.stringify({fileData})
             })
             .then(response => response.json())
-            .then(data => console.log("Sprite uploaded", data))
+            .then(data => {
+                console.log("Sprite uploaded", data);
+                fileInput.value = '';  // This resets the input field
+            })
             .catch(error => {
                 console.error('Error uploading file:', error);
             });
