@@ -48,7 +48,7 @@ function spawn_game_field() {
 
 
 // Connect to the Flask-SocketIO server with credentials (cookies) //
-const socket = io(`${socket_url}`, {
+const socket = io.connect(`${socket_url}`, {
     withCredentials: true  // Ensure the session cookie is sent with the WebSocket connection
 });
 
