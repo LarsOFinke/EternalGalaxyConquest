@@ -15,14 +15,12 @@ class Planet():
         self.__settlements: list = settlements
         
     def fetch_base_state(self) -> dict:
-        base_state: dict = {
+        return {
             "category": "base",
             "name": self.name,
             "tile_id": self.__tile_id,
             "settlement_states": [settlement.fetch_settlement_state() for settlement in self.__settlements]
         }
-        
-        return base_state
             
     
     

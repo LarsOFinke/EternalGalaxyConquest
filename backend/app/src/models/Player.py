@@ -16,14 +16,12 @@ class Player():
         return self.__bases
     
     def fetch_player_state(self) -> dict:
-        player_state: dict = {
+        return {
             "category": "player",
             "name": self.name,
             "player_id": self.player_id,
             "base_states": [base.fetch_base_state() for base in self.__bases]
         }
-        
-        return player_state
 
 
 

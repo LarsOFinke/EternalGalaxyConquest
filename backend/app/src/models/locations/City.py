@@ -125,14 +125,12 @@ class City():
         self.__free_builders: list = [person for person in self.__population if person.category == "Worker" and person.field_of_work == "Builder" and person.working == False]
  
     def fetch_settlement_state(self) -> dict:
-        settlement_state: dict = {
+        return {
             "category": "settlement",
             "name": self.name,
             "resources": self.get_resources("dump")["resources"],
-            "buildings": [building.fetch_building_state() for building in self.__buildings]
+            "building_states": [building.fetch_building_state() for building in self.__buildings]
         }
-        
-        return settlement_state
     
     def get_resources(self, dump) -> dict:
         return  {

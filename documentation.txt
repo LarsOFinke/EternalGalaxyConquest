@@ -57,6 +57,18 @@ sonst:
                         {
                             "category": "settlement",
                             "name": self.name,
+                            "resources": {
+                                    "gold": self.__gold,
+                                    "food": self.__food,
+                                    "wood": self.__wood,
+                                    "iron": self.__iron
+                                },
+                            "building_states": [
+                                {
+                                    "category": "building",
+                                    "name": self.name
+                                },
+                            ]
                         },
                     ]
                 },

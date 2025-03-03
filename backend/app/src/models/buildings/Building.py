@@ -6,10 +6,8 @@ class Building():
         self.active: bool = active
 
     def fetch_building_state(self) -> dict:
-        building_state: dict = {
+        return {
             "category": "building",
             "name": self.name
         }
-        
-        return building_state
 
