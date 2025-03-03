@@ -244,11 +244,15 @@ class City():
 
             if not self.check_if_builder_available():
                 return  { "success": False, "message": "Kein verfügbarer Baumeister!" }
+            
+        result_1: dict = self.check_if_building_already_exists(building_name)
+        if not result_1["success"]: # Don't mind this logic... :) - false if building exists, true if not
+            return result_1
 
         building_costs: dict = self.fetch_building_costs(building_name)
-        result: dict = self.check_if_enough_resources(building_costs)
-        if not result["success"]:
-            return result
+        result_2: dict = self.check_if_enough_resources(building_costs)
+        if not result_2["success"]:
+            return result_2
 
         if self.build_building(building_name):
             self.subtract_costs(building_costs)
@@ -269,6 +273,13 @@ class City():
             return True
         
         return False
+
+    def check_if_building_already_exists(self, building_name: str) -> dict:
+        for building in self.__buildings:
+            if building.name == building_name:
+                return {"success": False, "message": f"{building_name} bereits vorhanden!"}
+        
+        return {"success": True}
 
     def build_building(self, building_name: str, *parameters) -> bool:        
         for option, Building in self.build_options.items():
