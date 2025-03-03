@@ -9,7 +9,7 @@ class Game:
         self.total_player_count: int = 0
         self.current_player: int = 2
         self.__game_state: dict = {}
-        self.__round = 1
+        self.__round = 0
         self.running: bool = False
 
     def fetch_game_state(self) -> dict:
@@ -40,7 +40,6 @@ class Game:
         result = self.process_payload(payload)
         result.update({"player": payload["player"]})
         
-        self.next_turn()
         return result
 
 
@@ -154,9 +153,9 @@ class Game:
     def next_turn(self) -> None:
         self.current_player = self.check_next_player()
         self.__game_state['current_player'] = self.current_player
-        self.__round += 1
         
         if self.current_player == 1:
+            self.__round += 1
             self.ai_turn()
      
   

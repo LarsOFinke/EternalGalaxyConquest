@@ -46,9 +46,18 @@ def handle_player_input(data):
     if data.get("user_id") == game.current_player:
         payload = data.get('payload')
         result: dict = game.process_player_action(payload)
+        emit('result_player_action', result)
+
+
+@socketio.on("next_round")
+def next_round(data):
+    game = games[data["host"]]
+    user = int(data["user_id"])
+    
+    if game.current_player == user:
+        game.next_turn()
         game_state: dict = game.fetch_game_state()
         emit('game_update', game_state)
-        emit('result_player_action', result)
         emit('your_turn', {'player': game.current_player})
 
 

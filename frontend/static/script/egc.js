@@ -64,6 +64,28 @@ socket.on('welcome', (data) => {
 
 // ### GAME COMMUNICATION ### //
 
+// Get Player input from buttons, forms etc //
+function nextRound() {
+    socket.emit("next_round", {
+        host: window.host, 
+        user_id: window.user_id
+    });
+};
+
+
+// Send player input (actions) to the server //
+function sendPlayerActions(actions) {
+    socket.emit('player_input', 
+                { 
+                    host: window.host, 
+                    user_id: window.user_id,
+                    payload:  {
+                                "player": window.user_id,
+                                "payload": actions   // Send player action to the backend
+                              }
+                });  
+};
+
 // Register Player //
 function register_player() {
     socket.emit("register_player", { user: username })
@@ -79,6 +101,7 @@ function startGame() {
     next_round_btn.id = "next-round";
     next_round_btn.className = "btn-small";
     next_round_btn.textContent = "Fertig!";
+    next_round_btn.addEventListener("click", event => nextRound(event));
     const start_game_btn = document.getElementById("start-game");
     start_game_btn.insertAdjacentElement("beforebegin", next_round_btn);
     start_game_btn.remove();
@@ -99,6 +122,8 @@ socket.on("game_started", data => {
     game = new Game(data["game_state"]);
     spawn_game_field();
 
+    console.log("Game state updated:");
+    console.log(data["game_state"]);
 });
 
 // Listen for 'your_turn' event //
@@ -273,32 +298,5 @@ function inspectTile(event) {
     event.preventDefault();
     spawnTileMenu(event);
 
-};
-
-
-// Get Player input from buttons, forms etc //
-function nextRound() {
-    sendPlayerActions({
-        "category": "buildings",
-        "location": ["factory", "Hauptstadt", "Heimatplanet"],
-        "target": "Builders Hut",
-        "action": "Get Workers",
-        "context": ["dump",]
-    });
-};
-document.getElementById("next-round").addEventListener("click", event => nextRound(event));
-
-
-// Send player input (actions) to the server //
-function sendPlayerActions(actions) {
-    socket.emit('player_input', 
-                { 
-                    host: window.host, 
-                    user_id: window.user_id,
-                    payload:  {
-                                "player": window.user_id,
-                                "payload": actions   // Send player action to the backend
-                              }
-                });  
 };
 
