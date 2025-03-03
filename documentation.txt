@@ -83,6 +83,12 @@ sonst:
                                     "category": "population",
                                     "name": self.name,
                                     "alive": self.alive
+                                ### IF WORKER ###
+                                    "employed": self.employed,
+                                    "field_of_work": self.field_of_work,
+                                    "working": self.working,
+                                    "production": self.production
+                                ###           ###
                                 },
                             ],
                             "free_workers": [
