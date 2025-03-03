@@ -20,7 +20,8 @@ class Game:
         self.__game_state=  {
                                 "round": self.__round,
                                 "current_player": self.current_player,
-                                "player_states": [player.fetch_player_state() for player in self.players]
+                                "player_states": [player.fetch_player_state() for player in self.players],
+                                "__tile_states": self.__tile_states
                             }
         
         return self.__game_state
