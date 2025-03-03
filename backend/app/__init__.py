@@ -6,7 +6,9 @@ from flask import Flask
 from flask_session import Session
 from flask_socketio import SocketIO
 from flask_cors import CORS
-
+import eventlet
+# Monkey patch the standard library to enable async IO
+# eventlet.monkey_patch()
 
 
 ### Create the Flask-Application ###
