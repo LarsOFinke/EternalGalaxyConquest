@@ -21,7 +21,7 @@ class Player():
             "category": "player",
             "name": self.name,
             "player_id": self.player_id,
-            "bases_state": [base.fetch_base_state() for base in self.__bases]
+            "base_states": [base.fetch_base_state() for base in self.__bases]
         }
         
         return player_state

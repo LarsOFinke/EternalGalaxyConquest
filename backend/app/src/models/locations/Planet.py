@@ -4,20 +4,22 @@ from .City import City
 
 
 class Planet():
-    def __init__(self, name: str, settlements: list = []):
+    def __init__(self, name: str, tile_id: int = 0, settlements: list = []):
         self.action_list: list[dict] =  [
                                             { "name": "Select Settlement", "action": self.select_settlement },
                                             { "name": "Found City", "action": self.found_city },
                                             { "name": "Found Outpost", "action": self.found_outpost }
                                         ]
         self.name: str = name
+        self.__tile_id = tile_id
         self.__settlements: list = settlements
         
     def fetch_base_state(self) -> list[dict]:
         base_state: dict = {
             "category": "base",
             "name": self.name,
-            "settlements_state": [settlement.fetch_settlement_state() for settlement in self.__settlements]
+            "tile_id": self.__tile_id,
+            "settlement_states": [settlement.fetch_settlement_state() for settlement in self.__settlements]
         }
         
         return base_state
