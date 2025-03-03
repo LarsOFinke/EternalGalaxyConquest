@@ -21,6 +21,10 @@ class Planet():
             "tile_id": self.__tile_id,
             "settlement_states": [settlement.fetch_settlement_state() for settlement in self.__settlements]
         }
+    
+    def set_tile_id(self, tile_id):
+        self.__tile_id = tile_id
+            
             
     
     

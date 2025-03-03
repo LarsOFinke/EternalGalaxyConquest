@@ -50,6 +50,7 @@ sonst:
 
 ## GAME-STATE FROM BACKEND ##
 {
+    "round": self.__round,
     "current_player": self.current_player,
     "player_states":[
         {

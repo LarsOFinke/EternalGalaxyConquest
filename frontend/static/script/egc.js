@@ -110,7 +110,10 @@ function startGame() {
 document.getElementById("start-game").addEventListener("click", e => startGame());
 
 //  Listen for game start //
-socket.on("game_started", data => {
+socket.on("new_game_started", data => {
+    console.log("Game started with state:");
+    console.log(data["game_state"]);
+
     window.host = data.host;
 
     data["game_state"]["player_states"].forEach(e => {
@@ -120,10 +123,10 @@ socket.on("game_started", data => {
     });
 
     game = new Game(data["game_state"]);
+    const tile_states = game.fetchTileStates();
+    socket.emit("initial_tile_states", {"tile_states": tile_states, "host": data.host});
     spawn_game_field();
-
-    console.log("Game state updated:");
-    console.log(data["game_state"]);
+    
 });
 
 // Listen for 'your_turn' event //
@@ -286,7 +289,7 @@ function spawnTileMenu(event) {
     document.getElementById("next-round").insertAdjacentElement("afterend", tile_menu_container);
 
     // SEARCH THE SELECTED TILE IN THE GAME-OBJECT //
-    for (let tile of game.tile_list) {
+    for (let tile of game.__tile_list) {
         if (parseInt(tile.tile_id) === parseInt(event.srcElement.id)) {
             spawnTileContextMenu(tile_menu_container, tile);
             

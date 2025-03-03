@@ -34,8 +34,15 @@ def start_game(data):
     game.start()
     game_state = game.fetch_game_state()
     
-    emit("game_started", { "host": host, "game_state": game_state })
+    emit("new_game_started", { "host": host, "game_state": game_state })
     emit('your_turn', {'player': game.current_player})
+
+
+@socketio.on("initial_tile_states")
+def initial_tile_states(data):
+    host = data["host"]
+    tile_states = data["tile_states"]
+    games[host].set_tile_states(tile_states)
 
 
 @socketio.on('player_input')    # Handle player input (this event is triggered by frontend input)

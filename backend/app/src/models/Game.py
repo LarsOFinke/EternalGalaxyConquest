@@ -9,8 +9,12 @@ class Game:
         self.total_player_count: int = 0
         self.current_player: int = 2
         self.__game_state: dict = {}
-        self.__round = 0
+        self.__round: int = 0
+        self.__tile_states: list[dict] = []
         self.running: bool = False
+
+    def set_tile_states(self, tile_states: list[dict]):
+        self.__tile_states = tile_states
 
     def fetch_game_state(self) -> dict:
         self.__game_state=  {
