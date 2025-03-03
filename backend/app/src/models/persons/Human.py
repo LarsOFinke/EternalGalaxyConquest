@@ -5,7 +5,13 @@ class Human():
         self.name: str = name
         self.category: str = category
         self.alive: bool = alive
-        
+    
+    def fetch_population_state(self) -> dict:
+        return {
+            "category": "population",
+            "name": self.name,
+            "alive": self.alive
+        }
 
 
 

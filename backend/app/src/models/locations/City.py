@@ -129,7 +129,8 @@ class City():
             "category": "settlement",
             "name": self.name,
             "resources": self.get_resources("dump")["resources"],
-            "building_states": [building.fetch_building_state() for building in self.__buildings]
+            "building_states": [building.fetch_building_state() for building in self.__buildings],
+            "population_states": [population.fetch_population_state() for population in self.__populations]
         }
     
     def get_resources(self, dump) -> dict:

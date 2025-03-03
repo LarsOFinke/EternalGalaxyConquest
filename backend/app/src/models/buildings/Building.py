@@ -8,6 +8,7 @@ class Building():
     def fetch_building_state(self) -> dict:
         return {
             "category": "building",
-            "name": self.name
+            "name": self.name,
+            "active": self.active
         }
 
