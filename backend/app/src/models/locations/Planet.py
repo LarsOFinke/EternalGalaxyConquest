@@ -13,18 +13,14 @@ class Planet():
         self.name: str = name
         self.__settlements: list = settlements
         
-    def get_base_status(self) -> list[dict]:
-        base_status: list[dict] = []
+    def fetch_base_state(self) -> list[dict]:
+        base_state: dict = {
+            "category": "base",
+            "name": self.name,
+            "settlements_state": [settlement.fetch_settlement_state() for settlement in self.__settlements]
+        }
         
-        for settlement in self.__settlements:
-            settlement_status: dict = settlement.get_settlement_status()
-            
-            base_status.append({
-                "name": settlement.name,
-                "settlement_status": settlement_status
-            })
-        
-        return base_status
+        return base_state
             
     
     def match_payload_action(self, action: str, context: list) -> dict:

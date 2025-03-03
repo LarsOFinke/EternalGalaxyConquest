@@ -40,6 +40,24 @@ Wenn Erfolg:
 sonst:
 { "success": False [, "message": ...] }
 
+## GAME-STATE FROM BACKEND ##
+{
+    "current_player": self.current_player,
+    "player_states":[
+        {
+            "category": "player",
+            "name": self.name,
+            "player_id": self.player_id,
+            "bases_state": [
+                {
+                    "category": "base",
+                    "name": self.name,
+                    "settlements_state": [settlement.fetch_settlement_state() for settlement in self.__settlements]
+                }
+            ]
+        },
+    ]
+}
 
 
 

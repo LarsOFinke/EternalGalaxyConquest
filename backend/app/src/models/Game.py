@@ -11,34 +11,27 @@ class Game:
         self.game_state: dict = {}
         self.running: bool = False
 
+    def fetch_game_state(self) -> dict:
+        self.game_state={
+                            "current_player": self.current_player,
+                            "player_states": [player.fetch_player_state() for player in self.players]
+                        }
+        
+        return self.game_state
+    
+    
     def add_player(self, player: str) -> None:
         self.player_count += 1
         new_player = Player(player, self.player_count)
         self.players.append(new_player)
 
-    def get_player_states(self):
-        player_states: list = [player.get_player_state() for player in self.players]
-        
-        return player_states
-
-
     def start(self) -> None:
         self.total_player_count = len(self.players)
-        player_states: list = self.get_player_states()
-        self.game_state={
-                            "current_player": self.current_player,
-                            "player_states": player_states,
-                            
-                            
-                        }
         self.running = True
         self.ai_turn()
 
     def end(self) -> None:
         self.running = False
-
-    def get_game_state(self) -> dict:
-        return self.game_state
     
 
     def process_player_action(self, payload) -> dict:

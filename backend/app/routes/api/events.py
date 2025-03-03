@@ -34,7 +34,7 @@ def start_game(data):
     
     
     game.start()
-    game_state = game.get_game_state()
+    game_state = game.fetch_game_state()
     
     print(game_state)
     

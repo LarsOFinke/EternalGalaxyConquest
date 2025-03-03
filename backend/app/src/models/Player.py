@@ -16,24 +16,12 @@ class Player():
     def get_bases(self) -> list:
         return self.__bases
     
-    def get_bases_state(self) -> list[dict]:
-        bases_state = []
-        
-        for base in self.__bases:
-            base_status: dict = base.get_base_status()
-            
-            bases_state.append({
-                "name": base.name,
-                "base_status": base_status
-            })
-        
-        return bases_state
-    
-    def get_player_state(self) -> dict:
+    def fetch_player_state(self) -> dict:
         player_state: dict = {
+            "category": "player",
             "name": self.name,
             "player_id": self.player_id,
-            "bases_state": self.get_bases_state()
+            "bases_state": [base.fetch_base_state() for base in self.__bases]
         }
         
         return player_state
