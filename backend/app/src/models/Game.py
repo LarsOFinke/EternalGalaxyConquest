@@ -35,7 +35,20 @@ class Game:
     
 
     def process_player_action(self, payload) -> dict:
-        """ Payload example:
+        result = self.process_payload(payload)
+        result.update({"player": payload["player"]})
+        
+        self.next_turn()
+        return result
+
+
+    def process_payload(self, payload) -> dict:
+        """ 
+        ############################################################
+        # Player -> bases -> settlements -> buildings / population #
+        ############################################################
+        
+        Payload example:
         {
             "player": 2,
             "category": "locations",
@@ -45,17 +58,6 @@ class Game:
             "context": ["New Citto", 1000, 1000, 1000, 1000]
         }
         """
-        ############################################################
-        # Player -> bases -> settlements -> buildings / population #
-        ############################################################
-        result = self.process_payload(payload)
-        result.update({"player": payload["player"]})
-        
-        self.next_turn()
-        return result
-
-
-    def process_payload(self, payload) -> dict:
         match payload['payload']["category"]:
             case "locations":
                 result = self.fetch_location((payload["player"] - 1), payload["payload"].get("location"), payload["payload"].get("target"))

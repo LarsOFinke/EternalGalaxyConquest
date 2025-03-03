@@ -124,7 +124,7 @@ class City():
         self.__free_workers: list = [person for person in self.__population if person.category == "Worker" and person.employed == False]
         self.__free_builders: list = [person for person in self.__population if person.category == "Worker" and person.field_of_work == "Builder" and person.working == False]
  
-    def fetch_settlement_state(self) -> list[dict]:
+    def fetch_settlement_state(self) -> dict:
         settlement_state: dict = {
             "category": "settlement",
             "name": self.name,

@@ -14,7 +14,7 @@ class Planet():
         self.__tile_id = tile_id
         self.__settlements: list = settlements
         
-    def fetch_base_state(self) -> list[dict]:
+    def fetch_base_state(self) -> dict:
         base_state: dict = {
             "category": "base",
             "name": self.name,
