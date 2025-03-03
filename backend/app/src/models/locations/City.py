@@ -121,8 +121,8 @@ class City():
         self.__iron: float = iron
         self.__buildings: list = buildings
         self.__population: list = population
-        self.__free_workers: list = [person for person in self.__population if person.category == "Worker" and person.employed == False]
-        self.__free_builders: list = [person for person in self.__population if person.category == "Worker" and person.field_of_work == "Builder" and person.working == False]
+        self.__free_workers: list = [person for person in self.__population if person.profession == "Worker" and person.employed == False]
+        self.__free_builders: list = [person for person in self.__population if person.profession == "Worker" and person.field_of_work == "Builder" and person.working == False]
  
     def fetch_settlement_state(self) -> dict:
         return {
@@ -130,7 +130,7 @@ class City():
             "name": self.name,
             "resources": self.get_resources("dump")["resources"],
             "building_states": [building.fetch_building_state() for building in self.__buildings],
-            "population_states": [population.fetch_population_state() for population in self.__populations]
+            "population_states": [population.fetch_population_state() for population in self.__population]
         }
     
     def get_resources(self, dump) -> dict:

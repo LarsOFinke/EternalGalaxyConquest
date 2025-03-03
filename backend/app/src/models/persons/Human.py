@@ -1,9 +1,9 @@
 
 
 class Human():
-    def __init__(self, name: str, category, alive: bool = True):
+    def __init__(self, name: str, profession, alive: bool = True):
         self.name: str = name
-        self.category: str = category
+        self.profession: str = profession
         self.alive: bool = alive
     
     def fetch_population_state(self) -> dict:
