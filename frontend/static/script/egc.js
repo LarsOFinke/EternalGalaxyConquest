@@ -263,7 +263,7 @@ function spawnTileContextMenu(tile_menu_container, tile) {
     tile_menu_container.insertAdjacentElement("afterbegin", tile_menu_header);
 
     switch (tile.tile_type) {
-        case "home_planet":
+        case "base":
             createHomePlanetTileContextMenu(tile_menu_container, tile) 
 
     }

@@ -16,6 +16,23 @@ class Game:
     def set_tile_states(self, tile_states: list[dict]):
         self.__tile_states = tile_states
 
+    def set_base_tiles(self, tile_states: list[dict]):
+        for player in self.players:
+            print(player.name, player.get_bases())
+            
+        for tile_state in tile_states:
+            
+            if tile_state.get("tile_type") == "base":
+                tile_id: int = int(tile_state.get("tile_id"))
+                owner: dict = tile_state.get("owner")   # {'name': 'AI', 'id': 1}
+                base_id: int = int(tile_state["tile_content"].get("base_id"))
+                planet_name = tile_state["tile_content"]["planet_name"]
+
+                for base in self.players[int(owner["id"]) - 1].get_bases():
+                    if base.get_base_id() == base_id:
+                        base.set_tile_id(tile_id)
+                        base.name = planet_name
+                
     def fetch_game_state(self) -> dict:
         self.__game_state=  {
                                 "round": self.__round,
@@ -25,6 +42,7 @@ class Game:
                             }
         
         return self.__game_state
+    
     
     
     def add_player(self, player: str) -> None:
@@ -39,7 +57,7 @@ class Game:
 
     def end(self) -> None:
         self.running = False
-    
+
 
     def process_player_action(self, payload) -> dict:
         result = self.process_payload(payload)

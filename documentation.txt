@@ -143,6 +143,9 @@ sonst:
 
 
 ## ORTE (locations) ##
+- Blueprint-Klassen
+-- Base
+
 - Stadt             class City()
 -- action_list: list[dict] =    [
                                     { "name": "Select Building", "action": self.select_building },
@@ -165,7 +168,7 @@ sonst:
 -- Hauptstadt       class MainCity(City)
 - Außenposten       class Outpost()
 
-- Planet            class Planet()
+- Planet            class Planet(Base)
 -- action_list: list[dict] =    [
                                     { "name": "Select Settlement", "action": self.select_settlement },
                                     { "name": "Found City", "action": self.found_city },

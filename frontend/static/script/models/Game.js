@@ -42,20 +42,22 @@ export class Game {
             if (i === 2) {
                 this.__tile_list.push({
                     tile_id: i,
-                    tile_type: "home_planet",
+                    tile_type: "base",
                     owner: this.__players[0],
                     tile_content: {
                         tile_name: `Heimat von ${this.__players[0].name}`,
+                        base_id: 1,
                         planet_name: `${this.__players[0].name}'s Planet`
                     }
                 });
             } else if (i === 11) {
                 this.__tile_list.push({
                     tile_id: i,
-                    tile_type: "home_planet",
+                    tile_type: "base",
                     owner: this.__players[1],
                     tile_content: {
                         tile_name: `Heimat von ${this.__players[1].name}`,
+                        base_id: 2,
                         planet_name: `${this.__players[1].name}'s Planet`
                     }
                 });

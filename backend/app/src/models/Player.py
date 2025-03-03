@@ -4,7 +4,9 @@ from .locations.Planet import Planet
 
 
 class Player():
-    def __init__(self, name: str, player_id: int, bases: list = [HomePlanet("Heimatplanet")]):
+    def __init__(self, name: str, player_id: int, bases: list = None):
+        if bases is None:
+            bases = [HomePlanet("Heimatplanet")]
         self.__action_list: list[dict] =  [
                                             { "name": "Select Base", "action": self.select_base, }
                                         ]
