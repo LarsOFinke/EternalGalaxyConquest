@@ -2,7 +2,7 @@
 
 
 
-const socket_url = "http://192.168.2.31:5000";
+const socket_url = "ws://192.168.2.31:5000";
 const api_url = "http://192.168.2.31:5000/api/";
 
 

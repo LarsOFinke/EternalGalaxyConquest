@@ -7,7 +7,7 @@ class Game:
         self.players: list[Player] = [Player("AI", 1)]
         self.player_count: int = 1
         self.total_player_count: int = 0
-        self.current_player: int = 1
+        self.current_player: int = 2
         self.__game_state: dict = {}
         self.running: bool = False
 
@@ -140,8 +140,7 @@ class Game:
     def ai_turn(self):
         """Handle the AI's turn logic."""
         
-        # self.next_turn()
-        pass
+        self.next_turn()
 
 
     def check_next_player(self) -> int:

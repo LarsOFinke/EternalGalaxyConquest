@@ -42,11 +42,11 @@ def start_game(data):
 def handle_player_input(data):
     host = data.get("host")
     game = games.get(host)
-    
+    print(data.get("user_id"))
     if data.get("user_id") == game.current_player:
         payload = data.get('payload')
         result: dict = game.process_player_action(payload)
-        game_state: dict = game.get_game_state()
+        game_state: dict = game.fetch_game_state()
         emit('game_update', game_state)
         emit('result_player_action', result)
         emit('your_turn', {'player': game.current_player})
