@@ -9,7 +9,16 @@ class Worker(Human):
         self.working: bool = working
         self.production: int = production
 
-
+    def fetch_population_state(self) -> dict:
+        population_state: dict = super().fetch_population_state()
+        population_state.update({
+            "employed": self.employed,
+            "field_of_work": self.field_of_work,
+            "working": self.working,
+            "production": self.production
+        })
+        
+        return population_state
 
 
 
