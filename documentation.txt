@@ -84,6 +84,16 @@ sonst:
                                     "name": self.name,
                                     "alive": self.alive
                                 },
+                            ],
+                            "free_workers": [
+                                {
+                                    "name": worker.name
+                                }
+                            ],
+                            "free_builders": [
+                                {
+                                    "name": builder.name
+                                }
                             ]
                         },
                     ]

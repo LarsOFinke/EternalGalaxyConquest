@@ -130,7 +130,9 @@ class City():
             "name": self.name,
             "resources": self.get_resources("dump")["resources"],
             "building_states": [building.fetch_building_state() for building in self.__buildings],
-            "population_states": [population.fetch_population_state() for population in self.__population]
+            "population_states": [population.fetch_population_state() for population in self.__population],
+            "free_workers": [{"name": worker.name} for worker in self.__free_workers],
+            "free_builders": [{"name": builder.name} for builder in self.__free_builders]
         }
     
     def get_resources(self, dump) -> dict:
@@ -357,23 +359,3 @@ class City():
         
         return  { "success": True, "message": "Neuer Arbeiter erfolgreich angeheuert!" }
 
-
-
-
-
-
-
-
-if __name__ == "__main__":
-    ct = City("TestCT", 2000, 2000, 2000, 2000, buildings=[BuildersHut()])
-    # print(ct.build_building("Builders Hut"))
-    # print(ct.build("Builders hut"))
-    # print(ct.get_buildings()[1].worker_slots)
-    
-    # building = ct.get_buildings()[0]
-    # print(building)
-    # ct.remove_building(building)
-    # print(ct.get_buildings())
-    
-
-    pass
