@@ -237,12 +237,13 @@ class City():
             else:
                 print(result["message"])
         """
-        has_builders_hut: bool = True if building_name == "Builders Hut" else self.check_if_has_builders_hut()
-        if not has_builders_hut:
-            return  { "success": False, "message": "Zuerst eine Bauhütte bauen!" }
+        if building_name != "Builders Hut":         
+            has_builders_hut: bool = self.check_if_has_builders_hut()
+            if not has_builders_hut:
+                return  { "success": False, "message": "Zuerst eine Bauhütte bauen!" }
 
-        if not self.check_if_builder_available():
-            return  { "success": False, "message": "Kein verfügbarer Baumeister!" }
+            if not self.check_if_builder_available():
+                return  { "success": False, "message": "Kein verfügbarer Baumeister!" }
 
         building_costs: dict = self.fetch_building_costs(building_name)
         result: dict = self.check_if_enough_resources(building_costs)
