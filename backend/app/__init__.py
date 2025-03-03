@@ -71,9 +71,9 @@ def create_app():
     
     ## Initialize the websocket ##
     global socketio
-    ssl_cert = '/etc/letsencrypt/live/egc.portfolio-finke.de/fullchain.pem'
-    ssl_key = '/etc/letsencrypt/live/egc.portfolio-finke.de/privkey.pem'
-    socketio = SocketIO(app, cors_allowed_origins="*", async_mode='eventlet', ssl_context=(ssl_cert, ssl_key))
+    # ssl_cert = '/etc/letsencrypt/live/egc.portfolio-finke.de/fullchain.pem'
+    # ssl_key = '/etc/letsencrypt/live/egc.portfolio-finke.de/privkey.pem'
+    socketio = SocketIO(app, cors_allowed_origins="*", async_mode='eventlet')   #, ssl_context=(ssl_cert, ssl_key)
     # Websocket-events #
     from .routes.api import events
     
