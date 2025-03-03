@@ -128,28 +128,12 @@ class City():
         settlement_state: dict = {
             "category": "settlement",
             "name": self.name,
+            "resources": self.get_resources("dump")["resources"],
+            
         }
         
         return settlement_state
     
-    
-    def match_payload_action(self, action: str, context: list) -> dict:
-        try:
-            for act in self.action_list:
-                if act["name"] == action:
-                    return act["action"](*context)
-        except Exception as e:
-            return { "success": False, "message": e }
-    
-    
-    def select_building(self, target) -> dict:
-        for building in self.__buildings:
-            if building.category == target:
-                return  { "success": True, "target": building }
-        
-        return { "success": False, "message": f"{target} nicht gefunden!" }
-    
-        
     def get_resources(self, dump) -> dict:
         return  {
                     "success": True,
@@ -161,7 +145,7 @@ class City():
                                 }
                 }
     
-    
+
     def get_buildings(self, dump) -> dict:
         return  { "success": True, "buildings": self.__buildings }
     
@@ -225,6 +209,24 @@ class City():
         self.__set_free_builders(builder, increase=False)
         return  { "success": True }
       
+
+
+    def match_payload_action(self, action: str, context: list) -> dict:
+        try:
+            for act in self.action_list:
+                if act["name"] == action:
+                    return act["action"](*context)
+        except Exception as e:
+            return { "success": False, "message": e }
+    
+    
+    def select_building(self, target) -> dict:
+        for building in self.__buildings:
+            if building.category == target:
+                return  { "success": True, "target": building }
+        
+        return { "success": False, "message": f"{target} nicht gefunden!" }
+    
         
     def build(self, building_name: str) -> dict:
         """ 

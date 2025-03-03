@@ -12,7 +12,6 @@ class Player():
         self.player_id: int = player_id
         self.__bases: list = bases
 
-
     def get_bases(self) -> list:
         return self.__bases
     
@@ -25,6 +24,7 @@ class Player():
         }
         
         return player_state
+
 
 
     def match_payload_action(self, action: str, context: list) -> dict:

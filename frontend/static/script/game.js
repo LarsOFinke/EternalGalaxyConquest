@@ -104,7 +104,8 @@ socket.on('your_turn', data => {
 
 // Listen for game updates from the server //
 socket.on('game_update', (gameState) => {
-    console.log('Updated game state:', gameState);
+    console.log("Game state updated:");
+    console.log(gameState);
 });
 
 // Listen for the result of the player action //
