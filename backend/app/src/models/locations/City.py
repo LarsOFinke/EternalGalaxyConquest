@@ -41,7 +41,7 @@ class City():
                 }
             },
             {
-                "name": "Builders hut",
+                "name": "Builders Hut",
                 "costs": {
                     "gold": 200,
                     "food": 150,
@@ -121,7 +121,7 @@ class City():
         self.__iron: float = iron
         self.__buildings: list = buildings
         self.__population: list = population
-        self.__free_workers: list = [person for person in self.__population if person.profession == "Worker" and person.employed == False]
+        self.__free_workers: list = [person for person in self.__population if person.profession == "Worker" and person.working == False]
         self.__free_builders: list = [person for person in self.__population if person.profession == "Worker" and person.field_of_work == "Builder" and person.working == False]
  
     def fetch_settlement_state(self) -> dict:
@@ -238,9 +238,8 @@ class City():
         has_builders_hut: bool = True if building_name == "Builders Hut" else self.check_if_has_builders_hut()
         if not has_builders_hut:
             return  { "success": False, "message": "Zuerst eine Bauhütte bauen!" }
-        
-        builder_available: bool = self.check_if_builder_available()
-        if not builder_available:
+
+        if not self.check_if_builder_available():
             return  { "success": False, "message": "Kein verfügbarer Baumeister!" }
 
         building_costs: dict = self.fetch_building_costs(building_name)
@@ -293,9 +292,10 @@ class City():
     
             
     def fetch_building_costs(self, building_name: str) -> dict:
+        building_costs: dict = {}
         for building in self.building_list:
                 if building["name"] == building_name:
-                    building_costs: dict = building["costs"]
+                    return building["costs"]
                     
         return building_costs
         

@@ -42,7 +42,7 @@ def start_game(data):
 def handle_player_input(data):
     host = data.get("host")
     game = games.get(host)
-    print(data.get("user_id"))
+    
     if data.get("user_id") == game.current_player:
         payload = data.get('payload')
         result: dict = game.process_player_action(payload)
