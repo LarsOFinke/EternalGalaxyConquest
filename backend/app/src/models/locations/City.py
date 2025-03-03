@@ -129,7 +129,7 @@ class City():
             "category": "settlement",
             "name": self.name,
             "resources": self.get_resources("dump")["resources"],
-            
+            "buildings": [building.fetch_building_state() for building in self.__buildings]
         }
         
         return settlement_state

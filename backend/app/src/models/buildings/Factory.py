@@ -14,8 +14,8 @@ class Factory(Building):
                                 "Forge": Blacksmith,
                             }
     
-    def __init__(self, category: str, worker_slots: int = 0, workers = [], active: bool = True):
-        super().__init__(category=category, active=active)
+    def __init__(self, name: str, worker_slots: int = 0, workers = [], active: bool = True):
+        super().__init__(name=name, active=active)
         self.worker_slots: int = worker_slots
         self.__workers: list = workers
     

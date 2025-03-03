@@ -2,7 +2,7 @@ from .MilitaryBuilding import MilitaryBuilding
 
 class Headquarter(MilitaryBuilding):
     def __init__(self):
-        super().__init__(category="Headquarter")
+        super().__init__(name="Headquarter")
 
 
 

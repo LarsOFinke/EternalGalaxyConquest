@@ -16,7 +16,7 @@ class Warehouse(Factory):
                         "iron": 0
                     }
                  ) -> None:
-        super().__init__(category="Warehouse", worker_slots=2, workers=workers)
+        super().__init__(name="Warehouse", worker_slots=2, workers=workers)
         self.storage_capacity: dict = storage_capacity
         self.__current_stock: dict = current_stock
     

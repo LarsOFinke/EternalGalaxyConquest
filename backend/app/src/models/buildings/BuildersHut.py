@@ -3,7 +3,7 @@ from .Factory import Factory
 
 class BuildersHut(Factory):
     def __init__(self, workers: list = []) -> None:
-        super().__init__(category="Builders Hut", worker_slots=2, workers=workers)
+        super().__init__(name="Builders Hut", worker_slots=2, workers=workers)
         self.action_list: list[dict] =  [
                                             { "name": "Convert Worker To Builder", "action": self.convert_worker_to_builder },
                                             { "name": "Get Workers", "action": self.get_workers }
