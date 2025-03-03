@@ -21,7 +21,7 @@ def mainmenu():
 
 @views.route("/game")
 def game():
-    return render_template("game.html")
+    return render_template("egc.html")
 
 
 @views.route("/profile")

@@ -30,17 +30,11 @@ def start_game(data):
     for player in players:
         game.add_player(player)
     players.clear()
-    connected_players: list = [{"player_name": player.name, "player_id": player.player_id} for player in game.players]
-    
     
     game.start()
     game_state = game.fetch_game_state()
     
-    print(game_state)
-    
-    emit("players_connected", connected_players)
-    emit("host", { "host": host })
-    emit('game_update', game_state)
+    emit("game_started", { "host": host, "game_state": game_state })
     emit('your_turn', {'player': game.current_player})
 
 

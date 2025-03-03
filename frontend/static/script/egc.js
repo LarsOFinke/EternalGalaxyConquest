@@ -46,7 +46,6 @@ function spawn_game_field() {
     }
 };
 
-spawn_game_field()
 
 // Connect to the Flask-SocketIO server with credentials (cookies) //
 const socket = io(`${socket_url}`, {
@@ -78,19 +77,18 @@ function startGame() {
 
 };
 
-//  Listen for host assignment //
-socket.on("host", data => {
+//  Listen for game start //
+socket.on("game_started", data => {
     window.host = data.host;
-});
 
-//  Listen for player_id assignment //
-socket.on("players_connected", data => {
-    data.forEach(e => {
-        if (e.player_name === username) {
+    data["game_state"]["player_states"].forEach(e => {
+        if (e.name === username) {
             window.user_id = e.player_id;
         }
     });
-    game = new Game(data);
+
+    game = new Game(data["game_state"]);
+    spawn_game_field();
 
 });
 

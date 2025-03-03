@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block stylesheets %}
-<link rel="stylesheet" href="{{ url_for('static', filename='style/game.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='style/egc.css') }}">
 <link rel="stylesheet" href="{{ url_for('static', filename='style/honeycomb.css') }}">
 <script>
     const username = "{{ session.username }}"
@@ -34,5 +34,5 @@
 
 {% block scripts %}
 <script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script> <!-- Include the Socket.IO client -->
-<script type="module" src="{{ url_for('static', filename='script/game.js') }}" defer></script>
+<script type="module" src="{{ url_for('static', filename='script/egc.js') }}" defer></script>
 {% endblock %}
