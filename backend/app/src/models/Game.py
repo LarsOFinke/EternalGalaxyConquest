@@ -9,13 +9,15 @@ class Game:
         self.total_player_count: int = 0
         self.current_player: int = 2
         self.__game_state: dict = {}
+        self.__round = 1
         self.running: bool = False
 
     def fetch_game_state(self) -> dict:
-        self.__game_state={
-                            "current_player": self.current_player,
-                            "player_states": [player.fetch_player_state() for player in self.players]
-                        }
+        self.__game_state=  {
+                                "round": self.__round,
+                                "current_player": self.current_player,
+                                "player_states": [player.fetch_player_state() for player in self.players]
+                            }
         
         return self.__game_state
     
@@ -152,6 +154,7 @@ class Game:
     def next_turn(self) -> None:
         self.current_player = self.check_next_player()
         self.__game_state['current_player'] = self.current_player
+        self.__round += 1
         
         if self.current_player == 1:
             self.ai_turn()

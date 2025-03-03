@@ -58,7 +58,6 @@ socket.on('welcome', (data) => {
     document.getElementById("welcome-msg").textContent = msg;
 
     register_player();
-    startGame();
 });
 
 
@@ -73,9 +72,19 @@ function register_player() {
 // Start the game //
 function startGame() {
     socket.emit('start_game', { user: username });  // Notify the backend to start the game
+
     document.getElementById("welcome-msg").remove();
 
+    const next_round_btn = document.createElement("button");
+    next_round_btn.id = "next-round";
+    next_round_btn.className = "btn-small";
+    next_round_btn.textContent = "Fertig!";
+    const start_game_btn = document.getElementById("start-game");
+    start_game_btn.insertAdjacentElement("beforebegin", next_round_btn);
+    start_game_btn.remove();
+
 };
+document.getElementById("start-game").addEventListener("click", e => startGame());
 
 //  Listen for game start //
 socket.on("game_started", data => {

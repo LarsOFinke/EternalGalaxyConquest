@@ -5,7 +5,7 @@ h1 {
 
 
 
-#next-round {
+#start-game, #next-round {
     position: absolute;
     align-self: flex-end;
     bottom: 15px;

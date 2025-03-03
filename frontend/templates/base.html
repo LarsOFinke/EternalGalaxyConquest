@@ -24,7 +24,8 @@
                 {% if "username" not in session %}
                     <li><a href="/">Startseite</a></li>
                 {% else %}
-                    <li><a class="navbar-items" href="/api/auth/clear-session">Logout</a></li>
+                    <li><a href="/mainmenu">Hauptmenü</a></li>
+                    <li><a href="/api/auth/clear-session">Logout</a></li>
                 {% endif %}
             </ul>
         </div>
@@ -41,7 +42,8 @@
                         {% if "username" not in session %}
                             <li><a href="/">Startseite</a></li>
                         {% else %}
-                            <li><a class="navbar-items" href="/api/auth/clear-session">Logout</a></li>
+                            <li><a href="/mainmenu">Hauptmenü</a></li>
+                            <li><a href="/api/auth/clear-session">Logout</a></li>
                         {% endif %}
                     </ul> 
                 </div>
