@@ -68,22 +68,18 @@ socket.on('welcome', (data) => {
 function nextRound() {
     socket.emit("next_round", {
         host: window.host, 
-        user_id: window.user_id
+        player: window.player_id
     });
 };
 
 
 // Send player input (actions) to the server //
-function sendPlayerActions(actions) {
-    socket.emit('player_input', 
-                { 
-                    host: window.host, 
-                    user_id: window.user_id,
-                    payload:  {
-                                "player": window.user_id,
-                                "payload": actions   // Send player action to the backend
-                              }
-                });  
+function sendPlayerActions(action) {
+    socket.emit('player_input', { 
+        host: window.host, 
+        player: window.player_id,
+        "action": action   // Send player action to the backend
+    });  
 };
 
 // Register Player //
@@ -118,7 +114,7 @@ socket.on("new_game_started", data => {
 
     data["game_state"]["player_states"].forEach(e => {
         if (e.name === username) {
-            window.user_id = e.player_id;
+            window.player_id = e.player_id;
         }
     });
 
@@ -131,7 +127,7 @@ socket.on("new_game_started", data => {
 
 // Listen for 'your_turn' event //
 socket.on('your_turn', data => {
-    if (parseInt(data.player) === window.user_id) {
+    if (parseInt(data.player) === window.player_id) {
         alert(username + ", it's your turn!");
     }
     
@@ -173,9 +169,8 @@ function buildBuildersHut(event) {
 
     // ADD CITY SELECTION FOR PAYLOAD // 
     const payload = {
-        "player": 2,
         "category": "locations",
-        "location": ["settlements", "Heimatplanet"],
+        "location": ["settlements", "admin's Planet"],
         "target": "Hauptstadt",
         "action": "Build",
         "context": ["Builders Hut",]

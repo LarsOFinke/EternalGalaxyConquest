@@ -22,13 +22,16 @@
 }
 
 # Nr2 #
-{
-    "player": 2,
-    "category": "locations",
-    "location": ["settlements", "Heimatplanet"],
-    "target": "Hauptstadt",
-    "action": "Build",
-    "context": ["Builders Hut",]
+{ 
+    host: window.host, 
+    player: window.player_id,
+    action: {
+        "category": "locations",
+        "location": ["settlements", "admin's Planet"],
+        "target": "Hauptstadt",
+        "action": "Build",
+        "context": ["Builders Hut",]
+    }
 }
 
 # Nr3 #

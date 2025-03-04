@@ -30,8 +30,9 @@ class Player():
     def match_payload_action(self, action: str, context: list) -> dict:
         try:
             for act in self.__action_list:
-                if act["name"] == action:
+                if act.get("name") == action:
                     return act["action"](*context)
+                
         except Exception as e:
             return  { "success": False, "message": f"{e}" }
 

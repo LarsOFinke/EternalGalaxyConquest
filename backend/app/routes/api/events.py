@@ -53,19 +53,19 @@ def handle_player_input(data):
     host = data.get("host")
     game = games.get(host)
     
-    if data.get("user_id") == game.current_player:
-        payload = data.get('payload')
-        result: dict = game.process_player_action(payload)
-        print(result)
+    player = data.get("player")
+    if player == game.current_player:
+        action = data.get('action')
+        result: dict = game.process_player_action(player, action)
         emit('result_player_action', result)
 
 
 @socketio.on("next_round")
 def next_round(data):
     game = games[data["host"]]
-    user = int(data["user_id"])
+    player = int(data["player_id"])
     
-    if game.current_player == user:
+    if game.current_player == player:
         game.next_turn()
         game_state: dict = game.fetch_game_state()
         emit('game_update', game_state)

@@ -56,14 +56,14 @@ class Game:
         self.running = False
 
 
-    def process_player_action(self, payload) -> dict:
-        result = self.process_payload(payload)
-        result.update({"player": payload["player"]})
+    def process_player_action(self, player, action) -> dict:
+        result = self.process_payload((player - 1), action)
+        result.update({"player": (player + 1)})
         
         return result
 
 
-    def process_payload(self, payload) -> dict:
+    def process_payload(self, player, action) -> dict:
         """ 
         ############################################################
         # Player -> bases -> settlements -> buildings / population #
@@ -71,36 +71,35 @@ class Game:
         
         Payload example:
         {
-            "player": 2,
             "category": "locations",
-            "target": ["bases",],
-            "target_name": "Heimatplanet",
-            "action": "Found City",
-            "context": ["New Citto", 1000, 1000, 1000, 1000]
+            "location": ["settlements", "admin's Planet"],
+            "target": "Hauptstadt",
+            "action": "Build",
+            "context": ["Builders Hut",]
         }
         """
-        match payload['payload']["category"]:
+        match action["category"]:
             case "locations":
-                result = self.fetch_location((payload["player"] - 1), payload["payload"].get("location"), payload["payload"].get("target"))
+                result = self.fetch_location((player), action.get("location"), action.get("target"))
                 if result == None:
-                    return { "success": False, "message": f"{payload['payload'].get('target')} konnte nicht gefunden werden." } 
+                    return { "success": False, "message": f"{action.get('target')} konnte nicht gefunden werden." } 
                 
                 elif result["success"]:
-                    target = result["target"]
-                    payload_return = target.match_payload_action(payload["payload"].get("action"), payload["payload"].get("context"))
-                    return payload_return
+                    target = result.get("target")
+                    action_return = target.match_payload_action(action.get("action"), action.get("context"))
+                    return action_return
                 
                 return result
                 
             case "buildings":
-                result = self.fetch_building((payload["player"] - 1), payload["payload"].get("location"), payload["payload"].get("target"))
+                result = self.fetch_building((player), action.get("location"), action.get("target"))
                 if result == None:
-                    return { "success": False, "message": f"{payload['payload'].get('target')} konnte nicht gefunden werden." } 
+                    return { "success": False, "message": f"{action.get('target')} konnte nicht gefunden werden." } 
                 
                 elif result["success"]:
-                    target = result["target"]
-                    payload_return = target.match_payload_action(payload["payload"].get("action"), payload["payload"].get("context"))
-                    return payload_return
+                    target = result.get("target")
+                    action_return = target.match_payload_action(action.get("action"), action.get("context"))
+                    return action_return
                 
                 return result
             
