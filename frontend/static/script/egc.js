@@ -6,42 +6,6 @@ var game;
 
 // ### INITIALIZATION ### //
 
-function spawnHomePlanet(new_tile, owner_id) {
-    new_tile.classList = `hex color${owner_id + 1}`;
-
-    const home_planet_container = document.createElement("div");
-    home_planet_container.className = "home-planet";
-    home_planet_container.id = new_tile.id;
-    
-    const home_planet = document.createElement("img");
-    home_planet.id = new_tile.id;
-    home_planet.classList = "home-planet-sprite";
-    home_planet.src = "/api/sprite/1";
-    home_planet.addEventListener("click", event => inspectTile(event));
-    home_planet_container.insertAdjacentElement("afterbegin", home_planet);
-
-    new_tile.insertAdjacentElement("afterbegin", home_planet_container);
-};
-
-function spawn_game_field(tile_states) {
-    const game_field = document.getElementById("game_field");
-
-    for (const tile_state of tile_states) {
-        let new_tile = document.createElement("div");
-        new_tile.id = tile_state.id;
-        new_tile.addEventListener("click", event => inspectTile(event));
-
-        if (tile_state.tile_type === "home_planet") {
-            spawnHomePlanet(new_tile, tile_state.owner_id);
-        } else {
-            new_tile.classList = "hex color1";
-        }
-
-        game_field.insertAdjacentElement("beforeend", new_tile);
-    }
-};
-
-
 // Connect to the Flask-SocketIO server with credentials (cookies) //
 const socket = io.connect(`${socket_url}`, {
     withCredentials: true  // Ensure the session cookie is sent with the WebSocket connection
@@ -59,7 +23,6 @@ socket.on('welcome', (data) => {
 
 // ### GAME COMMUNICATION ### //
 
-// Get Player input from buttons, forms etc //
 function nextRound() {
     socket.emit("next_round", {
         host: game.host, 
@@ -112,8 +75,8 @@ socket.on("new_game_started", data => {
     });
 
     game = new Game(data.host, data["game_state"]);
+    game.spawn_game_field(data["game_state"]["tile_states"]);
 
-    spawn_game_field(data["game_state"]["tile_states"]);
 });
 
 // Listen for 'your_turn' event //
@@ -249,7 +212,7 @@ function spawnTileContextMenu(tile_menu_container, tile) {
     tile_menu_container.insertAdjacentElement("afterbegin", tile_menu_header);
 
     switch (tile.tile_type) {
-        case "base":
+        case "home_planet":
             createHomePlanetTileContextMenu(tile_menu_container, tile) 
 
     }
@@ -275,8 +238,8 @@ function spawnTileMenu(event) {
     document.getElementById("next-round").insertAdjacentElement("afterend", tile_menu_container);
 
     // SEARCH THE SELECTED TILE IN THE GAME-OBJECT //
-    for (let tile of game.__tile_list) {
-        if (parseInt(tile.tile_id) === parseInt(event.srcElement.id)) {
+    for (let tile of game.fetchTileStates()) {
+        if (parseInt(tile.id) === parseInt(event.srcElement.id)) {
             spawnTileContextMenu(tile_menu_container, tile);
             
         }
@@ -284,7 +247,7 @@ function spawnTileMenu(event) {
 };
 
 
-function inspectTile(event) {
+export function inspectTile(event) {
     event.preventDefault();
     spawnTileMenu(event);
 
