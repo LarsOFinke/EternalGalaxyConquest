@@ -66,7 +66,7 @@ h1 {
 }
 
 
-.home-planet {
+.planet {
     height: 30px;
     width: 30px;
     margin: 21px 16px 21px 16px;
@@ -75,6 +75,10 @@ h1 {
 }
 .home-planet-sprite {
     animation: moveSpriteSheet 4.5s steps(60) infinite;
+}
+
+.center-planet-sprite {
+    animation: moveSpriteSheet 10s steps(120) infinite;
 }
 
 @keyframes moveSpriteSheet {
