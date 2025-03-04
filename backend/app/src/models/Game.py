@@ -19,14 +19,14 @@ class Game:
 
     def set_base_tiles(self, tile_states: list[dict]):
         for tile_state in tile_states:
-            
-            if tile_state.get("tile_type") == "base":
-                tile_id: int = int(tile_state.get("tile_id"))
-                owner: dict = tile_state.get("owner")   # {'name': 'AI', 'id': 1}
+            if tile_state.get("tile_type") == "home_planet":
+                tile_id: int = int(tile_state.get("id"))
+                owner_id: dict = tile_state.get("owner_id")   # {'name': 'AI', 'id': 1}
+                print(tile_state["tile_content"].get("base_id"))
                 base_id: int = int(tile_state["tile_content"].get("base_id"))
                 planet_name = tile_state["tile_content"]["planet_name"]
 
-                for base in self.players[int(owner["id"]) - 1].get_bases():
+                for base in self.players[int(owner_id) - 1].get_bases():
                     if base.get_base_id() == base_id:
                         base.set_tile_id(tile_id)
                         base.name = planet_name
@@ -57,7 +57,8 @@ class Game:
             owner_id: player_id,
             tile_content: {
                 tile_name: `Heimat von ${this.__players[0].name}`,
-                planet_name: `${this.__players[0].name}'s Planet`
+                planet_name: `${this.__players[0].name}'s Planet`,
+                base_id: id,
             }
         }
         """
@@ -74,7 +75,8 @@ class Game:
                         "owner_id": self.players[0].player_id,
                         "tile_content": {
                             "tile_name": f"Heimat von {self.players[0].name}",
-                            "planet_name": f"{self.players[0].name}'s Planet"
+                            "planet_name": f"{self.players[0].name}'s Planet",
+                            "base_id": self.players[0].get_bases()[0].get_base_id()
                         }
                     }
                 )
@@ -87,7 +89,8 @@ class Game:
                         "owner_id": self.players[1].player_id,
                         "tile_content": {
                             "tile_name": f"Heimat von {self.players[1].name}",
-                            "planet_name": f"{self.players[1].name}'s Planet"
+                            "planet_name": f"{self.players[1].name}'s Planet",
+                            "base_id": self.players[1].get_bases()[0].get_base_id()
                         }
                     }
                 )
@@ -111,6 +114,7 @@ class Game:
     def start(self) -> None:
         self.total_player_count = len(self.players)
         self.__tile_states = self.spawn_game_field()
+        self.set_base_tiles(self.__tile_states)
         self.running = True
         self.ai_turn()
 
