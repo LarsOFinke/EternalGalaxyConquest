@@ -17,9 +17,6 @@ class Game:
         self.__tile_states = tile_states
 
     def set_base_tiles(self, tile_states: list[dict]):
-        for player in self.players:
-            print(player.name, player.get_bases())
-            
         for tile_state in tile_states:
             
             if tile_state.get("tile_type") == "base":
@@ -128,7 +125,7 @@ class Game:
                     return self.players[player].match_payload_action(action="Select Base", context=[target,])
                 
                 except Exception as e:
-                    return  { "success": False, "message": e }
+                    return  { "success": False, "message": f"{e}" }
                         
             case "settlements":
                 try:
@@ -136,7 +133,7 @@ class Game:
                     return base.match_payload_action(action="Select Settlement", context=[target,])
                 
                 except Exception as e:
-                    return  { "success": False, "message": e }
+                    return  { "success": False, "message": f"{e}" }
         
                 
     def fetch_building(self, player, location: list, target: str) -> dict:

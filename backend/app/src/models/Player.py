@@ -33,7 +33,7 @@ class Player():
                 if act["name"] == action:
                     return act["action"](*context)
         except Exception as e:
-            return  { "success": False, "message": e }
+            return  { "success": False, "message": f"{e}" }
 
 
     def select_base(self, target) -> dict:
