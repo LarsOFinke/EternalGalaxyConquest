@@ -5,12 +5,13 @@
 document.getElementById("sprite-upload").addEventListener("click", event => {
     event.preventDefault();
 
-    let new_sprite = document.getElementById("sprite-file").files[0];
+    const fileInput = document.getElementById("sprite-file");
+    let new_sprite = fileInput.files[0];
 
     const reader = new FileReader();
     reader.onload = function(e) {
             const fileData = e.target.result;
-
+            
             fetch(`${api_url}/sprite/upload`, {
                 method: "POST",
                 headers: {
@@ -21,7 +22,7 @@ document.getElementById("sprite-upload").addEventListener("click", event => {
             .then(response => response.json())
             .then(data => {
                 console.log("Sprite uploaded", data);
-                fileInput.value = '';  // This resets the input field
+                fileInput.value = '';
             })
             .catch(error => {
                 console.error('Error uploading file:', error);
