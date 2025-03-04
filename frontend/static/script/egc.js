@@ -6,8 +6,8 @@ var game;
 
 // ### INITIALIZATION ### //
 
-function spawnHomePlanet(new_tile, color) {
-    new_tile.classList = `hex ${color}`;
+function spawnHomePlanet(new_tile, owner_id) {
+    new_tile.classList = `hex color${owner_id + 1}`;
 
     const home_planet_container = document.createElement("div");
     home_planet_container.className = "home-planet";
@@ -21,23 +21,18 @@ function spawnHomePlanet(new_tile, color) {
     home_planet_container.insertAdjacentElement("afterbegin", home_planet);
 
     new_tile.insertAdjacentElement("afterbegin", home_planet_container);
-
 };
 
-function spawn_game_field() {
+function spawn_game_field(tile_states) {
     const game_field = document.getElementById("game_field");
 
-    for (let i=1; i<=12; i++) {
+    for (const tile_state of tile_states) {
         let new_tile = document.createElement("div");
-        new_tile.id = i;
+        new_tile.id = tile_state.id;
         new_tile.addEventListener("click", event => inspectTile(event));
 
-        if (i === 2) {
-            spawnHomePlanet(new_tile, "color2")
-
-        } else if (i === 11) {
-            spawnHomePlanet(new_tile, "color3")
-
+        if (tile_state.tile_type === "home_planet") {
+            spawnHomePlanet(new_tile, tile_state.owner_id);
         } else {
             new_tile.classList = "hex color1";
         }
@@ -67,7 +62,7 @@ socket.on('welcome', (data) => {
 // Get Player input from buttons, forms etc //
 function nextRound() {
     socket.emit("next_round", {
-        host: window.host, 
+        host: game.host, 
         player: window.player_id
     });
 };
@@ -76,7 +71,7 @@ function nextRound() {
 // Send player input (actions) to the server //
 function sendPlayerActions(action) {
     socket.emit('player_input', { 
-        host: window.host, 
+        host: game.host, 
         player: window.player_id,
         "action": action   // Send player action to the backend
     });  
@@ -110,21 +105,15 @@ socket.on("new_game_started", data => {
     console.log("Game started with state:");
     console.log(data["game_state"]);
 
-    window.host = data.host;
-
     data["game_state"]["player_states"].forEach(e => {
         if (e.name === username) {
             window.player_id = e.player_id;
         }
     });
 
-    game = new Game(data["game_state"]);
+    game = new Game(data.host, data["game_state"]);
 
-    // const tile_states = game.fetchTileStates();
-    // socket.emit("initial_tile_states", {"tile_states": tile_states, "host": data.host});
-    // spawn_game_field();
     spawn_game_field(data["game_state"]["tile_states"]);
-    
 });
 
 // Listen for 'your_turn' event //

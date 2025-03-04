@@ -5,7 +5,8 @@ import { Player } from "./player.js";
 
 export class Game {
 
-    constructor(game_state, tile_list = []) {
+    constructor(host, game_state, tile_list = []) {
+        this.host = host;
         this.game_state = game_state;
         this.__players = this.addPlayers(game_state);
         this.player_count = this.__players.length;

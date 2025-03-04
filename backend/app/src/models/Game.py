@@ -36,7 +36,7 @@ class Game:
                                 "round": self.__round,
                                 "current_player": self.current_player,
                                 "player_states": [player.fetch_player_state() for player in self.players],
-                                "__tile_states": self.__tile_states
+                                "tile_states": self.__tile_states
                             }
         
         return self.__game_state
@@ -51,9 +51,10 @@ class Game:
     def spawn_game_field(self) -> list[dict]:
         """
         {
-            tile_id: i,
+            id: i,
             tile_type: "home_planet",
             owner: this.__players[0],
+            owner_id: player_id,
             tile_content: {
                 tile_name: `Heimat von ${this.__players[0].name}`,
                 planet_name: `${this.__players[0].name}'s Planet`
@@ -70,6 +71,7 @@ class Game:
                     {
                         "tile_type": "home_planet",
                         "owner": self.players[0].name,
+                        "owner_id": self.players[0].player_id,
                         "tile_content": {
                             "tile_name": f"Heimat von {self.players[0].name}",
                             "planet_name": f"{self.players[0].name}'s Planet"
@@ -82,6 +84,7 @@ class Game:
                     {
                         "tile_type": "home_planet",
                         "owner": self.players[1].name,
+                        "owner_id": self.players[1].player_id,
                         "tile_content": {
                             "tile_name": f"Heimat von {self.players[1].name}",
                             "planet_name": f"{self.players[1].name}'s Planet"
