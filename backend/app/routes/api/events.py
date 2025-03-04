@@ -63,7 +63,7 @@ def handle_player_input(data):
 @socketio.on("next_round")
 def next_round(data):
     game = games[data["host"]]
-    player = int(data["player_id"])
+    player = int(data["player"])
     
     if game.current_player == player:
         game.next_turn()

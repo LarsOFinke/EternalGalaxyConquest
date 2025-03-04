@@ -57,13 +57,13 @@ class Game:
 
 
     def process_player_action(self, player, action) -> dict:
-        result = self.process_payload((player - 1), action)
+        result = self.process_action((player - 1), action)
         result.update({"player": (player + 1)})
         
         return result
 
 
-    def process_payload(self, player, action) -> dict:
+    def process_action(self, player, action) -> dict:
         """ 
         ############################################################
         # Player -> bases -> settlements -> buildings / population #
@@ -80,7 +80,7 @@ class Game:
         """
         match action["category"]:
             case "locations":
-                result = self.fetch_location((player), action.get("location"), action.get("target"))
+                result = self.fetch_location(player, action.get("location"), action.get("target"))
                 if result == None:
                     return { "success": False, "message": f"{action.get('target')} konnte nicht gefunden werden." } 
                 
@@ -92,7 +92,7 @@ class Game:
                 return result
                 
             case "buildings":
-                result = self.fetch_building((player), action.get("location"), action.get("target"))
+                result = self.fetch_building(player, action.get("location"), action.get("target"))
                 if result == None:
                     return { "success": False, "message": f"{action.get('target')} konnte nicht gefunden werden." } 
                 
