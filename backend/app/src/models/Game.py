@@ -10,6 +10,7 @@ class Game:
         self.current_player: int = 2
         self.__game_state: dict = {}
         self.__round: int = 0
+        self.__tile_count: int = 12
         self.__tile_states: list[dict] = []
         self.running: bool = False
 
@@ -31,7 +32,7 @@ class Game:
                         base.name = planet_name
                 
     def fetch_game_state(self) -> dict:
-        self.__game_state=  {
+        self.__game_state =  {
                                 "round": self.__round,
                                 "current_player": self.current_player,
                                 "player_states": [player.fetch_player_state() for player in self.players],
@@ -47,8 +48,66 @@ class Game:
         new_player = Player(player, self.player_count)
         self.players.append(new_player)
 
+    def spawn_game_field(self) -> list[dict]:
+        """
+        {
+            tile_id: i,
+            tile_type: "home_planet",
+            owner: this.__players[0],
+            tile_content: {
+                tile_name: `Heimat von ${this.__players[0].name}`,
+                planet_name: `${this.__players[0].name}'s Planet`
+            }
+        }
+        """
+        game_field: list[dict] = []
+
+        for i in range(self.__tile_count):
+            new_tile: dict = { "id": (i + 1) }
+
+            if i == 1:
+                new_tile.update(
+                    {
+                        "tile_type": "home_planet",
+                        "owner": self.players[0].name,
+                        "tile_content": {
+                            "tile_name": f"Heimat von {self.players[0].name}",
+                            "planet_name": f"{self.players[0].name}'s Planet"
+                        }
+                    }
+                )
+
+            elif i == 10:
+                new_tile.update(
+                    {
+                        "tile_type": "home_planet",
+                        "owner": self.players[1].name,
+                        "tile_content": {
+                            "tile_name": f"Heimat von {self.players[1].name}",
+                            "planet_name": f"{self.players[1].name}'s Planet"
+                        }
+                    }
+                )
+
+            else:
+                new_tile.update(
+                    {
+                        "tile_type": "space",
+                        "owner": "free",
+                        "tile_content": {
+                            "tile_name": f"Tile #{(i + 1)}",
+                            "planet_name": f"No Planet"
+                        }
+                    }
+                )
+        
+            game_field.append(new_tile)
+        
+        return game_field
+
     def start(self) -> None:
         self.total_player_count = len(self.players)
+        self.__tile_states = self.spawn_game_field()
         self.running = True
         self.ai_turn()
 

@@ -119,9 +119,11 @@ socket.on("new_game_started", data => {
     });
 
     game = new Game(data["game_state"]);
-    const tile_states = game.fetchTileStates();
-    socket.emit("initial_tile_states", {"tile_states": tile_states, "host": data.host});
-    spawn_game_field();
+
+    // const tile_states = game.fetchTileStates();
+    // socket.emit("initial_tile_states", {"tile_states": tile_states, "host": data.host});
+    // spawn_game_field();
+    spawn_game_field(data["game_state"]["tile_states"]);
     
 });
 

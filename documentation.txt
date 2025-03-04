@@ -127,7 +127,7 @@ sonst:
             tile_content: {
                 tile_name: `Heimat von ${this.__players[0].name}`,
                 planet_name: `${this.__players[0].name}'s Planet`
-                }
+            }
         },
     ]
 }
