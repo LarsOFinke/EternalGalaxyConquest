@@ -77,9 +77,13 @@ sonst:
                     "category": "base",
                     "name": self.name,
                     "tile_id": self.__tile_id,
+                    "base_id": self.get_base_id(),
+                    "base_type": self.base_type,
                     "settlement_states": [
                         {
                             "category": "settlement",
+                            "settlement_id": self.__settlement_id,
+                            "settlement_type": self.settlement_type,
                             "name": self.name,
                             "resources": {
                                     "gold": self.__gold,
@@ -97,6 +101,7 @@ sonst:
                             "population_states": [
                                 {
                                     "category": "population",
+                                    self.__population_id = Population.population_id
                                     "name": self.name,
                                     "alive": self.alive
                                 ### IF WORKER ###
@@ -224,7 +229,7 @@ sonst:
 
 
 
-## CHARAKTERE (persons) ##
+## CHARAKTERE (population) ##
 - Blueprint-Klassen
 -- Population       class Population
 -- Human            class Human(Population)
