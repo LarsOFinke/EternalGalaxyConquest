@@ -27,13 +27,3 @@ class BuildersHut(Factory):
             return  { "success": False, "message": f"{wn} konnte nicht zum Baumeister werden!" }
     
 
-
-
-
-
-if __name__ == "__main__":
-    # bh = BuildersHut()
-    # print(bh.worker_slots)
-    
-    pass
-    

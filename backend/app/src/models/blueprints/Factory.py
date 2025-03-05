@@ -19,6 +19,14 @@ class Factory(Building):
         self.worker_slots: int = worker_slots
         self.__workers: list = workers
     
+    def fetch_building_state(self) -> dict:
+        building_state: dict = super().fetch_building_state()
+        building_state.update({
+            "worker_slots": self.worker_slots,
+            "workers": self.__workers
+        })
+        
+        return building_state
     
     def get_workers(self, dump) -> list:
         return  { "success": True, "workers": self.__workers }
@@ -53,11 +61,4 @@ class Factory(Building):
 
         return False
 
-    # Method that takes workers etc as parameters to occupy them during work
-
-
-
-
-
-if __name__ == "__main__":
-    pass
+    # Method that takes workers etc as parameters to occupy them during work !?
