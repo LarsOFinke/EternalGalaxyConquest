@@ -222,14 +222,22 @@ class City():
             return { "success": False, "message": e }
     
     
-    def select_building(self, target) -> dict:
+    def select_building(self, target: str) -> dict:
         for building in self.__buildings:
             if building.category == target:
                 return  { "success": True, "target": building }
         
         return { "success": False, "message": f"{target} nicht gefunden!" }
     
-    def select_population(self, target) -> dict:
+    def select_population(self, target: int) -> dict:
+        """
+
+        Args:
+            target (int): The population_id of the target.
+
+        Returns:
+            dict: Returns the person under the "target"-key, if found, and a "message"-key if not.
+        """
         for population in self.__population:
             if population.get_population_id() == int(target):
                 return  { "success": True, "target": population }
