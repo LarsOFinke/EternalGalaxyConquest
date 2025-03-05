@@ -2,9 +2,13 @@
 
 ### PROJECT-SETUP ###
 1. pip install -r requirements.txt
-2. backend/app/__ini__.py --> comment out line 11 ("eventlet.monkey_patch()")
+2. backend/app/__ini__.py 
+-> comment out line 11 ("eventlet.monkey_patch()")
+-> check in the bottom for "ssl_cert" and "ssl_key" variables
+---> comment them out for http, fill in your own for https
+--> when socketio-variable gets created, remove parameter ", ssl_context=(ssl_cert, ssl_key)"
 3. frontend/static/script/general.js --> change IP and Port to your own (e.g. 192.168.2.31:5000)
---> !!! Be careful of wss / https or ws / http !!!
+-> !!! Be careful of wss / https or ws / http !!!
 
 
 

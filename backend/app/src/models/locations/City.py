@@ -231,7 +231,7 @@ class City():
     
     def select_population(self, target) -> dict:
         for population in self.__population:
-            if population.id == target:
+            if population.get_population_id() == int(target):
                 return  { "success": True, "target": population }
         
         return { "success": False, "message": f"{target} nicht gefunden!" }
