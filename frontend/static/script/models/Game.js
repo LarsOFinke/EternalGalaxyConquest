@@ -9,6 +9,7 @@ export class Game {
 
     constructor(host, game_state) {
         this.host = host;
+        this.own_player_id = 0;
         this.game_state = game_state;
         this.__players = this.addPlayers(game_state);
         this.player_count = this.__players.length;
@@ -29,6 +30,10 @@ export class Game {
             const new_player = new Player(player["name"], player["player_id"], player["base_states"]);
             players.push(new_player);
 
+            if (player["name"] === username) {
+                this.own_player_id = player["player_id"];
+            }
+            
           }
 
         return players;
@@ -37,7 +42,7 @@ export class Game {
     addUnclaimedPlanets(game_state) {
         let unclaimed_planets = [];
 
-        for (let planet in game_state["unclaimed_planets"]) {
+        for (let planet of game_state["unclaimed_planets"]) {
             unclaimed_planets.push(new Planet(planet.tile_id, planet.base_id, planet.name, planet.settlement_states))
         }
     }
