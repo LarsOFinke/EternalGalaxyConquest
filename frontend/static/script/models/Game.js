@@ -38,17 +38,33 @@ export class Game {
         new_tile.classList = `hex color${owner_id + 1}`;
     
         const home_planet_container = document.createElement("div");
-        home_planet_container.className = "home-planet";
+        home_planet_container.className = "planet";
         home_planet_container.id = new_tile.id;
         
         const home_planet = document.createElement("img");
         home_planet.id = new_tile.id;
         home_planet.classList = "home-planet-sprite";
-        home_planet.src = "/api/sprite/1";
+        home_planet.src = `/api/sprite/${owner_id + 1}`;
         home_planet.addEventListener("click", event => inspectTile(event));
         home_planet_container.insertAdjacentElement("afterbegin", home_planet);
     
         new_tile.insertAdjacentElement("afterbegin", home_planet_container);
+    };
+
+    spawnCenterPlanet(new_tile) {
+        new_tile.classList = "hex color1";
+        const center_planet_container = document.createElement("div");
+        center_planet_container.className = "planet";
+        center_planet_container.id = new_tile.id;
+        
+        const center_planet = document.createElement("img");
+        center_planet.id = new_tile.id;
+        center_planet.classList = "center-planet-sprite";
+        center_planet.src = `/api/sprite/4`;
+        center_planet.addEventListener("click", event => inspectTile(event));
+        center_planet_container.insertAdjacentElement("afterbegin", center_planet);
+    
+        new_tile.insertAdjacentElement("afterbegin", center_planet_container);
     };
     
     spawn_game_field(tile_states) {
@@ -56,15 +72,17 @@ export class Game {
     
         for (const tile_state of tile_states) {
             let new_tile = document.createElement("div");
-            new_tile.id = tile_state.id;
+            new_tile.id = parseInt(tile_state.id);
             new_tile.addEventListener("click", event => inspectTile(event));
     
             if (tile_state.tile_type === "home_planet") {
                 this.spawnHomePlanet(new_tile, tile_state.owner_id);
-            } else {
+            } else if (parseInt(tile_state.id) === 8 || parseInt(tile_state.id) === 5){
+                this.spawnCenterPlanet(new_tile);
+            }else {
                 new_tile.classList = "hex color1";
             }
-    
+            
             game_field.insertAdjacentElement("beforeend", new_tile);
         }
     };
