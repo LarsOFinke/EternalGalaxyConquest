@@ -24,7 +24,6 @@ export class Game {
         let players = [];
 
         for (const player of game_state["player_states"]) {
-            console.log(player["name"], player["player_id"], player["base_states"]);
             const new_player = new Player(player["name"], player["player_id"], player["base_states"]);
             players.push(new_player);
 

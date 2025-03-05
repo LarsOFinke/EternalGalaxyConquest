@@ -38,7 +38,8 @@ class Game:
                                 "round": self.__round,
                                 "current_player": self.current_player,
                                 "player_states": [player.fetch_player_state() for player in self.players],
-                                "tile_states": self.__tile_states
+                                "tile_states": self.__tile_states,
+                                "unclaimed_planets": [planet.fetch_base_state() for planet in self.__unclaimed_planets]
                             }
         
         return self.__game_state
