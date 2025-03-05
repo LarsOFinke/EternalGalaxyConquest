@@ -74,11 +74,11 @@ h1 {
     z-index: 175;
 }
 .home-planet-sprite {
-    animation: moveSpriteSheet 4.5s steps(60) infinite;
+    animation: moveSpriteSheet 11.55s steps(120) infinite;
 }
 
 .center-planet-sprite {
-    animation: moveSpriteSheet 10s steps(120) infinite;
+    animation: moveSpriteSheet 4.5s steps(60) infinite;
 }
 
 @keyframes moveSpriteSheet {

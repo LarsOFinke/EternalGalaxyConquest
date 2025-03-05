@@ -22,7 +22,6 @@ class Game:
             if tile_state.get("tile_type") == "home_planet":
                 tile_id: int = int(tile_state.get("id"))
                 owner_id: dict = tile_state.get("owner_id")   # {'name': 'AI', 'id': 1}
-                print(tile_state["tile_content"].get("base_id"))
                 base_id: int = int(tile_state["tile_content"].get("base_id"))
                 planet_name = tile_state["tile_content"]["planet_name"]
 
@@ -80,6 +79,19 @@ class Game:
                         }
                     }
                 )
+                
+            elif i == 4 or i == 7:
+                new_tile.update(
+                    {
+                        "tile_type": "center_planet",
+                        "owner": "free",
+                        "owner_id": 0,
+                        "tile_content": {
+                            "tile_name": f"Tile #{(i + 1)}",
+                            "planet_name": f"Unbeanspruchter Planet",
+                        }
+                    }
+                )
 
             elif i == 10:
                 new_tile.update(
@@ -100,6 +112,7 @@ class Game:
                     {
                         "tile_type": "space",
                         "owner": "free",
+                        "owner_id": 0,
                         "tile_content": {
                             "tile_name": f"Tile #{(i + 1)}",
                             "planet_name": f"No Planet"

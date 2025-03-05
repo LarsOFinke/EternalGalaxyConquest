@@ -44,7 +44,7 @@ export class Game {
         const home_planet = document.createElement("img");
         home_planet.id = new_tile.id;
         home_planet.classList = "home-planet-sprite";
-        home_planet.src = `/api/sprite/${owner_id + 1}`;
+        home_planet.src = `/api/sprite/4`;
         home_planet.addEventListener("click", event => inspectTile(event));
         home_planet_container.insertAdjacentElement("afterbegin", home_planet);
     
@@ -60,7 +60,7 @@ export class Game {
         const center_planet = document.createElement("img");
         center_planet.id = new_tile.id;
         center_planet.classList = "center-planet-sprite";
-        center_planet.src = `/api/sprite/4`;
+        center_planet.src = `/api/sprite/1`;
         center_planet.addEventListener("click", event => inspectTile(event));
         center_planet_container.insertAdjacentElement("afterbegin", center_planet);
     
@@ -77,7 +77,7 @@ export class Game {
     
             if (tile_state.tile_type === "home_planet") {
                 this.spawnHomePlanet(new_tile, tile_state.owner_id);
-            } else if (parseInt(tile_state.id) === 8 || parseInt(tile_state.id) === 5){
+            } else if (tile_state.tile_type === "center_planet"){
                 this.spawnCenterPlanet(new_tile);
             }else {
                 new_tile.classList = "hex color1";
