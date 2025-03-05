@@ -1,4 +1,4 @@
-from .Base import Base
+from ..blueprints.Base import Base
 from .Outpost import Outpost
 from .City import City
 

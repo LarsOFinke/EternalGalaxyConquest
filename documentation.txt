@@ -222,7 +222,8 @@ sonst:
 
 ## CHARAKTERE (persons) ##
 - Blueprint-Klassen
--- Human
+-- Population       class Population
+-- Human            class Human(Population)
 
 - Kommandeur        class Commander(Human)
 - Arbeiter          class Worker(Human)

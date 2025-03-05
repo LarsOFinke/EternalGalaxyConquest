@@ -1,4 +1,4 @@
-from .MilitaryBuilding import MilitaryBuilding
+from ..blueprints.MilitaryBuilding import MilitaryBuilding
 
 class Headquarter(MilitaryBuilding):
     def __init__(self):

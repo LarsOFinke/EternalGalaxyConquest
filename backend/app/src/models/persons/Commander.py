@@ -1,4 +1,4 @@
-from .Human import Human
+from ..blueprints.Human import Human
 
 
 class Commander(Human):

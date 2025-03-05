@@ -15,6 +15,7 @@ class City():
                  ) -> None:
         self.action_list: list[dict] =  [
                                             { "name": "Select Building", "action": self.select_building },
+                                            { "name": "Select Population", "action": self.select_population },
                                             { "name": "Build", "action": self.build },
                                             { "name": "Create Worker", "action": self.create_worker },
                                             { "name": "Remove Building", "action": self.remove_building },
@@ -225,6 +226,13 @@ class City():
         for building in self.__buildings:
             if building.category == target:
                 return  { "success": True, "target": building }
+        
+        return { "success": False, "message": f"{target} nicht gefunden!" }
+    
+    def select_population(self, target) -> dict:
+        for population in self.__population:
+            if population.id == target:
+                return  { "success": True, "target": population }
         
         return { "success": False, "message": f"{target} nicht gefunden!" }
     

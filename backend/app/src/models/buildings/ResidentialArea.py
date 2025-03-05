@@ -1,4 +1,4 @@
-from .CivilianBuilding import CivilianBuilding
+from ..blueprints.CivilianBuilding import CivilianBuilding
 
 
 class ResidentialArea(CivilianBuilding):

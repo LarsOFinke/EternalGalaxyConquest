@@ -1,4 +1,4 @@
-from .Mine import Mine
+from ..blueprints.Mine import Mine
 
 
 class GoldMine(Mine):
