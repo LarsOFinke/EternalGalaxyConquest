@@ -8,11 +8,16 @@ export class Player {
     constructor(name, player_id, bases) {
         this.name = name;
         this.id = player_id;
-        this.__bases = this.addBases(bases);
+        this.__bases = this.addInitialBases(bases);
 
     }
 
-    addBases(bases) {
+    getBases() {
+        return this.__bases;
+    }
+
+
+    addInitialBases(bases) {
         let base_list = [];
 
         for (let base of bases) {

@@ -15,7 +15,7 @@ export class Game {
         this.player_count = this.__players.length;
         this.current_player = game_state["current_player"];
         this.__tile_list = game_state["tile_states"];
-        this.__unclaimed_planets = this.addUnclaimedPlanets(game_state);
+        this.__unclaimed_planets = this.addInitialUnclaimedPlanets(game_state);
     }
 
     fetchTileStates() {
@@ -38,7 +38,7 @@ export class Game {
         return players;
     }
 
-    addUnclaimedPlanets(game_state) {
+    addInitialUnclaimedPlanets(game_state) {
         let unclaimed_planets = [];
 
         for (let planet of game_state["unclaimed_planets"]) {
@@ -62,7 +62,7 @@ export class Game {
         planet_container.insertAdjacentElement("afterbegin", planet);
     
         tile.insertAdjacentElement("afterbegin", planet_container);
-    };
+    }
     
     spawn_game_field(tile_states) {
         const game_field = document.getElementById("game_field");
@@ -82,6 +82,47 @@ export class Game {
             
             game_field.insertAdjacentElement("beforeend", new_tile);
         }
-    };
+    }
+
+
+    checkIfBuildingInGame(target) { 
+        for (let player of this.__players) {
+            for (let base of player.getBases()) {
+                for (let settlement of base.getSettlements()) {
+                    for (let building of settlement.getBuildings()) {
+                        if (building.getBuildingId() === target){
+                            return true;
+                        }
+                        
+                    }
+                }
+            }
+        }
+    }
+
+    updateGameState(game_state) {
+
+
+        for (let player of game_state.player_states) {
+            for (let base of player.base_states) {
+                for (let settlement of base.settlement_states) {
+                    for (let building of settlement.building_states) {
+                        if (!this.checkIfBuildingInGame(building.building_id)) {
+                            console.log("NICHT GEFUNDEN");
+                            console.log(building);
+                            console.log(player.player_id);
+                            // ADD BUILDING TO THE PLAYER
+                        }
+
+                    }
+                }
+            }
+        }
+
+    }
 
 }
+
+
+
+       

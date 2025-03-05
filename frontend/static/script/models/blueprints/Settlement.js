@@ -7,15 +7,20 @@ import { Headquarter } from "../buildings/Headquarter.js";
 
 export class Settlement {
     constructor(settlement_id, name, resources, buildings, population, free_workers, free_builders) {
-        this.settlement_id = settlement_id;
+        this.__settlement_id = settlement_id;
         this.name = name;
-        this.resources = resources;
-        this.buildings = this.addBuildings(buildings);
-        this.population = this.addPopulation(population);
-        this.free_workers = free_workers;
-        this.free_builders = free_builders;
+        this.__resources = resources;
+        this.__buildings = this.addBuildings(buildings);
+        this.__population = this.addPopulation(population);
+        this.__free_workers = free_workers;
+        this.__free_builders = free_builders;
         
     }
+    
+    getBuildings() {
+        return this.__buildings;
+    }
+
 
     addPopulation(population) {
         let population_list = []

@@ -8,9 +8,14 @@ export class Base {
         this.tile_id = tile_id;
         this.base_id = base_id;
         this.name = name;
-        this.settlements = this.addSettlements(settlements);
+        this.__settlements = this.addSettlements(settlements);
 
     }
+
+    getSettlements() {
+        return this.__settlements;
+    }
+
 
     addSettlements(settlements) {
         let settlement_list = []
