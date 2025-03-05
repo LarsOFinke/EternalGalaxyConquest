@@ -21,7 +21,7 @@ export class Player {
             }
 
         }
-        console.log(base_list);
+
     }
 
 

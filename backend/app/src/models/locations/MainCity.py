@@ -12,6 +12,6 @@ class MainCity(City):
                  buildings = [Headquarter()],
                  population = [Commander("Gottfried"), Worker("Abrams")] 
                  ) -> None:
-        super().__init__(name=name, gold=gold, food=food, wood=wood, iron=iron, buildings=buildings, population=population)
+        super().__init__(name=name, settlement_type="main_city", gold=gold, food=food, wood=wood, iron=iron, buildings=buildings, population=population)
      
     
