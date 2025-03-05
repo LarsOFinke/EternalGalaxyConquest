@@ -1,6 +1,6 @@
 from .Building import Building
-from ..persons.Worker import Worker; from ..persons.Builder import Builder; from ..persons.WarehouseWorker import WarehouseWorker; from ..persons.Baker import Baker;
-from ..persons.Woodcutter import Woodcutter; from ..persons.Miner import Miner; from ..persons.Blacksmith import Blacksmith
+from ..population.Worker import Worker; from ..population.Builder import Builder; from ..population.WarehouseWorker import WarehouseWorker; from ..population.Baker import Baker;
+from ..population.Woodcutter import Woodcutter; from ..population.Miner import Miner; from ..population.Blacksmith import Blacksmith
 
 
 class Factory(Building):

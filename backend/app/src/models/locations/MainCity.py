@@ -1,7 +1,7 @@
 from .City import City
 from ..buildings.Headquarter import Headquarter
-from ..persons.Commander import Commander
-from ..persons.Worker import Worker
+from ..population.Commander import Commander
+from ..population.Worker import Worker
 # from ..buildings.BuildersHut import BuildersHut
 # from ..persons.Builder import Builder
 

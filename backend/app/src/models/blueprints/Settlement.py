@@ -1,7 +1,7 @@
 "use strict";
 ### IMPORT PERSONS ###
-from ..persons.Commander import Commander; from ..persons.Worker import Worker; from ..persons.Builder import Builder; from ..persons.WarehouseWorker import WarehouseWorker; from ..persons.Baker import Baker
-from ..persons.Woodcutter import Woodcutter; from ..persons.Miner import Miner; from ..persons.Blacksmith import Blacksmith
+from ..population.Commander import Commander; from ..population.Worker import Worker; from ..population.Builder import Builder; from ..population.WarehouseWorker import WarehouseWorker; from ..population.Baker import Baker
+from ..population.Woodcutter import Woodcutter; from ..population.Miner import Miner; from ..population.Blacksmith import Blacksmith
 
 ### IMPORT BUILDINGS ###
 from ..buildings.ResidentialArea import ResidentialArea; from ..buildings.BuildersHut import BuildersHut; from ..buildings.Warehouse import Warehouse; from ..buildings.Bakery import Bakery 
