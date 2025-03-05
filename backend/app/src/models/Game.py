@@ -87,7 +87,7 @@ class Game:
                 tile_name = f"Tile #{(i + 1)}"
                 planet_name = f"Unbeansprucht"
                 
-                self.__unclaimed_planets.append(Planet(planet_name, tile_id)) 
+                self.__unclaimed_planets.append(Planet(planet_name, tile_id=tile_id)) 
                 base_id: int = [planet.get_base_id() for planet in self.__unclaimed_planets if planet.get_tile_id() == tile_id][0]
                 
                 tile_content = {

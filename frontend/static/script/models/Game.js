@@ -9,9 +9,9 @@ export class Game {
 
     constructor(host, game_state) {
         this.host = host;
-        this.own_player_id = 0;
+        this.__own_player_id = 0;
         this.game_state = game_state;
-        this.__players = this.addPlayers(game_state);
+        this.__players = this.addPlayers(game_state["player_states"]);
         this.player_count = this.__players.length;
         this.current_player = game_state["current_player"];
         this.__tile_list = game_state["tile_states"];
@@ -23,17 +23,16 @@ export class Game {
     }
 
 
-    addPlayers(game_state) {
+    addPlayers(player_states) {
         let players = [];
 
-        for (const player of game_state["player_states"]) {
-            const new_player = new Player(player["name"], player["player_id"], player["base_states"]);
-            players.push(new_player);
+        for (const player_state of player_states) {
+            players.push(new Player(player_state["name"], player_state["player_id"], player_state["base_states"]));
 
-            if (player["name"] === username) {
-                this.own_player_id = player["player_id"];
+            if (player_state["name"] === username) {
+                this.__own_player_id = player_state["player_id"];
             }
-            
+
           }
 
         return players;
