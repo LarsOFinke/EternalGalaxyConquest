@@ -18,6 +18,9 @@ class Planet(Base):
     
     def set_tile_id(self, tile_id):
         self.__tile_id = tile_id
+    
+    def get_tile_id(self) -> int:
+        return self.__tile_id
         
     def fetch_base_state(self) -> dict:
         return {

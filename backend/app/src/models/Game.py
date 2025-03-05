@@ -1,4 +1,5 @@
 from .Player import Player
+from .locations.Planet import Planet
 
 
 
@@ -12,6 +13,7 @@ class Game:
         self.__round: int = 0
         self.__tile_count: int = 12
         self.__tile_states: list[dict] = []
+        self.__unclaimed_planets: list = []
         self.running: bool = False
 
     def set_tile_states(self, tile_states: list[dict]):
@@ -19,9 +21,10 @@ class Game:
 
     def set_base_tiles(self, tile_states: list[dict]):
         for tile_state in tile_states:
-            if tile_state.get("tile_type") == "home_planet":
+            owner_id: int = tile_state.get("owner_id") 
+            
+            if owner_id != 0:
                 tile_id: int = int(tile_state.get("id"))
-                owner_id: dict = tile_state.get("owner_id")   # {'name': 'AI', 'id': 1}
                 base_id: int = int(tile_state["tile_content"].get("base_id"))
                 planet_name = tile_state["tile_content"]["planet_name"]
 
@@ -64,63 +67,60 @@ class Game:
         game_field: list[dict] = []
 
         for i in range(self.__tile_count):
-            new_tile: dict = { "id": (i + 1) }
-
+            tile_id: int = (i + 1)
             if i == 1:
-                new_tile.update(
-                    {
-                        "tile_type": "home_planet",
-                        "owner": self.players[0].name,
-                        "owner_id": self.players[0].player_id,
-                        "tile_content": {
-                            "tile_name": f"Heimat von {self.players[0].name}",
-                            "planet_name": f"{self.players[0].name}'s Planet",
-                            "base_id": self.players[0].get_bases()[0].get_base_id()
-                        }
-                    }
-                )
+                owner = self.players[0].name
+                owner_id = self.players[0].player_id
+                tile_type = "home_planet"
+                tile_name = f"Heimat von {self.players[0].name}"
+                tile_content = {
+                    "planet_name": f"{self.players[0].name}'s Planet",
+                    "base_id": self.players[0].get_bases()[0].get_base_id()
+                }
                 
             elif i == 4 or i == 7:
-                new_tile.update(
-                    {
-                        "tile_type": "center_planet",
-                        "owner": "free",
-                        "owner_id": 0,
-                        "tile_content": {
-                            "tile_name": f"Tile #{(i + 1)}",
-                            "planet_name": f"Unbeanspruchter Planet",
-                        }
-                    }
-                )
+                owner = "free"
+                owner_id = 0
+                tile_type = "center_planet"
+                tile_name = f"Tile #{(i + 1)}"
+                planet_name = f"Unbeanspruchter Planet"
+                
+                self.__unclaimed_planets.append(Planet(planet_name, tile_id)) 
+                base_id: int = [planet.get_base_id() for planet in self.__unclaimed_planets if planet.get_tile_id() == tile_id][0]
+                
+                tile_content = {
+                    "planet_name": planet_name,
+                    "base_id": base_id
+                }
 
             elif i == 10:
-                new_tile.update(
-                    {
-                        "tile_type": "home_planet",
-                        "owner": self.players[1].name,
-                        "owner_id": self.players[1].player_id,
-                        "tile_content": {
-                            "tile_name": f"Heimat von {self.players[1].name}",
-                            "planet_name": f"{self.players[1].name}'s Planet",
-                            "base_id": self.players[1].get_bases()[0].get_base_id()
-                        }
-                    }
-                )
+                owner = self.players[1].name
+                owner_id = self.players[1].player_id
+                tile_type = "home_planet"
+                tile_name = f"Heimat von {self.players[1].name}"
+                tile_content = {
+                    "planet_name": f"{self.players[1].name}'s Planet",
+                    "base_id": self.players[1].get_bases()[0].get_base_id()
+                }
 
             else:
-                new_tile.update(
-                    {
-                        "tile_type": "space",
-                        "owner": "free",
-                        "owner_id": 0,
-                        "tile_content": {
-                            "tile_name": f"Tile #{(i + 1)}",
-                            "planet_name": f"No Planet"
-                        }
-                    }
-                )
-        
-            game_field.append(new_tile)
+                owner = "free"
+                owner_id = 0
+                tile_type = "space"
+                tile_name = f"Tile #{(i + 1)}"
+                tile_content = {
+                    "planet_name": f"No Planet"
+                }
+                
+                            
+            game_field.append({
+                "id": tile_id,
+                "owner": owner,
+                "owner_id": owner_id,
+                "tile_type": tile_type,
+                "tile_name": tile_name,
+                "tile_content": tile_content
+            })
         
         return game_field
 

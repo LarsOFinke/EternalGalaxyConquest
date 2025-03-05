@@ -122,12 +122,12 @@ sonst:
     "tile_states": [
         {
             id: i,
-            tile_type: "home_planet",
-            owner: this.__players[0].name,
-            owner_id: this.players[0].player_id,
+            owner: owner,
+            owner_id: owner_id,
+            tile_type: tile_type,
+            tile_name: tile_name,
             tile_content: {
-                tile_name: `Heimat von ${this.__players[0].name}`,
-                planet_name: `${this.__players[0].name}'s Planet`
+                planet_name: planet_name
                 base_id: id
             }
         },
