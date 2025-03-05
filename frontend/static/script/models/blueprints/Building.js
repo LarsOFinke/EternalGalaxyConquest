@@ -2,4 +2,8 @@
 
 
 
-
+export class Building {
+    constructor() {
+        
+    }
+}
