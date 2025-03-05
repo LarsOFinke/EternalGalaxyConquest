@@ -4,9 +4,10 @@
 
 export class Player {
 
-    constructor(player_name, player_id) {
-        this.name = player_name;
+    constructor(name, player_id, bases) {
+        this.name = name;
         this.id = player_id;
+        this.bases = bases;
 
     }
 

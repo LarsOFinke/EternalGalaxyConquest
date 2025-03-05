@@ -1,5 +1,5 @@
 "use strict";
-import { Player } from "./player.js";
+import { Player } from "./Player.js";
 import { inspectTile } from "../egc.js";
 
 
@@ -24,9 +24,8 @@ export class Game {
         let players = [];
 
         for (const player of game_state["player_states"]) {
-            const player_name = player["name"];
-            const player_id = player["player_id"];
-            const new_player = new Player(player_name, player_id);
+            console.log(player["name"], player["player_id"], player["base_states"]);
+            const new_player = new Player(player["name"], player["player_id"], player["base_states"]);
             players.push(new_player);
 
           }

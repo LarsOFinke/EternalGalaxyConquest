@@ -1,10 +1,10 @@
 "use strict";
+import { Planet } from "./Planet.js";
 
 
-
-class HomePlanet {
-    constructor(buildings) {
-        this.buildings = buildings;
+class HomePlanet extends Planet {
+    constructor(tile_id, base_id, name, settlements) {
+        super(tile_id, base_id, name, settlements);
     }
 
     
