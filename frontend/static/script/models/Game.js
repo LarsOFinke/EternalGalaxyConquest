@@ -34,37 +34,22 @@ export class Game {
         return players;
     }
 
-    spawnHomePlanet(new_tile, owner_id) {
-        new_tile.classList = `hex color${owner_id + 1}`;
-    
-        const home_planet_container = document.createElement("div");
-        home_planet_container.className = "planet";
-        home_planet_container.id = new_tile.id;
-        
-        const home_planet = document.createElement("img");
-        home_planet.id = new_tile.id;
-        home_planet.classList = "home-planet-sprite";
-        home_planet.src = `/api/sprite/4`;
-        home_planet.addEventListener("click", event => inspectTile(event));
-        home_planet_container.insertAdjacentElement("afterbegin", home_planet);
-    
-        new_tile.insertAdjacentElement("afterbegin", home_planet_container);
-    };
 
-    spawnCenterPlanet(new_tile) {
-        new_tile.classList = "hex color1";
-        const center_planet_container = document.createElement("div");
-        center_planet_container.className = "planet";
-        center_planet_container.id = new_tile.id;
-        
-        const center_planet = document.createElement("img");
-        center_planet.id = new_tile.id;
-        center_planet.classList = "center-planet-sprite";
-        center_planet.src = `/api/sprite/1`;
-        center_planet.addEventListener("click", event => inspectTile(event));
-        center_planet_container.insertAdjacentElement("afterbegin", center_planet);
+    spawnPlanet(tile, color_id, class_name, sprite_id) {
+        tile.classList = `hex color${color_id}`;
     
-        new_tile.insertAdjacentElement("afterbegin", center_planet_container);
+        const planet_container = document.createElement("div");
+        planet_container.className = "planet";
+        planet_container.id = tile.id;
+        
+        const planet = document.createElement("img");
+        planet.id = tile.id;
+        planet.classList = `${class_name}`;
+        planet.src = `/api/sprite/${sprite_id}`;
+        planet.addEventListener("click", event => inspectTile(event));
+        planet_container.insertAdjacentElement("afterbegin", planet);
+    
+        tile.insertAdjacentElement("afterbegin", planet_container);
     };
     
     spawn_game_field(tile_states) {
@@ -76,9 +61,9 @@ export class Game {
             new_tile.addEventListener("click", event => inspectTile(event));
     
             if (tile_state.tile_type === "home_planet") {
-                this.spawnHomePlanet(new_tile, tile_state.owner_id);
+                this.spawnPlanet(new_tile, (tile_state.owner_id + 1), "home-planet-sprite", 4);
             } else if (tile_state.tile_type === "center_planet"){
-                this.spawnCenterPlanet(new_tile);
+                this.spawnPlanet(new_tile, 1, "center-planet-sprite", 1);
             }else {
                 new_tile.classList = "hex color1";
             }
