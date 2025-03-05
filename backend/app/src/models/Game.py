@@ -54,7 +54,7 @@ class Game:
         """
         {
             id: i,
-            tile_type: "home_planet",
+            tile_type: "planet",
             owner: this.__players[0],
             owner_id: player_id,
             tile_content: {
@@ -68,22 +68,23 @@ class Game:
 
         for i in range(self.__tile_count):
             tile_id: int = (i + 1)
-            if i == 1:
-                owner = self.players[0].name
-                owner_id = self.players[0].player_id
-                tile_type = "home_planet"
-                tile_name = f"Heimat von {self.players[0].name}"
+            if i == 1 or i == 10:
+                player: int = 0 if i == 1 else 1
+                owner = self.players[player].name
+                owner_id = self.players[player].player_id
+                tile_type = "planet"
+                tile_name = f"Heimat von {self.players[player].name}"
                 tile_content = {
-                    "planet_name": f"{self.players[0].name}'s Planet",
-                    "base_id": self.players[0].get_bases()[0].get_base_id()
+                    "planet_name": f"{self.players[player].name}'s Planet",
+                    "base_id": self.players[player].get_bases()[0].get_base_id()
                 }
                 
             elif i == 4 or i == 7:
                 owner = "free"
                 owner_id = 0
-                tile_type = "center_planet"
+                tile_type = "planet"
                 tile_name = f"Tile #{(i + 1)}"
-                planet_name = f"Unbeanspruchter Planet"
+                planet_name = f"Unbeansprucht"
                 
                 self.__unclaimed_planets.append(Planet(planet_name, tile_id)) 
                 base_id: int = [planet.get_base_id() for planet in self.__unclaimed_planets if planet.get_tile_id() == tile_id][0]
@@ -91,16 +92,6 @@ class Game:
                 tile_content = {
                     "planet_name": planet_name,
                     "base_id": base_id
-                }
-
-            elif i == 10:
-                owner = self.players[1].name
-                owner_id = self.players[1].player_id
-                tile_type = "home_planet"
-                tile_name = f"Heimat von {self.players[1].name}"
-                tile_content = {
-                    "planet_name": f"{self.players[1].name}'s Planet",
-                    "base_id": self.players[1].get_bases()[0].get_base_id()
                 }
 
             else:

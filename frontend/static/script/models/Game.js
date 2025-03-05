@@ -60,9 +60,9 @@ export class Game {
             new_tile.id = parseInt(tile_state.id);
             new_tile.addEventListener("click", event => inspectTile(event));
     
-            if (tile_state.tile_type === "home_planet") {
+            if (tile_state.owner_id !== 0) {
                 this.spawnPlanet(new_tile, (tile_state.owner_id + 1), "home-planet-sprite", 4);
-            } else if (tile_state.tile_type === "center_planet"){
+            } else if (tile_state.owner_id === 0 && tile_state.tile_type === "planet"){
                 this.spawnPlanet(new_tile, 1, "center-planet-sprite", 1);
             }else {
                 new_tile.classList = "hex color1";

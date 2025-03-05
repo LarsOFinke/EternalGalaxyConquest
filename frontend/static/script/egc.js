@@ -171,7 +171,7 @@ function spawnBuildMenu() {
 };
 
 
-function createHomePlanetTileContextMenu(tile_menu_container, tile) {
+function createPlanetTileContextMenu(tile_menu_container, tile) {
     const planet_name_container = document.createElement("div");
     planet_name_container.id = "planet-name-container";
     planet_name_container.className = "centered";
@@ -212,8 +212,8 @@ function spawnTileContextMenu(tile_menu_container, tile) {
     tile_menu_container.insertAdjacentElement("afterbegin", tile_menu_header);
 
     switch (tile.tile_type) {
-        case "home_planet":
-            createHomePlanetTileContextMenu(tile_menu_container, tile) 
+        case "planet":
+            createPlanetTileContextMenu(tile_menu_container, tile) 
 
     }
     
