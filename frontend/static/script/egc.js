@@ -65,7 +65,7 @@ document.getElementById("start-game").addEventListener("click", e => startGame()
 
 //  Listen for game start //
 socket.on("new_game_started", data => {
-    console.log("Game started with state:");
+    console.log("Game started with state (Backend):");
     console.log(data["game_state"]);
 
     data["game_state"]["player_states"].forEach(e => {

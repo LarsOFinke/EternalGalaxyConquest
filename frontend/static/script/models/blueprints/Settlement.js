@@ -18,7 +18,7 @@ export class Settlement {
             let population_list = []
             for (let pops of population) {
                 if (pops.profession === "worker") {
-                    population_list.push(new Worker(pops.pop_id, pops.name, pops.profession, pops.alive, pops.employed, pops.field_of_work, pops.working, pops.production));
+                    population_list.push(new Worker(pops.population_id, pops.name, pops.profession, pops.alive, pops.employed, pops.field_of_work, pops.working, pops.production));
                 }
             }
     
