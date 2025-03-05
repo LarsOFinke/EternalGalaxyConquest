@@ -2,8 +2,8 @@
 
 
 
-const socket_url = "ws://192.168.2.31:5000/";
-const api_url = "http://192.168.2.31:5000/api/";
+const socket_url = "wss://egc.portfolio-finke.de/";
+const api_url = "https://egc.portfolio-finke.de/api/";
 
 
 function createErrorBox(message) {
