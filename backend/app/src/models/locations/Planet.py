@@ -27,6 +27,7 @@ class Planet(Base):
             "category": "base",
             "name": self.name,
             "tile_id": self.__tile_id,
+            "base_id": self.get_base_id(),
             "settlement_states": [settlement.fetch_settlement_state() for settlement in self.__settlements]
         }
       

@@ -1,5 +1,6 @@
 "use strict";
 import { Player } from "./Player.js";
+import { Planet } from "./locations/Planet.js";
 import { inspectTile } from "../egc.js";
 
 
@@ -13,6 +14,7 @@ export class Game {
         this.player_count = this.__players.length;
         this.current_player = game_state["current_player"];
         this.__tile_list = game_state["tile_states"];
+        this.__unclaimed_planets = this.addUnclaimedPlanets(game_state);
     }
 
     fetchTileStates() {
@@ -30,6 +32,14 @@ export class Game {
           }
 
         return players;
+    }
+
+    addUnclaimedPlanets(game_state) {
+        let unclaimed_planets = [];
+
+        for (let planet in game_state["unclaimed_planets"]) {
+            unclaimed_planets.push(new Planet(planet.tile_id, planet.base_id, planet.name, planet.settlement_states))
+        }
     }
 
 
