@@ -85,40 +85,35 @@ export class Game {
     }
 
 
+    // Utility function to check if a building ID exists in the game
     checkIfBuildingInGame(target) { 
-        for (let player of this.__players) {
-            for (let base of player.getBases()) {
-                for (let settlement of base.getSettlements()) {
-                    for (let building of settlement.getBuildings()) {
-                        if (building.getBuildingId() === target){
-                            return true;
-                        }
-                        
-                    }
-                }
-            }
-        }
+        return this.__players.some(player =>
+            player.getBases().some(base =>
+                base.getSettlements().some(settlement =>
+                    settlement.getBuildings().some(building =>
+                        building.getBuildingId() === target
+                    )
+                )
+            )
+        );
     }
 
+    // Refactored updateGameState function
     updateGameState(game_state) {
-
-
-        for (let player of game_state.player_states) {
-            for (let base of player.base_states) {
-                for (let settlement of base.settlement_states) {
-                    for (let building of settlement.building_states) {
+        game_state.player_states.forEach(player => {
+            player.base_states.forEach(base => {
+                base.settlement_states.forEach(settlement => {
+                    settlement.building_states.forEach(building => {
                         if (!this.checkIfBuildingInGame(building.building_id)) {
                             console.log("NICHT GEFUNDEN");
                             console.log(building);
                             console.log(player.player_id);
                             // ADD BUILDING TO THE PLAYER
                         }
-
-                    }
-                }
-            }
-        }
-
+                    });
+                });
+            });
+        });
     }
 
 }
