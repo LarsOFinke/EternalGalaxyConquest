@@ -1,6 +1,6 @@
-from ... import socketio
+from .. import socketio
 from flask_socketio import emit
-from ...src.models.Game import Game
+from ..src.models.Game import Game
 
 
 

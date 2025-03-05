@@ -77,6 +77,6 @@ def create_app():
     # ssl_key = '/etc/letsencrypt/live/egc.portfolio-finke.de/privkey.pem'
     socketio = SocketIO(app, cors_allowed_origins="*", async_mode='eventlet', ping_timeout=10, ping_interval=5)   #, ssl_context=(ssl_cert, ssl_key)
     # Websocket-events #
-    from .routes.websocket import events
+    from .websocket import events
     
     return app
