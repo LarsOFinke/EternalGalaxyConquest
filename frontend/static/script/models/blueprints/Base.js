@@ -17,7 +17,7 @@ export class Base {
         for (let settlement of settlements) {
             if (settlement.settlement_type === "main_city") {
                 settlement_list.push(new MainCity(settlement.name, settlement.resources, 
-                    settlement.buildings, settlement.population, 
+                    settlement.buildings, settlement.population_states, 
                     settlement.free_workers, settlement.free_builders)
                 );
             }

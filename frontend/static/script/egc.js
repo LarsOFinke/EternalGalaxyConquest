@@ -84,12 +84,14 @@ socket.on('your_turn', data => {
     if (parseInt(data.player) === window.player_id) {
         alert(username + ", it's your turn!");
     }
+
+    console.log("Current Game-State (Frontend):");
     console.log(game);
 });
 
 // Listen for game updates from the server //
 socket.on('game_update', (gameState) => {
-    console.log("Game state updated:");
+    console.log("Game state updated (Backend):");
     console.log(gameState);
 });
 

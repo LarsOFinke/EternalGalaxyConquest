@@ -18,6 +18,7 @@ class Population():
             "population_id": self.__population_id,
             "category": "population",
             "name": self.name,
+            "profession": self.profession,
             "alive": self.alive
         }
     
