@@ -22,6 +22,8 @@ export class Player {
 
         }
 
+        return base_list;
+
     }
 
 

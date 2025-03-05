@@ -22,5 +22,7 @@ export class Base {
                 );
             }
         }
+
+        return settlement_list;
     }
 }
