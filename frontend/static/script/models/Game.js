@@ -85,6 +85,22 @@ export class Game {
     }
 
 
+    addBuildingToPlayer(player_id, base_id, settlement_id, building) {
+        this.__players.forEach(player => {
+            if (player.id === player_id) {
+                player.getBases().forEach(base => {
+                    if (base.base_id === base_id) {
+                        base.getSettlements().forEach(settlement => {
+                            if (settlement.settlement_id === settlement_id) {
+                                settlement.addNewBuilding(building);
+                            }
+                        })
+                    }
+                })
+            }
+        })
+    }
+
     // Utility function to check if a building ID exists in the game
     checkIfBuildingInGame(target) { 
         return this.__players.some(player =>
@@ -105,10 +121,7 @@ export class Game {
                 base.settlement_states.forEach(settlement => {
                     settlement.building_states.forEach(building => {
                         if (!this.checkIfBuildingInGame(building.building_id)) {
-                            console.log("NICHT GEFUNDEN");
-                            console.log(building);
-                            console.log(player.player_id);
-                            // ADD BUILDING TO THE PLAYER
+                            this.addBuildingToPlayer(player.player_id, base.base_id, settlement.settlement_id, building);
                         }
                     });
                 });

@@ -7,11 +7,11 @@ import { Headquarter } from "../buildings/Headquarter.js";
 
 export class Settlement {
     constructor(settlement_id, name, resources, buildings, population, free_workers, free_builders) {
-        this.__settlement_id = settlement_id;
+        this.settlement_id = settlement_id;
         this.name = name;
         this.__resources = resources;
-        this.__buildings = this.addBuildings(buildings);
-        this.__population = this.addPopulation(population);
+        this.__buildings = this.addInitialBuildings(buildings);
+        this.__population = this.addInitialPopulation(population);
         this.__free_workers = free_workers;
         this.__free_builders = free_builders;
         
@@ -21,19 +21,7 @@ export class Settlement {
         return this.__buildings;
     }
 
-
-    addPopulation(population) {
-        let population_list = []
-        for (let pops of population) {
-            if (pops.profession === "worker") {
-                population_list.push(new Worker(pops.population_id, pops.name, pops.profession, pops.alive, pops.employed, pops.field_of_work, pops.working, pops.production));
-            }
-        }
-
-        return population_list;
-    }
-
-    addBuildings(buildings) {
+    addInitialBuildings(buildings) {
         let building_list = []
         for (let building of buildings) {
             if (building.name === "Headquarter") {
@@ -45,4 +33,46 @@ export class Settlement {
 
         return building_list;
     }
+
+    setBuildings(new_building) {
+        this.__buildings.push(new_building);
+        console.log(new_building, "PUSHED");
+    }
+
+
+    getPopulation() {
+        return this.__population;
+    }
+
+    addInitialPopulation(population) {
+        let population_list = []
+        for (let pops of population) {
+            if (pops.profession === "worker") {
+                population_list.push(new Worker(pops.population_id, pops.name, pops.profession, pops.alive, pops.employed, pops.field_of_work, pops.working, pops.production));
+            }
+        }
+
+        return population_list;
+    }
+
+    setPopulation(new_building) {
+        this.__buildings.push(new_building);
+    }
+
+
+
+    addNewBuilding(building) {
+        switch (building.name) {
+            case "Builders Hut":
+                console.log("matched");
+                this.setBuildings(new BuildersHut(building.building_id, building.name, building.active, building.worker_slots, building.workers));
+
+        }
+    }
+
+
+    addNewPopulation(person) {
+
+    }
+
 }

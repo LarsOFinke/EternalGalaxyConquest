@@ -8,7 +8,7 @@ export class Base {
         this.tile_id = tile_id;
         this.base_id = base_id;
         this.name = name;
-        this.__settlements = this.addSettlements(settlements);
+        this.__settlements = this.addInitialSettlements(settlements);
 
     }
 
@@ -17,7 +17,7 @@ export class Base {
     }
 
 
-    addSettlements(settlements) {
+    addInitialSettlements(settlements) {
         let settlement_list = []
         for (let settlement of settlements) {
             if (settlement.settlement_type === "main_city") {
