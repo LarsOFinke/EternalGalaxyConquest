@@ -12,21 +12,20 @@ h1 {
     font-size: 1rem;
 }
 
-#tile-menu-container, #build-menu-container, #settlement-menu-container, #build-menu-container {
+#tile-menu-container, #found-settlement-menu-container, #settlement-menu-container, #build-menu-container {
     position: absolute;
     background-color: rgb(22, 22, 22);
     opacity: .975;
     height: 50%;
     width: 75%;
-    z-index: 200;
 }
-#build-menu-container {
-    z-index: 225;
-}
+#tile-menu-container { z-index: 200; }
+#found-settlement-menu-container { z-index: 205; }
+#build-menu-container { z-index: 300; }
 #tile-menu-container, #build-menu-container > h4 {
     margin-top: 4px;
 }
-#found-settlements-menu-btn {
+#found-settlement-menu-btn {
     position: absolute;
     bottom: 12px;
     align-self: center;

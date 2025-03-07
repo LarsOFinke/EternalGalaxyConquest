@@ -4,7 +4,7 @@
 
 export class PlanetMenu {
     constructor(tile_menu_container, tile) {
-        this.createPlanetTileContextMenu(tile_menu_container, tile);
+        this.createPlanetMenu(tile_menu_container, tile);
     }
 
 
@@ -13,9 +13,51 @@ export class PlanetMenu {
     }
 
 
+
+    foundNewSettlement(event) {
+        event.preventDefault();
+
+    }
+
+    spawnFoundSettlementMenu(event) {
+        event.preventDefault();
+
+        const found_settlement_menu_container = document.createElement("div");
+        found_settlement_menu_container.id = "found-settlement-menu-container";
+        found_settlement_menu_container.className = "bordered";
+        const found_settlement_menu_header = document.createElement("h4");
+        found_settlement_menu_header.id = "found-settlement-menu-header";
+        found_settlement_menu_header.textContent = "Siedlungsgründung";
+        found_settlement_menu_container.insertAdjacentElement("afterbegin", found_settlement_menu_header);
+
+        const close_btn = document.createElement("button");
+        close_btn.classList = "close-btn bordered";
+        close_btn.textContent = "X";
+        close_btn.addEventListener("click", this.closeFoundSettlementMenu.bind(this)); // Add bound method
+        found_settlement_menu_container.insertAdjacentElement("afterbegin", close_btn);
+        
+        const found_settlement_name_input_box = document.createElement("div");
+        found_settlement_name_input_box.className = "small-input-box";
+        const found_settlement_name_input = document.createElement("input");
+        found_settlement_name_input.type = "text";
+        found_settlement_name_input.id = "new-settlement-name"
+        found_settlement_name_input_box.insertAdjacentElement("afterbegin", found_settlement_name_input);
+        const found_settlement_btn = document.createElement("button");
+        found_settlement_btn.id = "found-settlement-btn";
+        found_settlement_btn.className = "btn-small";
+        found_settlement_btn.textContent = "Gründen";
+        found_settlement_btn.addEventListener("click", event => this.foundNewSettlement(event));
+        found_settlement_name_input_box.insertAdjacentElement("beforeend", found_settlement_btn);
+        found_settlement_menu_container.insertAdjacentElement("beforeend", found_settlement_name_input_box);
+
+        document.getElementById("next-round").insertAdjacentElement("afterend", found_settlement_menu_container);
+
+    }
+
+
     spawnFoundSettlementMenuButton() {
         const found_settlement_menu_btn = document.createElement("button");
-        found_settlement_menu_btn.id = "found-settlements-menu-btn";
+        found_settlement_menu_btn.id = "found-settlement-menu-btn";
         found_settlement_menu_btn.className = "btn-small";
         found_settlement_menu_btn.textContent = "Neue Siedlung gründen";
         found_settlement_menu_btn.addEventListener("click", event => this.spawnFoundSettlementMenu(event));
@@ -50,7 +92,7 @@ export class PlanetMenu {
         return planet_name_container;
     }
 
-    createPlanetTileContextMenu(tile_menu_container, tile) {
+    createPlanetMenu(tile_menu_container, tile) {
         const tile_name_lbl = document.createElement("label");
         tile_name_lbl.textContent = tile.tile_name;
         tile_menu_container.insertAdjacentElement("beforeend", tile_name_lbl);
@@ -65,6 +107,15 @@ export class PlanetMenu {
     }
 
 
+
+    closeFoundSettlementMenu() {
+        // Remove the tile menu container
+        const found_settlement_menu_container = document.getElementById("found-settlement-menu-container");
+        if (found_settlement_menu_container) {
+            found_settlement_menu_container.remove();
+        }
+    }
+
     closePlanetMenu() {
         // Remove the tile menu container
         const tile_menu_container = document.getElementById("tile-menu-container");
@@ -76,6 +127,7 @@ export class PlanetMenu {
         const closeBtns = document.querySelectorAll('.close-btn');
         closeBtns.forEach(btn => {
             btn.removeEventListener('click', this.closeBuildMenu.bind(this));
+            btn.removeEventListener("click", this.closeFoundSettlementMenu.bind(this))
         });
 
     }
