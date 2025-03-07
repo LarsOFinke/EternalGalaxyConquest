@@ -1,6 +1,6 @@
 "use strict";
 import { Game } from "./models/Game.js";
-var game;
+export var game;
 
 
 
