@@ -5,7 +5,7 @@ import { sendPlayerActions } from "../egc.js";
 
 export class BuildMenu {
     constructor() {
-
+        this.spawnBuildMenu();
     }
 
 

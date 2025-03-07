@@ -1,4 +1,5 @@
 "use strict";
+import { BuildMenu } from "./BuildMenu.js";
 
 
 
@@ -11,14 +12,13 @@ export class SettlementMenu {
     }
 
 
-    // const build_menu_btn = this.spawnBuildMenuButton();
-    // tile_menu_container.insertAdjacentElement("beforeend", build_menu_btn);
+
     spawnBuildMenuButton() {
         const build_menu_btn = document.createElement("button");
         build_menu_btn.id = "build-menu-btn";
         build_menu_btn.className = "btn-small";
         build_menu_btn.textContent = "Baumenü";
-        build_menu_btn.addEventListener("click", event => this.spawnBuildMenu(event));
+        build_menu_btn.addEventListener("click", event => new BuildMenu(event));
 
         return build_menu_btn;
     }
@@ -72,6 +72,9 @@ export class SettlementMenu {
         close_btn.textContent = "X";
         close_btn.addEventListener("click", this.closeSettlementMenu.bind(this)); // Add bound method
         settlement_menu_container.insertAdjacentElement("afterbegin", close_btn);
+
+        const build_menu_btn = this.spawnBuildMenuButton();
+        settlement_menu_container.insertAdjacentElement("beforeend", build_menu_btn);
 
         document.getElementById("next-round").insertAdjacentElement("afterend", settlement_menu_container);
     }

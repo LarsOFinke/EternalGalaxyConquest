@@ -38,6 +38,7 @@ h1 {
 #build-menu-btn {
     position: absolute;
     bottom: 12px;
+    right: 12px;
 }
 
 .close-btn {
