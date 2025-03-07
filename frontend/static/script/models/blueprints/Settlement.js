@@ -36,7 +36,6 @@ export class Settlement {
 
     setBuildings(new_building) {
         this.__buildings.push(new_building);
-        console.log(new_building, "PUSHED");
     }
 
 
@@ -64,7 +63,6 @@ export class Settlement {
     addNewBuilding(building) {
         switch (building.name) {
             case "Builders Hut":
-                console.log("matched");
                 this.setBuildings(new BuildersHut(building.building_id, building.name, building.active, building.worker_slots, building.workers));
 
         }
