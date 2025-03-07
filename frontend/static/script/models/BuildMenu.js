@@ -26,7 +26,6 @@ export class BuildMenu {
         build_menu_container.id = "build-menu-container";
         build_menu_container.className = "bordered";
         const build_menu_header = document.createElement("h4");
-        build_menu_header.id = "build-menu-header";
         build_menu_header.textContent = "Baumenü";
         build_menu_container.insertAdjacentElement("afterbegin", build_menu_header);
 

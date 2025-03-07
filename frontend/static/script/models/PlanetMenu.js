@@ -1,5 +1,6 @@
 "use strict";
 import { game } from "../egc.js";
+import { SettlementMenu } from "./SettlementMenu.js";
 
 
 
@@ -54,7 +55,6 @@ export class PlanetMenu {
 
     }
 
-
     spawnFoundSettlementMenuButton() {
         const found_settlement_menu_btn = document.createElement("button");
         found_settlement_menu_btn.id = "found-settlement-menu-btn";
@@ -64,6 +64,7 @@ export class PlanetMenu {
 
         return found_settlement_menu_btn;
     }
+    
 
     spawnSettlementsContainer(tile) {
         const settlements_container = document.createElement("div");
@@ -83,6 +84,7 @@ export class PlanetMenu {
         settlements_table.insertAdjacentElement("afterbegin", settlements_table_head);
         settlements_container.insertAdjacentElement("beforeend", settlements_table);
 
+        // CREATE A NEW ROW IN THE TABLE FOR EACH SETTLEMENT FETCHED //
         game.getPlayers()[tile.owner_id - 1].getBases().forEach(base => {
             if (base.base_id === tile["tile_content"].base_id) {
                 base.getSettlements().forEach(settlement => {
@@ -93,6 +95,10 @@ export class PlanetMenu {
                     const name = document.createElement("td");
                     name.textContent = settlement.name;
                     new_row.insertAdjacentElement("beforeend", name);
+                    new_row.addEventListener("click", event => {
+                        event.preventDefault();
+                        const sm = new SettlementMenu(tile, settlement);
+                    })
                     settlements_table.insertAdjacentElement("beforeend", new_row);
                 })
                 
