@@ -6,8 +6,9 @@ import { Headquarter } from "../buildings/Headquarter.js";
 
 
 export class Settlement {
-    constructor(settlement_id, name, resources, buildings, population, free_workers, free_builders) {
+    constructor(settlement_id, settlement_type, name, resources, buildings, population, free_workers, free_builders) {
         this.settlement_id = settlement_id;
+        this.settlement_type = settlement_type;
         this.name = name;
         this.__resources = resources;
         this.__buildings = this.addInitialBuildings(buildings);

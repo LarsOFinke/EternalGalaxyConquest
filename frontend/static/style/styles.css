@@ -41,6 +41,48 @@ body {
 h1, h2, h3, h4, h5 {
     text-align: center;
 }
+table {
+    font-size: 0.9rem;
+}
+
+
+/* ### LINK STYLE ### */
+a {
+    text-decoration: none;
+    font-size: 1.3rem;
+}
+a:link {
+    color: var(--gold);
+}
+a:visited {
+    color: var(--gold);
+}
+a:hover {
+    color: var(--light-red);
+}
+a:active {
+    color: var(--dark-red);
+}
+
+
+/* ### ERROR-BOX ### */
+#error_box {
+    position: relative;
+    width: 100%;
+    height: 24px;
+    margin: 24px 0;
+    text-align: center;
+}
+#error_box p {
+    width: 60%;
+    margin: auto;
+    padding: .25rem;
+    border: 2px solid gray;
+    border-radius: 4px;
+    background-color: #fff;
+    color: var(--dark-red);
+    font-weight: bold;
+}
 
 
 /* ### UTILITY ### */
@@ -170,42 +212,3 @@ h1, h2, h3, h4, h5 {
     height: 100%;
 }
 
-
-
-/* ### LINK STYLE ### */
-a {
-    text-decoration: none;
-    font-size: 1.3rem;
-}
-a:link {
-    color: var(--gold);
-}
-a:visited {
-    color: var(--gold);
-}
-a:hover {
-    color: var(--light-red);
-}
-a:active {
-    color: var(--dark-red);
-}
-
-
-/* ### ERROR-BOX ### */
-#error_box {
-    position: relative;
-    width: 100%;
-    height: 24px;
-    margin: 24px 0;
-    text-align: center;
-}
-#error_box p {
-    width: 60%;
-    margin: auto;
-    padding: .25rem;
-    border: 2px solid gray;
-    border-radius: 4px;
-    background-color: #fff;
-    color: var(--dark-red);
-    font-weight: bold;
-}

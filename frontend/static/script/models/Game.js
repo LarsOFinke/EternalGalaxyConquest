@@ -22,6 +22,10 @@ export class Game {
         return this.__tile_list
     }
 
+    getPlayers() {
+        return this.__players;
+    }
+
 
     addPlayers(player_states) {
         let players = [];

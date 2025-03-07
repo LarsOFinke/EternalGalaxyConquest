@@ -1,4 +1,5 @@
 "use strict";
+import { game } from "../egc.js";
 
 
 
@@ -26,7 +27,6 @@ export class PlanetMenu {
         found_settlement_menu_container.id = "found-settlement-menu-container";
         found_settlement_menu_container.className = "bordered";
         const found_settlement_menu_header = document.createElement("h4");
-        found_settlement_menu_header.id = "found-settlement-menu-header";
         found_settlement_menu_header.textContent = "Siedlungsgründung";
         found_settlement_menu_container.insertAdjacentElement("afterbegin", found_settlement_menu_header);
 
@@ -65,6 +65,44 @@ export class PlanetMenu {
         return found_settlement_menu_btn;
     }
 
+    spawnSettlementsContainer(tile) {
+        const settlements_container = document.createElement("div");
+        settlements_container.id = "planet-name-container";
+        settlements_container.className = "centered";
+
+        // SETTLEMENTS-TABLE //
+        const settlements_table = document.createElement("table");
+        settlements_table.className = "centered";
+        const settlements_table_head = document.createElement("thead")
+        const settlements_table_head_type = document.createElement("th");
+        settlements_table_head_type.textContent = "Siedlungstyp";
+        settlements_table_head.insertAdjacentElement("beforeend", settlements_table_head_type);
+        const settlements_table_head_name = document.createElement("th");
+        settlements_table_head_name.textContent = "Siedlungsname";
+        settlements_table_head.insertAdjacentElement("beforeend", settlements_table_head_name);
+        settlements_table.insertAdjacentElement("afterbegin", settlements_table_head);
+        settlements_container.insertAdjacentElement("beforeend", settlements_table);
+
+        game.getPlayers()[tile.owner_id - 1].getBases().forEach(base => {
+            if (base.base_id === tile["tile_content"].base_id) {
+                base.getSettlements().forEach(settlement => {
+                    const new_row = document.createElement("tr");
+                    const type = document.createElement("td");
+                    type.textContent = settlement.settlement_type;
+                    new_row.insertAdjacentElement("afterbegin", type);
+                    const name = document.createElement("td");
+                    name.textContent = settlement.name;
+                    new_row.insertAdjacentElement("beforeend", name);
+                    settlements_table.insertAdjacentElement("beforeend", new_row);
+                })
+                
+            }
+        })
+        
+
+        return settlements_container;
+    }
+
     spawnPlanetNameContainer(tile) {
         const planet_name_container = document.createElement("div");
         planet_name_container.id = "planet-name-container";
@@ -93,17 +131,18 @@ export class PlanetMenu {
     }
 
     createPlanetMenu(tile_menu_container, tile) {
-        const tile_name_lbl = document.createElement("label");
-        tile_name_lbl.textContent = tile.tile_name;
-        tile_menu_container.insertAdjacentElement("beforeend", tile_name_lbl);
+        const tile_name = document.createElement("h4");
+        tile_name.textContent = tile.tile_name;
+        tile_menu_container.insertAdjacentElement("beforeend", tile_name);
 
         const planet_name_container = this.spawnPlanetNameContainer(tile);
         tile_menu_container.insertAdjacentElement("beforeend", planet_name_container);
 
-        const found_settlement_menu_btn = this.spawnFoundSettlementMenuButton();
-        tile_menu_container.insertAdjacentElement("beforeend", found_settlement_menu_btn);
+        const settlements_container = this.spawnSettlementsContainer(tile);
+        tile_menu_container.insertAdjacentElement("beforeend", settlements_container);
 
-        
+        const found_settlement_menu_btn = this.spawnFoundSettlementMenuButton(tile);
+        tile_menu_container.insertAdjacentElement("beforeend", found_settlement_menu_btn);
     }
 
 
