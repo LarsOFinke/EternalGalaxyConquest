@@ -28,6 +28,41 @@ export class SettlementMenu {
         event.preventDefault();
     }
 
+    spawnBuildingsContainer() {
+        const buildings_container = document.createElement("div");
+        buildings_container.id = "buildings-container";
+        buildings_container.className = "centered";
+
+        // BUILDINGS-TABLE //
+        const buildings_table = document.createElement("table");
+        buildings_table.className = "centered";
+        const buildings_table_head = document.createElement("thead")
+        const buildings_table_head_building = document.createElement("th");
+        buildings_table_head_building.textContent = "Gebäude";
+        buildings_table_head.insertAdjacentElement("beforeend", buildings_table_head_building);
+        const buildings_table_head_details = document.createElement("th");
+        buildings_table_head_details.textContent = "Details";
+        buildings_table_head.insertAdjacentElement("beforeend", buildings_table_head_details);
+        buildings_table.insertAdjacentElement("afterbegin", buildings_table_head);
+        buildings_container.insertAdjacentElement("beforeend", buildings_table);
+
+        console.log(this.settlement);
+        // CREATE A NEW ROW IN THE TABLE FOR EACH BUILDING FETCHED //
+        this.settlement.getBuildings().forEach(building => {
+            const new_row = document.createElement("tr");
+            const building_name = document.createElement("td");
+            building_name.textContent = building.name;
+            new_row.insertAdjacentElement("beforeend", building_name);
+            const building_details = document.createElement("td");
+            building_details.textContent = "Details";
+            new_row.insertAdjacentElement("beforeend", building_details);
+            buildings_table.insertAdjacentElement("beforeend", new_row);
+        })
+        
+
+        return buildings_container;
+    }
+
     spawnSettlementNameContainer(tile) {
         const settlement_name_container = document.createElement("div");
         settlement_name_container.id = "settlement-name-container";
@@ -60,6 +95,12 @@ export class SettlementMenu {
         settlement_menu_container.id = "settlement-menu-container";
         settlement_menu_container.className = "bordered";
 
+        const close_btn = document.createElement("button");
+        close_btn.classList = "close-btn bordered";
+        close_btn.textContent = "X";
+        close_btn.addEventListener("click", this.closeSettlementMenu.bind(this)); // Add bound method
+        settlement_menu_container.insertAdjacentElement("afterbegin", close_btn);
+
         const origin_planet = document.createElement("h4");
         origin_planet.textContent = tile.tile_content.planet_name;
         settlement_menu_container.insertAdjacentElement("afterbegin", origin_planet);
@@ -67,11 +108,8 @@ export class SettlementMenu {
         const settlement_name_container = this.spawnSettlementNameContainer();
         settlement_menu_container.insertAdjacentElement("beforeend", settlement_name_container);
 
-        const close_btn = document.createElement("button");
-        close_btn.classList = "close-btn bordered";
-        close_btn.textContent = "X";
-        close_btn.addEventListener("click", this.closeSettlementMenu.bind(this)); // Add bound method
-        settlement_menu_container.insertAdjacentElement("afterbegin", close_btn);
+        const buildings_container = this.spawnBuildingsContainer();
+        settlement_menu_container.insertAdjacentElement("beforeend", buildings_container);
 
         const build_menu_btn = this.spawnBuildMenuButton();
         settlement_menu_container.insertAdjacentElement("beforeend", build_menu_btn);
