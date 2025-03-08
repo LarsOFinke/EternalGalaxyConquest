@@ -97,7 +97,7 @@ export class PlanetMenu {
                     new_row.insertAdjacentElement("beforeend", name);
                     new_row.addEventListener("click", event => {
                         event.preventDefault();
-                        const sm = new SettlementMenu(tile, settlement);
+                        const sm = new SettlementMenu(tile, base.base_id, settlement);
                     })
                     settlements_table.insertAdjacentElement("beforeend", new_row);
                 })

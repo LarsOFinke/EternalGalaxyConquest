@@ -5,11 +5,17 @@ import { PopulationMenu } from "./PopulationMenu.js";
 
 
 export class SettlementMenu {
-    constructor(tile, settlement) {
+    constructor(tile, base_id, settlement) {
         this.tile = tile;
+        this.base_id = base_id;
         this.settlement = settlement;
 
         this.spawnSettlementMenu(tile);
+    }
+
+
+    changeSettlementName(event) {
+        event.preventDefault();
     }
 
 
@@ -17,7 +23,7 @@ export class SettlementMenu {
         const build_menu_btn = document.createElement("button");
         build_menu_btn.classList = "btn-small bottom-right";
         build_menu_btn.textContent = "Baumenü";
-        build_menu_btn.addEventListener("click", e => new BuildMenu());
+        build_menu_btn.addEventListener("click", e => new BuildMenu(this.base_id, this.settlement.settlement_id));
 
         return build_menu_btn;
     }
@@ -29,10 +35,6 @@ export class SettlementMenu {
         population_menu_btn.addEventListener("click", e => new PopulationMenu(this.settlement));
 
         return population_menu_btn;
-    }
-
-    changeSettlementName(event) {
-        event.preventDefault();
     }
 
     spawnBuildingsContainer() {

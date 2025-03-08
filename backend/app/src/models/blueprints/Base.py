@@ -51,7 +51,7 @@ class Base():
     
     def select_settlement(self, target) -> dict:
         for settlement in self.__settlements:
-            if settlement.name == target:
+            if settlement.get_settlement_id() == int(target):
                 return  { "success": True, "target": settlement }
         
         return  { "success": False, "message": f"{target} nicht gefunden!" }

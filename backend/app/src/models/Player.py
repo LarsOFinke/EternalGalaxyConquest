@@ -39,7 +39,7 @@ class Player():
 
     def select_base(self, target) -> dict:
         for base in self.__bases:
-            if base.name == target:
+            if base.get_base_id() == int(target):
                 return  { "success": True, "target": base }
         
         return  { "success": False, "message": f"{target} nicht gefunden!", "target": f"{target} nicht gefunden!" }

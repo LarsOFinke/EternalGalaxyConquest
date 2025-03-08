@@ -4,7 +4,9 @@ import { sendPlayerActions } from "../../egc.js";
 
 
 export class BuildMenu {
-    constructor() {
+    constructor(base_id, settlement_id) {
+        this.base_id = base_id;
+        this.settlement_id = settlement_id;
         this.spawnBuildMenu();
     }
 
@@ -13,11 +15,12 @@ export class BuildMenu {
         event.preventDefault();
         const payload = {
             "category": "locations",
-            "location": ["settlements", "admin's Planet"],
-            "target": "Hauptstadt",
+            "location": ["settlements", this.base_id ],
+            "target": this.settlement_id,
             "action": "Build",
             "context": ["Builders Hut"]
         };
+        console.log(payload);
         sendPlayerActions(payload);
     }
 

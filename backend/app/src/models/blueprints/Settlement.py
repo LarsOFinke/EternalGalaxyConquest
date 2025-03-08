@@ -145,6 +145,9 @@ class Settlement():
             "free_builders": [{"name": builder.name, "population_id": builder.get_population_id()} for builder in self.__free_builders]
         }
     
+    def get_settlement_id(self):
+        return self.__settlement_id
+    
     def get_resources(self, dump) -> dict:
         return  {
                     "success": True,
