@@ -1,5 +1,5 @@
 "use strict";
-import { sendPlayerActions } from "../egc.js";
+import { sendPlayerActions } from "../../egc.js";
 
 
 

@@ -1,5 +1,6 @@
 "use strict";
 import { BuildMenu } from "./BuildMenu.js";
+import { PopulationMenu } from "./PopulationMenu.js";
 
 
 
@@ -18,11 +19,20 @@ export class SettlementMenu {
         build_menu_btn.id = "build-menu-btn";
         build_menu_btn.className = "btn-small";
         build_menu_btn.textContent = "Baumenü";
-        build_menu_btn.addEventListener("click", event => new BuildMenu(event));
+        build_menu_btn.addEventListener("click", e => new BuildMenu());
 
         return build_menu_btn;
     }
 
+    spawnPopulationMenuButton() {
+        const population_menu_btn = document.createElement("button");
+        population_menu_btn.id = "population-menu-btn";
+        population_menu_btn.className = "btn-small";
+        population_menu_btn.textContent = "Bevölkerung";
+        population_menu_btn.addEventListener("click", e => new PopulationMenu());
+
+        return population_menu_btn;
+    }
 
     changeSettlementName(event) {
         event.preventDefault();
@@ -110,6 +120,9 @@ export class SettlementMenu {
 
         const buildings_container = this.spawnBuildingsContainer();
         settlement_menu_container.insertAdjacentElement("beforeend", buildings_container);
+
+        const population_menu_btn = this.spawnPopulationMenuButton();
+        settlement_menu_container.insertAdjacentElement("beforeend", population_menu_btn);
 
         const build_menu_btn = this.spawnBuildMenuButton();
         settlement_menu_container.insertAdjacentElement("beforeend", build_menu_btn);

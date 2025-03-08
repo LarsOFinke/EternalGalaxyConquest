@@ -1,5 +1,5 @@
 "use strict";
-import { game } from "../egc.js";
+import { game } from "../../egc.js";
 import { SettlementMenu } from "./SettlementMenu.js";
 
 

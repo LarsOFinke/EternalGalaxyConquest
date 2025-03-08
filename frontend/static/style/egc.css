@@ -2,6 +2,9 @@
 h1 {
     font-size: 1.45rem;
 }
+h4 {
+    margin-top: 4px;
+}
 
 
 
@@ -12,7 +15,7 @@ h1 {
     font-size: 1rem;
 }
 
-#tile-menu-container, #found-settlement-menu-container, #settlement-menu-container, #build-menu-container {
+#tile-menu-container, #found-settlement-menu-container, #settlement-menu-container, #population-menu-container, #build-menu-container {
     position: absolute;
     background-color: rgb(22, 22, 22);
     opacity: .975;
@@ -23,18 +26,21 @@ h1 {
 #tile-menu-container { z-index: 200; }
 #found-settlement-menu-container { z-index: 205; }
 #settlement-menu-container { z-index: 225; }
+#population-menu-container { z-index: 300; }
 #build-menu-container { z-index: 300; }
 
-#tile-menu-container, #build-menu-container > h4 {
-    margin-top: 4px;
-}
+
 
 #found-settlement-menu-btn {
     position: absolute;
     bottom: 12px;
     align-self: center;
 }
-
+#population-menu-btn {
+    position: absolute;
+    bottom: 12px;
+    left: 12px;
+}
 #build-menu-btn {
     position: absolute;
     bottom: 12px;

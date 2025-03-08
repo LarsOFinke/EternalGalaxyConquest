@@ -1,7 +1,7 @@
 "use strict";
 import { Player } from "./Player.js";
 import { Planet } from "./locations/Planet.js";
-import { TileMenu } from "./TileMenu.js";
+import { TileMenu } from "./menus/TileMenu.js";
 
 
 
