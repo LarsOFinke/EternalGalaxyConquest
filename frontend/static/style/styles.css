@@ -108,6 +108,18 @@ a:active {
     position: absolute;
     top: 5px;
 }
+
+.bottom-left {
+    position: absolute;
+    bottom: 12px;
+    left: 12px;
+}
+.bottom-right {
+    position: absolute;
+    bottom: 12px;
+    right: 12px;
+}
+
 .btn {
     width: fit-content;
     height: 45px;
@@ -139,6 +151,17 @@ a:active {
 }
 .btn:hover, .btn-small:hover {
     background-color: #c5c5c5;
+}
+.close-btn {
+    position: absolute;
+    top: -2px;
+    right: -2px;
+    background-color: red;
+    color: #fff;
+    width: 24px;
+    height: 24px;
+    margin-top: 0;
+
 }
 
 .wrapper {

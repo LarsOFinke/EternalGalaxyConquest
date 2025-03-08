@@ -13,11 +13,9 @@ export class SettlementMenu {
     }
 
 
-
     spawnBuildMenuButton() {
         const build_menu_btn = document.createElement("button");
-        build_menu_btn.id = "build-menu-btn";
-        build_menu_btn.className = "btn-small";
+        build_menu_btn.classList = "btn-small bottom-right";
         build_menu_btn.textContent = "Baumenü";
         build_menu_btn.addEventListener("click", e => new BuildMenu());
 
@@ -26,8 +24,7 @@ export class SettlementMenu {
 
     spawnPopulationMenuButton() {
         const population_menu_btn = document.createElement("button");
-        population_menu_btn.id = "population-menu-btn";
-        population_menu_btn.className = "btn-small";
+        population_menu_btn.classList = "btn-small bottom-left";
         population_menu_btn.textContent = "Bevölkerung";
         population_menu_btn.addEventListener("click", e => new PopulationMenu(this.settlement));
 

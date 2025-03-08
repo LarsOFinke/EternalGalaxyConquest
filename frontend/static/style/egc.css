@@ -29,34 +29,10 @@ h4 {
 #population-menu-container { z-index: 300; }
 #build-menu-container { z-index: 300; }
 
-
-
 #found-settlement-menu-btn {
     position: absolute;
     bottom: 12px;
     align-self: center;
-}
-#population-menu-btn {
-    position: absolute;
-    bottom: 12px;
-    left: 12px;
-}
-#build-menu-btn {
-    position: absolute;
-    bottom: 12px;
-    right: 12px;
-}
-
-.close-btn {
-    position: absolute;
-    top: -2px;
-    right: -2px;
-    background-color: red;
-    color: #fff;
-    width: 24px;
-    height: 24px;
-    margin-top: 0;
-
 }
 
 
