@@ -68,6 +68,10 @@ export class Settlement {
     }
 
 
+    getFreeWorkers() {
+        return this.__free_workers;
+    }
+
 
     addNewBuilding(building) {
         switch (building.name) {

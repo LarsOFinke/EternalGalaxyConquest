@@ -20,7 +20,6 @@ export class BuildMenu {
             "action": "Build",
             "context": ["Builders Hut"]
         };
-        console.log(payload);
         sendPlayerActions(payload);
     }
 

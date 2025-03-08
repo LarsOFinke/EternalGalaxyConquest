@@ -15,7 +15,8 @@ h4 {
     font-size: 1rem;
 }
 
-#tile-menu-container, #found-settlement-menu-container, #settlement-menu-container, #population-menu-container, #build-menu-container {
+#tile-menu-container, #found-settlement-menu-container, #settlement-menu-container, 
+#population-menu-container, #build-menu-container, #building-menu-container {
     position: absolute;
     background-color: rgb(22, 22, 22);
     opacity: .975;
@@ -28,6 +29,7 @@ h4 {
 #settlement-menu-container { z-index: 225; }
 #population-menu-container { z-index: 300; }
 #build-menu-container { z-index: 300; }
+#building-menu-container { z-index: 300; }
 
 #found-settlement-menu-btn {
     position: absolute;

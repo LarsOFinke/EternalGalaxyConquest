@@ -22,7 +22,7 @@
     action: {
         "category": "locations",
         "location": ["bases",],
-        "target": "Heimatplanet",
+        "target": base_id,
         "action": "Found City",
         "context": ["New Citto", 1000, 1000, 1000, 1000]
     }
@@ -34,8 +34,8 @@
     player: window.player_id,
     action: {
         "category": "locations",
-        "location": ["settlements", "admin's Planet"],
-        "target": "Hauptstadt",
+        "location": ["settlements", base_id],
+        "target": settlement_id,
         "action": "Build",
         "context": ["Builders Hut",]
     }
@@ -47,7 +47,7 @@
     player: window.player_id,
     action: {
         "category": "buildings",
-        "location": ["factory", "Hauptstadt", "Heimatplanet"],
+        "location": ["factory", settlement_id, base_id],
         "target": "Builders Hut",
         "action": "Get Workers",
         "context": ["dump",]
