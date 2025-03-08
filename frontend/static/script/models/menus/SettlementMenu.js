@@ -29,7 +29,7 @@ export class SettlementMenu {
         population_menu_btn.id = "population-menu-btn";
         population_menu_btn.className = "btn-small";
         population_menu_btn.textContent = "Bevölkerung";
-        population_menu_btn.addEventListener("click", e => new PopulationMenu());
+        population_menu_btn.addEventListener("click", e => new PopulationMenu(this.settlement));
 
         return population_menu_btn;
     }
@@ -56,7 +56,6 @@ export class SettlementMenu {
         buildings_table.insertAdjacentElement("afterbegin", buildings_table_head);
         buildings_container.insertAdjacentElement("beforeend", buildings_table);
 
-        console.log(this.settlement);
         // CREATE A NEW ROW IN THE TABLE FOR EACH BUILDING FETCHED //
         this.settlement.getBuildings().forEach(building => {
             const new_row = document.createElement("tr");
