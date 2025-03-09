@@ -21,9 +21,9 @@ export class PlanetMenu {
             "location": ["bases",],
             "target": this.tile.tile_content.base_id,
             "action": "Change Name",
-            "context": [,]
+            "context": [new_name,]
         };
-        
+
         this.tile.tile_content.planet_name = new_name;
         sendPlayerActions(payload);
     }
@@ -32,7 +32,28 @@ export class PlanetMenu {
 
     foundNewSettlement(event) {
         event.preventDefault();
+        const new_settlement_name = document.getElementById("new-settlement-name").value;
+        let action = document.getElementById("new-settlement-type").value;
+        switch (action) {
+            case "Outpost":
+                action = "Found Outpost";
+                break;
 
+            case "City":
+                action = "Found City";
+                break;
+        };
+
+        // ADD DROPDOWN FOR OUTPOST / CITY
+        const payload = {
+            "category": "locations",
+            "location": ["bases",],
+            "target": this.tile.tile_content.base_id,
+            "action": action,
+            "context": [new_settlement_name,]
+        };
+
+        sendPlayerActions(payload);
     }
 
     spawnFoundSettlementMenu(event) {
@@ -50,6 +71,18 @@ export class PlanetMenu {
         close_btn.textContent = "X";
         close_btn.addEventListener("click", this.closeFoundSettlementMenu.bind(this)); // Add bound method
         found_settlement_menu_container.insertAdjacentElement("afterbegin", close_btn);
+        
+        const found_settlement_type = document.createElement("select");
+        found_settlement_type.id = "new-settlement-type";
+        const option_outpost = document.createElement("option");
+        option_outpost.textContent = "Außenposten";
+        option_outpost.value = "Outpost";
+        const option_city = document.createElement("option");
+        option_city.textContent = "Stadt";
+        option_city.value = "City";
+        found_settlement_type.insertAdjacentElement("beforeend", option_outpost);
+        found_settlement_type.insertAdjacentElement("beforeend", option_city);
+        found_settlement_menu_container.insertAdjacentElement("beforeend", found_settlement_type);
         
         const found_settlement_name_input_box = document.createElement("div");
         found_settlement_name_input_box.className = "small-input-box";

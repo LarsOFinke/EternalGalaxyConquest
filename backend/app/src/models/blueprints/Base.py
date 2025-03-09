@@ -58,7 +58,7 @@ class Base():
         return  { "success": False, "message": f"{target} nicht gefunden!" }
     
     
-    def change_name(self, new_name):
+    def change_name(self, new_name) -> dict:
         try:
             self.name = new_name
             return  { "success": True, "message": f"Umbenennung in '{new_name}' erfolgreich!",
@@ -73,24 +73,62 @@ class Base():
             return  { "success": False, "message": f"{e}" }
     
     
-    def found_outpost(self) -> dict:
+    def found_outpost(self, name: str, 
+                   gold: float=500, food: float=250, wood: float=500, iron: float=50, 
+                   buildings: list = [], 
+                   population: list = []
+                   ) -> dict:
         try:
-            new_outpost = Outpost()
+            new_outpost = Outpost(name, gold, food, wood, iron, buildings, population)
             self.__settlements.append(new_outpost)
-            return  { "success": True, "message": f"Neuer Außenposten erfolgreich gegründet auf: {self.name}!" }
+            return  { "success": True, "message": f"Neuer Außenposten erfolgreich gegründet auf: {self.name}!",
+                     "update": {
+                            "action": "Found Outpost",
+                            "base_id": self.__base_id,
+                            "settlement_id": self.__settlements[-1].get_settlement_id(),
+                            "name": name,
+                            "resources": {
+                                "gold": gold,
+                                "food": food,
+                                "wood": wood,
+                                "iron": iron
+                                },
+                            "buildings": buildings,
+                            "population": population,
+                            "free_workers": self.__settlements[-1].get_free_workers()["free_workers"],
+                            "free_builders": self.__settlements[-1].get_free_builders()["free_builders"]
+                        } 
+                    }
         
         except Exception as e:
             return  { "success": False, "message": f"Neuer Außenposten konnte nicht gegründet werden auf: {self.name}!\n{e}" }
 
     def found_city(self, name: str, 
-                   gold: float, food: float, wood: float, iron: float, 
+                   gold: float=1000, food: float=500, wood: float=750, iron: float=200, 
                    buildings: list = [], 
                    population: list = []
                    ) -> dict:
         try:
             new_city = City(name, gold, food, wood, iron, buildings, population)
             self.__settlements.append(new_city)
-            return  { "success": True, "message": f"Neue Stadt erfolgreich gegründet auf: {self.name}!" }
+            return  { "success": True, "message": f"Neue Stadt erfolgreich gegründet auf: {self.name}!",
+                        "update": {
+                            "action": "Found Outpost",
+                            "base_id": self.__base_id,
+                            "settlement_id": self.__settlements[-1].get_settlement_id(),
+                            "name": name,
+                            "resources": {
+                                "gold": gold,
+                                "food": food,
+                                "wood": wood,
+                                "iron": iron
+                                },
+                            "buildings": buildings,
+                            "population": population,
+                            "free_workers": self.__settlements[-1].get_free_workers()["free_workers"],
+                            "free_builders": self.__settlements[-1].get_free_builders()["free_builders"]
+                        } 
+                    }
         
         except Exception as e:
             return  { "success": False, "message": f"Neue Stadt konnte nicht gegründet werden auf: {self.name}!\n{e}" }

@@ -188,7 +188,7 @@ class Settlement():
         return  { "success": True }
     
     
-    def get_free_workers(self) -> dict:
+    def get_free_workers(self, dump="dump") -> dict:
         return { "success": True, "free_workers": self.__free_workers }
     
     def __set_free_workers(self, worker: Worker, increase: bool = True) -> None:
@@ -206,7 +206,7 @@ class Settlement():
         return  { "success": True }
     
     
-    def get_free_builders(self, dump) -> dict:
+    def get_free_builders(self, dump="dump") -> dict:
         return  { "success": True, "free_builders": self.__free_builders }
     
     def __set_free_builders(self, builder: Builder, increase: bool = True) -> None:

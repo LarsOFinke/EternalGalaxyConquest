@@ -97,29 +97,48 @@ export class Game {
     };
     
 
+    convertWorker(player, update) {
+        player.getBases().forEach(base => {
+            base.getSettlements().forEach(settlement => {
+                if (settlement.settlement_id === update.settlement_id) {
+                    settlement.setPopulation(update.old_population_id, false);
+                    settlement.setFreeWorkers(update.old_population_id, false);
+                    
+                    settlement.setPopulation(settlement.createPopulationInstance(update));
+                }
+            })
+        });
+    };
+
+    changeBaseName(player, update) {
+        player.getBases().forEach(base => {
+            if (base.base_id === update.base_id) {
+                base.name = update.name;
+            }
+        });
+    }
+
+    foundSettlement(player, update) {
+        player.getBases().forEach(base => {
+            if (base.base_id === update.base_id) {
+                base.setSettlement(base.createSettlementInstance(update));
+            }
+        });
+    }
+
     playerActionUpdate(player, update) {
         player = this.__players[player - 1];
 
         switch (update.action) {
             case "Convert Worker":
-                player.getBases().forEach(base => {
-                    base.getSettlements().forEach(settlement => {
-                        if (settlement.settlement_id === update.settlement_id) {
-                            settlement.setPopulation(update.old_population_id, false);
-                            settlement.setFreeWorkers(update.old_population_id, false);
-                            
-                            const new_worker = settlement.createPopulationInstance(update);
-                            settlement.setPopulation(new_worker);
-                        }
-                    })
-                });
+                this.convertWorker(player, update);
             
             case "Change Base Name":
-                player.getBases().forEach(base => {
-                    if (base.base_id === update.base_id) {
-                        base.name = update.name;
-                    }
-                });
+                this.changeBaseName(player, update);
+
+            case "Found Outpost" || "Found City":
+                this.foundSettlement(player, update);
+
         }
     }
 
