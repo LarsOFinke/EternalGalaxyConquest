@@ -68,44 +68,32 @@ export class PlanetMenu {
 
     spawnSettlementsContainer(tile) {
         const settlements_container = document.createElement("div");
-        settlements_container.id = "planet-name-container";
+        settlements_container.id = "settlements-container";
         settlements_container.className = "centered";
 
-        // SETTLEMENTS-TABLE //
-        const settlements_table = document.createElement("table");
-        settlements_table.className = "centered";
-        const settlements_table_head = document.createElement("thead")
-        const settlements_table_head_type = document.createElement("th");
-        settlements_table_head_type.textContent = "Siedlungstyp";
-        settlements_table_head.insertAdjacentElement("beforeend", settlements_table_head_type);
-        const settlements_table_head_name = document.createElement("th");
-        settlements_table_head_name.textContent = "Siedlungsname";
-        settlements_table_head.insertAdjacentElement("beforeend", settlements_table_head_name);
-        settlements_table.insertAdjacentElement("afterbegin", settlements_table_head);
-        settlements_container.insertAdjacentElement("beforeend", settlements_table);
-
-        // CREATE A NEW ROW IN THE TABLE FOR EACH SETTLEMENT FETCHED //
         game.getPlayers()[tile.owner_id - 1].getBases().forEach(base => {
             if (base.base_id === tile["tile_content"].base_id) {
                 base.getSettlements().forEach(settlement => {
-                    const new_row = document.createElement("tr");
-                    const type = document.createElement("td");
-                    type.textContent = settlement.settlement_type;
-                    new_row.insertAdjacentElement("afterbegin", type);
-                    const name = document.createElement("td");
-                    name.textContent = settlement.name;
-                    new_row.insertAdjacentElement("beforeend", name);
-                    new_row.addEventListener("click", event => {
+                    const settlements_input_box = document.createElement("div");
+                    settlements_input_box.className = "small-input-box";
+
+                    const settlements_lbl = document.createElement("label");
+                    settlements_lbl.textContent = settlement.name;
+                    settlements_input_box.insertAdjacentElement("beforeend", settlements_lbl);
+
+                    const settlements_btn = document.createElement("button");
+                    settlements_btn.className = "btn-small";
+                    settlements_btn.textContent = "Ansehen";
+                    settlements_btn.addEventListener("click", event => {
                         event.preventDefault();
                         const sm = new SettlementMenu(tile, base.base_id, settlement);
-                    })
-                    settlements_table.insertAdjacentElement("beforeend", new_row);
+                    });
+                    settlements_input_box.insertAdjacentElement("beforeend", settlements_btn),
+                    settlements_container.insertAdjacentElement("beforeend", settlements_input_box);
                 })
-                
             }
         })
         
-
         return settlements_container;
     }
 
