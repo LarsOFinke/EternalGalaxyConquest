@@ -1,51 +1,76 @@
 "use strict";
+import { sendPlayerActions } from "../../egc.js";
 
 
 
 export class PopulationMenu {
-    constructor(settlement) {
+    constructor(base_id, settlement) {
+        this.base_id = base_id;
         this.settlement = settlement;
         this.spawnPopulationMenu();
     }
 
-    createNewWorker() {
+    createNewWorker(event) {
+        event.preventDefault();
+        const name = document.getElementById("create-new-worker").value;
 
+        const payload = {
+            "category": "locations",
+            "location": ["settlements", this.base_id],
+            "target": this.settlement.settlement_id,
+            "action": "Create Worker",
+            "context": [name,]
+        };
+        sendPlayerActions(payload);
     }
 
-    createNewWorkerButton() {
-        const create_new_worker_btn = document.createElement("button");
-        create_new_worker_btn.classList = "btn-small bottom-left";
-        create_new_worker_btn.textContent = "Neuen Arbeiter anheuern";
-        create_new_worker_btn.addEventListener("click", e => this.createNewWorker());
+    createNewWorkerContainer() {
+        const create_new_worker_container = document.createElement("div");
+        create_new_worker_container.id = "create-new-worker-container";
+        create_new_worker_container.classList = "very-bottom";
 
-        return create_new_worker_btn;
+        const input_box = document.createElement("div");
+        input_box.classList = "bottom small-input-box";
+
+        const create_new_worker_input = document.createElement("input");
+        create_new_worker_input.id = "create-new-worker"; 
+        create_new_worker_input.type = "text";
+        input_box.insertAdjacentElement("beforeend", create_new_worker_input);
+
+        const create_new_worker_btn = document.createElement("button");
+        create_new_worker_btn.classList = "btn-small";
+        create_new_worker_btn.textContent = "Anheuern!";
+        create_new_worker_btn.addEventListener("click", event => this.createNewWorker(event));
+        input_box.insertAdjacentElement("beforeend", create_new_worker_btn);
+
+        create_new_worker_container.insertAdjacentElement("beforeend", input_box);
+ 
+
+        return create_new_worker_container;
     }
 
     spawnPopulationTable() {
-        const population_table = document.createElement("table");
-        population_table.className = "centered";
-        const population_table_head = document.createElement("thead")
-        const population_table_head_profession = document.createElement("th");
-        population_table_head_profession.textContent = "Beruf";
-        population_table_head.insertAdjacentElement("beforeend", population_table_head_profession);
-        const population_table_head_name = document.createElement("th");
-        population_table_head_name.textContent = "Details";
-        population_table_head.insertAdjacentElement("beforeend", population_table_head_name);
-        population_table.insertAdjacentElement("afterbegin", population_table_head);
+        const population_container = document.createElement("div");
+        population_container.id = "buildings-container";
+        population_container.className = "centered";
 
-        // CREATE A NEW ROW IN THE TABLE FOR EACH POPULATION FETCHED //
         this.settlement.getPopulation().forEach(population => {
-            const new_row = document.createElement("tr");
-            const population_name = document.createElement("td");
-            population_name.textContent = population.profession;
-            new_row.insertAdjacentElement("beforeend", population_name);
-            const population_details = document.createElement("td");
-            population_details.textContent = population.name;
-            new_row.insertAdjacentElement("beforeend", population_details);
-            population_table.insertAdjacentElement("beforeend", new_row);
-        })
+            const population_input_box = document.createElement("div");
+            population_input_box.className = "small-input-box";
 
-        return population_table;
+            const population_lbl = document.createElement("label");
+            population_lbl.textContent = population.name;
+            population_input_box.insertAdjacentElement("beforeend", population_lbl);
+
+            const population_btn = document.createElement("button");
+            population_btn.className = "btn-small";
+            population_btn.textContent = "Ansehen";
+            // population_btn.addEventListener("click", e => new BuildingMenu(this.base_id, this.settlement, building));
+            population_input_box.insertAdjacentElement("beforeend", population_btn),
+            population_container.insertAdjacentElement("beforeend", population_input_box);
+        })
+        
+        return population_container;
     }
 
     spawnPopulationMenu() {
@@ -65,8 +90,8 @@ export class PopulationMenu {
         const population_table = this.spawnPopulationTable();
         population_menu_container.insertAdjacentElement("beforeend", population_table);
 
-        const create_new_worker_btn = this.createNewWorkerButton();
-        population_menu_container.insertAdjacentElement("beforeend", create_new_worker_btn);
+        const create_new_worker_container = this.createNewWorkerContainer();
+        population_menu_container.insertAdjacentElement("beforeend", create_new_worker_container);
 
 
         document.getElementById("next-round").insertAdjacentElement("afterend", population_menu_container);

@@ -109,6 +109,14 @@ a:active {
     top: 5px;
 }
 
+.bottom {
+    position: absolute;
+    bottom: 12px;
+}
+.very-bottom {
+    position: absolute;
+    bottom: 0;
+}
 .bottom-left {
     position: absolute;
     bottom: 12px;

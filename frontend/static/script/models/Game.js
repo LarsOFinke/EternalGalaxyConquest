@@ -97,6 +97,16 @@ export class Game {
     };
     
 
+    createWorker(player, update) {
+        player.getBases().forEach(base => {
+            base.getSettlements().forEach(settlement => {
+                if (settlement.settlement_id === update.settlement_id) {
+                    settlement.setPopulation(settlement.createPopulationInstance(update));
+                }
+            })
+        });
+    }
+
     convertWorker(player, update) {
         player.getBases().forEach(base => {
             base.getSettlements().forEach(settlement => {
@@ -130,6 +140,9 @@ export class Game {
         player = this.__players[player - 1];
 
         switch (update.action) {
+            case "Create Worker":
+                this.createWorker(player, update);
+
             case "Convert Worker":
                 this.convertWorker(player, update);
             

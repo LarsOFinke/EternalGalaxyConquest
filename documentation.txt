@@ -1,4 +1,5 @@
 ###---### DOKUMENTATION ###---###
+#-# CURRENT VERSION IS LIVE @ https://egc.portfolio-finke.de/ :) #-#
 
 ### PROJECT-SETUP ###
 1. pip install -r requirements.txt

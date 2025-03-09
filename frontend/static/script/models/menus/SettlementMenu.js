@@ -33,7 +33,7 @@ export class SettlementMenu {
         const population_menu_btn = document.createElement("button");
         population_menu_btn.classList = "btn-small bottom-left";
         population_menu_btn.textContent = "Bevölkerung";
-        population_menu_btn.addEventListener("click", e => new PopulationMenu(this.settlement));
+        population_menu_btn.addEventListener("click", e => new PopulationMenu(this.base_id, this.settlement));
 
         return population_menu_btn;
     }

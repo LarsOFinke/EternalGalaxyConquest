@@ -397,4 +397,17 @@ class Settlement():
         self.__set_population(new_worker)
         self.__set_free_workers(new_worker)
         
-        return  { "success": True, "message": "Neuer Arbeiter erfolgreich angeheuert!" }
+        return  { "success": True, "message": "Neuer Arbeiter erfolgreich angeheuert!",
+                 "update": {
+                        "action": "Create Worker",
+                        "settlement_id": self.__settlement_id,
+                        "population_id": new_worker.get_population_id(),
+                        "name": new_worker.name,
+                        "profession": new_worker.profession,
+                        "alive": new_worker.alive,
+                        "employed": new_worker.employed,
+                        "field_of_work": new_worker.field_of_work,
+                        "working": new_worker.working,
+                        "production": new_worker.production
+                    } 
+                 }
