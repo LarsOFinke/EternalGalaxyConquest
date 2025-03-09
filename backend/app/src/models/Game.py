@@ -129,7 +129,7 @@ class Game:
 
     def process_player_action(self, player, action) -> dict:
         result = self.process_action((player - 1), action)
-        result.update({"player": (player + 1)})
+        result.update({"player": (player)})
         
         return result
 
@@ -176,9 +176,7 @@ class Game:
                 elif result["success"]:
                     target = result.get("target")
                     action["context"].append(result.get("settlement"))
-                    print(action)
                     action_return = target.match_payload_action(action.get("action"), action.get("context"))
-                    print(action_return)
                     return action_return
                 
                 return result

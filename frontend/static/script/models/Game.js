@@ -97,6 +97,25 @@ export class Game {
     };
     
 
+    playerActionUpdate(player, update) {
+        player = this.__players[player - 1];
+
+        switch (update.action) {
+            case "Convert Worker":
+                player.getBases().forEach(base => {
+                    base.getSettlements().forEach(settlement => {
+                        if (settlement.settlement_id === update.settlement_id) {
+                            // REMOVE OLD WORKER (old_population_id)
+                            settlement.setPopulation(update.old_population_id, false);
+                            settlement.setFreeWorkers(update.old_population_id, false);
+                            // ADD NEW WORKER (new_population_id, name, profession, alive) --> more attributes!?
+
+                        }
+                    })
+                })
+        }
+    }
+
 
     addBuildingToPlayer(player_id, base_id, settlement_id, building) {
         this.__players.forEach(player => {

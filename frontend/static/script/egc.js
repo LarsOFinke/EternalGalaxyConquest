@@ -98,6 +98,10 @@ socket.on("result_player_action", data => {
     // }
     
     alert(data["message"]);
+    console.log(data);
+    if (data.success) {
+        game.playerActionUpdate(data.player, data.update);
+    }
 });
 
 function nextRound() {

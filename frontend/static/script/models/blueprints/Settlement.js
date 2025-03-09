@@ -63,13 +63,27 @@ export class Settlement {
         return population_list;
     }
 
-    setPopulation(new_building) {
-        this.__buildings.push(new_building);
+    setPopulation(population, increase=true) {
+        if (increase) {
+            this.__population.push(population);
+        } else {
+            const pop_index = this.__population.findIndex(pops => pops.population_id === parseInt(population));
+            this.__population.splice(pop_index, 1);
+        }
     }
 
 
     getFreeWorkers() {
         return this.__free_workers;
+    }
+
+    setFreeWorkers(worker, increase=true) {
+        if (increase) {
+            this.__population.push(worker);
+        } else {
+            const pop_index = this.__free_workers.findIndex(fw => fw.population_id === parseInt(worker));
+            this.__free_workers.splice(pop_index, 1);
+        }
     }
 
 
@@ -79,11 +93,6 @@ export class Settlement {
                 this.setBuildings(new BuildersHut(building.building_id, building.name, building.active, building.worker_slots, building.workers));
 
         }
-    }
-
-
-    addNewPopulation(person) {
-
     }
 
 }

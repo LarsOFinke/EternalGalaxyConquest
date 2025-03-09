@@ -48,9 +48,8 @@ class Factory(Building):
     
     def convert_worker_to_craftsman(self, building: str, worker_id, settlement) -> bool:
         worker = settlement.select_population(worker_id)["target"]
-        print(worker)
+        
         if isinstance(worker, Worker):
-            print("OK")
             new_craftsman = Factory.build_options[building](worker.name)
             settlement.remove_population(worker)
             settlement.remove_free_worker(worker)
@@ -60,8 +59,19 @@ class Factory(Building):
             if building == "Builders hut":
                 settlement.add_free_builder(new_craftsman)
             
-            return True
+            return { 
+                    "success": True, "message": f"{new_craftsman.name} zum Baumeister!",
+                    "update": {
+                            "action": "Convert Worker",
+                            "settlement_id": settlement.get_settlement_id(),
+                            "old_population_id": worker_id,
+                            "new_population_id": new_craftsman.get_population_id(),
+                            "name": new_craftsman.name,
+                            "profession": new_craftsman.profession,
+                            "alive": new_craftsman.alive
+                        } 
+                    }
 
-        return False
+        return { "success": False, "message": f"{worker.name} konnte nicht zum Baumeister werden!" }
 
     # Method that takes workers etc as parameters to occupy them during work !?
