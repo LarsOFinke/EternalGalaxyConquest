@@ -10,6 +10,7 @@ class Base():
         Base.base_count += 1
         self.action_list: list[dict] =  [
                                             { "name": "Select Settlement", "action": self.select_settlement },
+                                            { "name": "Change Name", "action": self.change_name },
                                             { "name": "Found City", "action": self.found_city },
                                             { "name": "Found Outpost", "action": self.found_outpost }
                                         ]
@@ -57,6 +58,15 @@ class Base():
         return  { "success": False, "message": f"{target} nicht gefunden!" }
     
     
+    def change_name(self, new_name):
+        try:
+            self.name = new_name
+            return  { "success": True, "message": f"Umbenennung in '{new_name}' erfolgreich!" }
+        
+        except Exception as e:
+            return  { "success": False, "message": f"{e}" }
+    
+    
     def found_outpost(self) -> dict:
         try:
             new_outpost = Outpost()
@@ -65,7 +75,6 @@ class Base():
         
         except Exception as e:
             return  { "success": False, "message": f"Neuer Außenposten konnte nicht gegründet werden auf: {self.name}!\n{e}" }
-
 
     def found_city(self, name: str, 
                    gold: float, food: float, wood: float, iron: float, 

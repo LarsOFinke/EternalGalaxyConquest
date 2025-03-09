@@ -12,13 +12,13 @@ export class BuildingMenu {
     }
 
 
-    assignWorker(event, population_id) {
+    assignWorker(event, target, action, population_id) {
         event.preventDefault();
         const payload = {
             "category": "buildings",
             "location": ["factory", this.settlement.settlement_id, this.base_id],
-            "target": "Builders Hut",
-            "action": "Convert Worker To Builder",
+            "target": target,
+            "action": action,
             "context": [population_id,]
         };
         sendPlayerActions(payload);
@@ -40,7 +40,7 @@ export class BuildingMenu {
             assign_worker_btn.id = "assign-worker-hut-btn";
             assign_worker_btn.className = "btn-small";
             assign_worker_btn.textContent = "Zuweisen";
-            assign_worker_btn.addEventListener("click", event => this.assignWorker(event, fworker.population_id));
+            assign_worker_btn.addEventListener("click", event => this.assignWorker(event, "Builders Hut", "Convert Worker To Builder", fworker.population_id));
             assign_worker_input_box.insertAdjacentElement("beforeend", assign_worker_btn);
             builders_hut_menu.insertAdjacentElement("beforeend", assign_worker_input_box);
         })

@@ -1,17 +1,27 @@
 "use strict";
 import { game } from "../../egc.js";
 import { SettlementMenu } from "./SettlementMenu.js";
+import { sendPlayerActions } from "../../egc.js";
 
 
 
 export class PlanetMenu {
     constructor(tile_menu_container, tile) {
+        this.tile = tile;
         this.createPlanetMenu(tile_menu_container, tile);
     }
 
 
     changePlanetName(event) {
         event.preventDefault();
+        const payload = {
+            "category": "locations",
+            "location": ["bases",],
+            "target": this.tile.tile_content.base_id,
+            "action": "Change Name",
+            "context": [document.getElementById("planet-name").value,]
+        };
+        sendPlayerActions(payload);
     }
 
 
