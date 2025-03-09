@@ -152,7 +152,7 @@ class Game:
             case "locations":
                 result = self.fetch_location(player, action.get("location"), action.get("target"))
                 
-                if result == None:
+                if not result:
                     return { "success": False, "message": f"{action.get('target')} konnte nicht gefunden werden." } 
                 
                 elif result["success"]:
@@ -167,14 +167,16 @@ class Game:
                 # "location": ["factory", this.settlement.settlement_id, this.base_id],
                 # "target": "Builders Hut",
                 # "action": "Convert Worker To Builder",
-                # "context": [population_id, "dump"]
+                # "context": [population_id,]
                 
                 result = self.fetch_building(player, action.get("location"), action.get("target"))
-                if result == None:
+                if not result:
                     return { "success": False, "message": f"{action.get('target')} konnte nicht gefunden werden." } 
                 
                 elif result["success"]:
                     target = result.get("target")
+                    action["context"].append(result.get("settlement"))
+                    print(action)
                     action_return = target.match_payload_action(action.get("action"), action.get("context"))
                     print(action_return)
                     return action_return
@@ -222,8 +224,10 @@ class Game:
                 settlement = self.get_settlement(base, location[1])["target"]
                 result = settlement.match_payload_action(action="Select Building", context=[target,])
                 
-                if result == None:
+                if not result:
                     return  { "success": False, "message": f"{target} konnte nicht gefunden werden." } 
+                
+                result.update({"settlement": settlement})
                 
                 return result
                 

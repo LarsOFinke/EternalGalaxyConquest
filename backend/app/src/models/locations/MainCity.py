@@ -2,7 +2,7 @@ from .City import City
 from ..buildings.Headquarter import Headquarter
 from ..population.Commander import Commander
 from ..population.Worker import Worker
-# from ..buildings.BuildersHut import BuildersHut
+from ..buildings.BuildersHut import BuildersHut
 # from ..persons.Builder import Builder
 
 
@@ -13,7 +13,7 @@ class MainCity(City):
                  population=None 
                  ) -> None:
         if buildings == None:
-            buildings = [Headquarter()]
+            buildings = [Headquarter(), BuildersHut()]
         if population == None:
             population = [Commander("Gottfried"), Worker("Abrams")]
         super().__init__(name=name, settlement_type="main_city", gold=gold, food=food, wood=wood, iron=iron, buildings=buildings, population=population)
