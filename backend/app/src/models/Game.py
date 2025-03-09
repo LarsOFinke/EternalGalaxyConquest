@@ -1,4 +1,5 @@
 from .Player import Player
+from .Tile import Tile
 from .locations.Planet import Planet
 
 
@@ -19,26 +20,18 @@ class Game:
     def set_tile_states(self, tile_states: list[dict]):
         self.__tile_states = tile_states
 
-    def set_base_tiles(self, tile_states: list[dict]):
-        for tile_state in tile_states:
-            owner_id: int = tile_state.get("owner_id") 
-            
-            if owner_id != 0:
-                tile_id: int = int(tile_state.get("id"))
-                base_id: int = int(tile_state["tile_content"].get("base_id"))
-                planet_name = tile_state["tile_content"]["planet_name"]
-
-                for base in self.players[int(owner_id) - 1].get_bases():
-                    if base.get_base_id() == base_id:
-                        base.set_tile_id(tile_id)
-                        base.name = planet_name
+    def set_base_tiles(self, tile_id, owner_id, base_id, planet_name):
+        for base in self.players[int(owner_id) - 1].get_bases():
+            if base.get_base_id() == base_id:
+                base.set_tile_id(tile_id)
+                base.name = planet_name
                 
     def fetch_game_state(self) -> dict:
         self.__game_state =  {
                                 "round": self.__round,
                                 "current_player": self.current_player,
                                 "player_states": [player.fetch_player_state() for player in self.players],
-                                "tile_states": self.__tile_states,
+                                "tile_states": [tile.fetch_tile_state() for tile in self.__tile_states],
                                 "unclaimed_planets": [planet.fetch_base_state() for planet in self.__unclaimed_planets]
                             }
         
@@ -75,10 +68,14 @@ class Game:
                 owner_id = self.players[player].player_id
                 tile_type = "planet"
                 tile_name = f"Heimat von {self.players[player].name}"
+                base = self.players[player].get_bases()[0]
                 tile_content = {
-                    "planet_name": f"{self.players[player].name}'s Planet",
-                    "base_id": self.players[player].get_bases()[0].get_base_id()
+                    "base": base
                 }
+                
+                base_id = base.get_base_id()
+                planet_name = f"{self.players[player].name}'s Planet"
+                self.set_base_tiles(tile_id, owner_id, base_id, planet_name)
                 
             elif i == 4 or i == 7:
                 owner = "free"
@@ -103,23 +100,14 @@ class Game:
                 tile_content = {
                     "planet_name": f"No Planet"
                 }
-                
                             
-            game_field.append({
-                "id": tile_id,
-                "owner": owner,
-                "owner_id": owner_id,
-                "tile_type": tile_type,
-                "tile_name": tile_name,
-                "tile_content": tile_content
-            })
+            game_field.append(Tile(tile_id, owner, owner_id, tile_type, tile_name, tile_content))
         
         return game_field
 
     def start(self) -> None:
         self.total_player_count = len(self.players)
         self.__tile_states = self.spawn_game_field()
-        self.set_base_tiles(self.__tile_states)
         self.running = True
         self.ai_turn()
 
