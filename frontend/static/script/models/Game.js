@@ -112,7 +112,14 @@ export class Game {
                             settlement.setPopulation(new_worker);
                         }
                     })
-                })
+                });
+            
+            case "Change Base Name":
+                player.getBases().forEach(base => {
+                    if (base.base_id === update.base_id) {
+                        base.name = update.name;
+                    }
+                });
         }
     }
 

@@ -61,7 +61,13 @@ class Base():
     def change_name(self, new_name):
         try:
             self.name = new_name
-            return  { "success": True, "message": f"Umbenennung in '{new_name}' erfolgreich!" }
+            return  { "success": True, "message": f"Umbenennung in '{new_name}' erfolgreich!",
+                     "update": {
+                            "action": "Change Base Name",
+                            "base_id": self.__base_id,
+                            "name": new_name
+                        } 
+                    }
         
         except Exception as e:
             return  { "success": False, "message": f"{e}" }

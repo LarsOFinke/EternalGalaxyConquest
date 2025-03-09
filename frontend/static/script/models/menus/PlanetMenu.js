@@ -14,13 +14,17 @@ export class PlanetMenu {
 
     changePlanetName(event) {
         event.preventDefault();
+        const new_name = document.getElementById("planet-name").value;
+
         const payload = {
             "category": "locations",
             "location": ["bases",],
             "target": this.tile.tile_content.base_id,
             "action": "Change Name",
-            "context": [document.getElementById("planet-name").value,]
+            "context": [,]
         };
+        
+        this.tile.tile_content.planet_name = new_name;
         sendPlayerActions(payload);
     }
 
