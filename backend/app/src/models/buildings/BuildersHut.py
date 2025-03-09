@@ -19,9 +19,10 @@ class BuildersHut(Factory):
             return  { "success": False, "message": e }
             
 
-    def convert_worker_to_builder(self, worker, location) -> dict:
+    def convert_worker_to_builder(self, worker_id, settlement) -> dict:
+        worker = select_worker_by_id(worker_id)
         wn: str = worker.name
-        if self.__convert_worker_to_craftsman("Builders Hut", worker, location):
+        if self.__convert_worker_to_craftsman("Builders Hut", worker, settlement):
             return  { "success": True, "message": f"{wn} wurde zum Baumeister!" }
         else:
             return  { "success": False, "message": f"{wn} konnte nicht zum Baumeister werden!" }

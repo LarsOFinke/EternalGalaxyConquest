@@ -133,7 +133,6 @@ class Game:
         
         return result
 
-
     def process_action(self, player, action) -> dict:
         """ 
         ############################################################
@@ -152,6 +151,7 @@ class Game:
         match action["category"]:
             case "locations":
                 result = self.fetch_location(player, action.get("location"), action.get("target"))
+                
                 if result == None:
                     return { "success": False, "message": f"{action.get('target')} konnte nicht gefunden werden." } 
                 
@@ -163,6 +163,12 @@ class Game:
                 return result
                 
             case "buildings":
+                # "category": "buildings",
+                # "location": ["factory", this.settlement.settlement_id, this.base_id],
+                # "target": "Builders Hut",
+                # "action": "Convert Worker To Builder",
+                # "context": [population_id, "dump"]
+                
                 result = self.fetch_building(player, action.get("location"), action.get("target"))
                 if result == None:
                     return { "success": False, "message": f"{action.get('target')} konnte nicht gefunden werden." } 
@@ -170,13 +176,21 @@ class Game:
                 elif result["success"]:
                     target = result.get("target")
                     action_return = target.match_payload_action(action.get("action"), action.get("context"))
+                    print(action_return)
                     return action_return
                 
                 return result
             
             # case "population":
-            #     self.match_persons(payload)
+            #     self.fetch_person(payload)
 
+
+    def get_base(self, player, location):
+        return self.players[player].match_payload_action(action="Select Base", context=[location,])
+    
+    def get_settlement(self, base, location):
+        return base.match_payload_action(action="Select Settlement", context=[location,])
+                
                 
     def fetch_location(self, player, location: list, target: str) -> dict:
         """Fetch the target location-object for further processing like calling methods.
@@ -189,35 +203,30 @@ class Game:
         Returns:
             dict: {"success": bool, "result": result}
         """
-        match location[0]:  # The list-attribute where the object is in
-            case "bases":
-                try:
-                    return self.players[player].match_payload_action(action="Select Base", context=[target,])
-                
-                except Exception as e:
-                    return  { "success": False, "message": f"{e}" }
-                        
-            case "settlements":
-                try:
-                    base = self.players[player].match_payload_action(action="Select Base", context=[location[1],])["target"]
-                    return base.match_payload_action(action="Select Settlement", context=[target,])
-                
-                except Exception as e:
-                    return  { "success": False, "message": f"{e}" }
-        
+        try:
+            match location[0]:
+                case "bases":
+                        return self.get_base(player, target)
+                            
+                case "settlements":
+                        base = self.get_base(player, location[1])["target"]
+                        return self.get_settlement(base, target)
+                    
+        except Exception as e:
+            return  { "success": False, "message": f"{e}" }
                 
     def fetch_building(self, player, location: list, target: str) -> dict:
         match location[0]:
             case "factory":
-                base = self.players[player].match_payload_action(action="Select Base", context=[location[2],])["target"]
-                settlement = base.match_payload_action(action="Select Settlement", context=[location[1],])["target"]
+                base = self.get_base(player, location[2])["target"]
+                settlement = self.get_settlement(base, location[1])["target"]
                 result = settlement.match_payload_action(action="Select Building", context=[target,])
+                
                 if result == None:
                     return  { "success": False, "message": f"{target} konnte nicht gefunden werden." } 
                 
                 return result
                 
-          
               
     # def fetch_person(self, payload):
     #     match payload["person"]:
@@ -226,6 +235,7 @@ class Game:
             
     #         case "Builder":
     #             pass
+            
             
 
     def ai_turn(self):

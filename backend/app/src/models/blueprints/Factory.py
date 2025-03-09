@@ -46,16 +46,16 @@ class Factory(Building):
         return  { "success": True }
     
     
-    def __convert_worker_to_craftsman(self, building: str, worker: Worker, location) -> bool:
+    def __convert_worker_to_craftsman(self, building: str, worker: Worker, settlement) -> bool:
         if isinstance(worker, Worker):
             new_craftsman = Factory.build_options[building](worker.name)
-            location.remove_population(worker)
-            location.remove_free_worker(worker)
+            settlement.remove_population(worker)
+            settlement.remove_free_worker(worker)
             del worker
-            location.add_population(new_craftsman)
+            settlement.add_population(new_craftsman)
             
             if building == "Builders hut":
-                location.add_free_builder(new_craftsman)
+                settlement.add_free_builder(new_craftsman)
             
             return True
 

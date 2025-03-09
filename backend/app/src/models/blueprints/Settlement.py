@@ -236,7 +236,7 @@ class Settlement():
     
     def select_building(self, target: str) -> dict:
         for building in self.__buildings:
-            if building.category == target:
+            if building.name == target:
                 return  { "success": True, "target": building }
         
         return { "success": False, "message": f"{target} nicht gefunden!" }

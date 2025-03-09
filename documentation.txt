@@ -49,8 +49,8 @@
         "category": "buildings",
         "location": ["factory", settlement_id, base_id],
         "target": "Builders Hut",
-        "action": "Get Workers",
-        "context": ["dump",]
+        "action": "Convert Worker To Builder",
+        "context": [population_id,]
     }
 }
 

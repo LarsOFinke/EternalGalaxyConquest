@@ -19,7 +19,7 @@ export class BuildingMenu {
             "location": ["factory", this.settlement.settlement_id, this.base_id],
             "target": "Builders Hut",
             "action": "Convert Worker To Builder",
-            "context": [population_id, "dump"]
+            "context": [population_id,]
         };
         sendPlayerActions(payload);
     }
@@ -54,7 +54,7 @@ export class BuildingMenu {
         building_menu_container.id = "building-menu-container";
         building_menu_container.className = "bordered";
         const building_menu_header = document.createElement("h4");
-        building_menu_header.textContent = "Baumenü";
+        building_menu_header.textContent = this.building.name;
         building_menu_container.insertAdjacentElement("afterbegin", building_menu_header);
 
         const close_btn = document.createElement("button");
