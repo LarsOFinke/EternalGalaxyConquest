@@ -108,8 +108,9 @@ export class Game {
                             // REMOVE OLD WORKER (old_population_id)
                             settlement.setPopulation(update.old_population_id, false);
                             settlement.setFreeWorkers(update.old_population_id, false);
-                            // ADD NEW WORKER (new_population_id, name, profession, alive) --> more attributes!?
-
+                            // ADD NEW WORKER (new_population_id, name, profession, alive, employed, field_of_work, working, production)
+                            const new_worker = settlement.createPopulationInstance(update);
+                            settlement.setPopulation(new_worker);
                         }
                     })
                 })

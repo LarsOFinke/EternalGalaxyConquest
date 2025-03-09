@@ -65,10 +65,14 @@ class Factory(Building):
                             "action": "Convert Worker",
                             "settlement_id": settlement.get_settlement_id(),
                             "old_population_id": worker_id,
-                            "new_population_id": new_craftsman.get_population_id(),
+                            "population_id": new_craftsman.get_population_id(),
                             "name": new_craftsman.name,
                             "profession": new_craftsman.profession,
-                            "alive": new_craftsman.alive
+                            "alive": new_craftsman.alive,
+                            "employed": new_craftsman.employed,
+                            "field_of_work": new_craftsman.field_of_work,
+                            "working": new_craftsman.working,
+                            "production": new_craftsman.production
                         } 
                     }
 

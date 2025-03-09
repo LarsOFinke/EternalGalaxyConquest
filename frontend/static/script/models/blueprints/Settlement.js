@@ -46,18 +46,23 @@ export class Settlement {
         return this.__population;
     }
 
+    createPopulationInstance(pops) {
+        if (pops.profession === "leader") {
+            return new Commander(pops.population_id, pops.name, pops.profession, pops.alive);
+        } else if (pops.profession === "worker") {
+            if (pops.field_of_work === "unskilled") {
+                return new Worker(pops.population_id, pops.name, pops.profession, pops.alive, pops.employed, pops.field_of_work, pops.working, pops.production);
+            } else if (pops.field_of_work === "builder") {
+                return new Builder(pops.population_id, pops.name, pops.profession, pops.alive, pops.employed, pops.field_of_work, pops.working, pops.production);
+            } 
+        }
+    }
+
     addInitialPopulation(population) {
         let population_list = []
         for (let pops of population) {
-            if (pops.profession === "leader") {
-                population_list.push(new Commander(pops.population_id, pops.name, pops.profession, pops.alive));
-            } else if (pops.profession === "worker") {
-                if (pops.field_of_work === "unskilled") {
-                    population_list.push(new Worker(pops.population_id, pops.name, pops.profession, pops.alive, pops.employed, pops.field_of_work, pops.working, pops.production));
-                } else if (pops.field_of_work === "builder") {
-                    population_list.push(new Builder(pops.population_id, pops.name, pops.profession, pops.alive, pops.employed, pops.field_of_work, pops.working, pops.production));
-                } 
-            }
+            let new_pop = this.createPopulationInstance(pops);
+            population_list.push(new_pop);
         }
 
         return population_list;
