@@ -52,7 +52,7 @@ class Factory(Building):
         if isinstance(worker, Worker):
             new_craftsman = Factory.build_options[building](worker.name)
             settlement.remove_population(worker)
-            settlement.remove_free_worker(worker)
+            settlement.set_free_workers(worker, False)
             del worker
             settlement.add_population(new_craftsman)
             
@@ -60,7 +60,7 @@ class Factory(Building):
                 settlement.add_free_builder(new_craftsman)
             
             return { 
-                    "success": True, "message": f"{new_craftsman.name} zum Baumeister!",
+                    "success": True, "message": f"{new_craftsman.name} wurde zum Baumeister!",
                     "update": {
                             "action": "Convert Worker",
                             "settlement_id": settlement.get_settlement_id(),

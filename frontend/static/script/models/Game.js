@@ -101,7 +101,10 @@ export class Game {
         player.getBases().forEach(base => {
             base.getSettlements().forEach(settlement => {
                 if (settlement.settlement_id === update.settlement_id) {
-                    settlement.setPopulation(settlement.createPopulationInstance(update));
+                    const new_worker = settlement.createPopulationInstance(update);
+                    settlement.setPopulation(new_worker);
+                    settlement.setFreeWorkers({"name": update.name, "population_id": update.population_id});
+                    settlement.test();  // DO NOT REMOVE THIS, FOR SOME REASON ITS REQUIRED FOR setFreeWorkers TO FUNCTION, I HAVE TRIED EVERYTHING! :/ //
                 }
             })
         });

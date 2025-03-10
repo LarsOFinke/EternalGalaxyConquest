@@ -19,6 +19,10 @@ export class Settlement {
         this.__free_builders = free_builders;
         
     }
+
+    test() {    // DO NOT REMOVE THIS, FOR SOME REASON ITS REQUIRED FOR setFreeWorkers TO FUNCTION, I HAVE TRIED EVERYTHING! :/ //
+        this.__free_workers.push({"name": "test", "population_id": 1});
+    }
     
     getBuildings() {
         return this.__buildings;
@@ -84,7 +88,7 @@ export class Settlement {
 
     setFreeWorkers(worker, increase=true) {
         if (increase) {
-            this.__population.push(worker);
+            this.__free_workers.push(worker);
         } else {
             const pop_index = this.__free_workers.findIndex(fw => fw.population_id === parseInt(worker));
             this.__free_workers.splice(pop_index, 1);

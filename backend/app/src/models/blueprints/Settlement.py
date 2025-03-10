@@ -30,8 +30,8 @@ class Settlement():
                                             { "name": "Add_population", "action": self.add_population },
                                             { "name": "Remove_population", "action": self.remove_population },
                                             { "name": "Get Free Workers", "action": self.get_free_workers },
-                                            { "name": "Add Free Worker", "action": self.add_free_worker },
-                                            { "name": "Remove Free Worker", "action": self.remove_free_worker },
+                                            { "name": "Add Free Worker", "action": self.set_free_workers },
+                                            { "name": "Remove Free Worker", "action": self.set_free_workers },
                                             { "name": "Get Free Builders", "action": self.get_free_builders },
                                             { "name": "Add Free Builders", "action": self.add_free_builders },
                                             { "name": "Remove Free Builders", "action": self.remove_free_builders }
@@ -191,19 +191,11 @@ class Settlement():
     def get_free_workers(self, dump="dump") -> dict:
         return { "success": True, "free_workers": self.__free_workers }
     
-    def __set_free_workers(self, worker: Worker, increase: bool = True) -> None:
+    def set_free_workers(self, worker: Worker, increase: bool = True) -> None:
         if increase:
             self.__free_workers.append(worker)
         else:
             self.__free_workers.remove(worker)
-    
-    def add_free_worker(self, worker: Worker) -> dict:
-        self.__set_free_workers(worker)
-        return  { "success": True }
-    
-    def remove_free_worker(self, worker: Worker) -> dict:
-        self.__set_free_workers(worker, increase=False)
-        return  { "success": True }
     
     
     def get_free_builders(self, dump="dump") -> dict:
@@ -395,7 +387,7 @@ class Settlement():
         
         new_worker = Worker(name)
         self.__set_population(new_worker)
-        self.__set_free_workers(new_worker)
+        self.set_free_workers(new_worker)
         
         return  { "success": True, "message": "Neuer Arbeiter erfolgreich angeheuert!",
                  "update": {
