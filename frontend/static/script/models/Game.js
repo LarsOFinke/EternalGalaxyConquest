@@ -96,64 +96,55 @@ export class Game {
     
     };
     
+    
 
-    createWorker(player, update) {
-        player.getBases().forEach(base => {
-            base.getSettlements().forEach(settlement => {
-                if (settlement.settlement_id === update.settlement_id) {
-                    const new_worker = settlement.createPopulationInstance(update);
-                    settlement.setPopulation(new_worker);
-                    settlement.setFreeWorkers({"name": update.name, "population_id": update.population_id});
-                    settlement.test();  // DO NOT REMOVE THIS, FOR SOME REASON ITS REQUIRED FOR setFreeWorkers TO FUNCTION, I HAVE TRIED EVERYTHING! :/ //
-                }
-            })
-        });
+    findSettlementById(player, settlement_id) {
+        for (let base of player.getBases()) {
+            const settlement = base.getSettlements().find(settlement => settlement.settlement_id === settlement_id);
+            if (settlement) {
+                return settlement;
+            }
+        }
+        return undefined; // Return undefined if no settlement is found
     }
 
-    convertWorker(player, update) {
-        player.getBases().forEach(base => {
-            base.getSettlements().forEach(settlement => {
-                if (settlement.settlement_id === update.settlement_id) {
-                    settlement.setPopulation(update.old_population_id, false);
-                    settlement.setFreeWorkers(update.old_population_id, false);
-                    
-                    settlement.setPopulation(settlement.createPopulationInstance(update));
-                }
-            })
-        });
-    };
-
-    changeBaseName(player, update) {
-        player.getBases().forEach(base => {
-            if (base.base_id === update.base_id) {
-                base.name = update.name;
-            }
-        });
-    }
-
-    foundSettlement(player, update) {
-        player.getBases().forEach(base => {
-            if (base.base_id === update.base_id) {
-                base.setSettlement(base.createSettlementInstance(update));
-            }
-        });
+    findBaseById(player, base_id) {
+        const base = player.getBases().find(base => base.base_id === base_id);
+        return base; // will return undefined if no base is found
     }
 
     playerActionUpdate(player, update) {
+        let settlement;
+
         player = this.__players[player - 1];
 
         switch (update.action) {
             case "Create Worker":
-                this.createWorker(player, update);
+                settlement = this.findSettlementById(player, update.settlement_id);
+                let new_worker = settlement.createPopulationInstance(update);
+                settlement.setPopulation(new_worker);
+                settlement.setFreeWorkers({"name": update.name, "population_id": update.population_id});
+                break;
 
             case "Convert Worker":
-                this.convertWorker(player, update);
+                settlement = this.findSettlementById(player, update.settlement_id);
+                settlement.setPopulation(update.old_population_id, false);
+                settlement.setFreeWorkers(update.old_population_id, false);
+                
+                settlement.setPopulation(settlement.createPopulationInstance(update));
+                break;
             
             case "Change Base Name":
-                this.changeBaseName(player, update);
+                const base = this.findBaseById(player, update.base_id);
+                console.log(base);
+                base.name = update.name;
+                break;
 
             case "Found Outpost" || "Found City":
-                this.foundSettlement(player, update);
+                let base_ = this.findBaseById(player, update.base_id);
+                base_.setSettlement(base_.createSettlementInstance(update));
+                break;
+                
 
         }
     }
