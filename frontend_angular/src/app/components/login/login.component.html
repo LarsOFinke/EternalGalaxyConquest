@@ -26,10 +26,10 @@
         </div>
         <br class="spacer">
   
-        <button type="submit" id="login" class="custom-btn">Einloggen</button>
+        <button type="submit" id="login-button" class="custom-btn">Einloggen</button>
   
         <div class="register-link">
-            <p><a (click)="toggleForms()">Noch nicht registriert?</a></p>
+            <p><a [routerLink]="['/register']" routerLinkActive="router-link-active" >Noch nicht registriert?</a></p>
         </div>
     </form>
   </div>
