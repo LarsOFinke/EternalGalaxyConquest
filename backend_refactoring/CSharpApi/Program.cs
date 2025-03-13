@@ -1,4 +1,5 @@
 using CSharpApi.Data;
+using CSharpApi.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -12,12 +13,12 @@ builder.Services.AddOpenApi();
 
 if (builder.Environment.IsDevelopment())
 {
-    builder.Services.AddDbContext<EthernalDatabaseContext>(options =>
+    builder.Services.AddDbContext<EternalDatabaseContext>(options =>
         options.UseSqlite(builder.Configuration.GetConnectionString("DevContext")));
 }
 else
 {
-    builder.Services.AddDbContext<EthernalDatabaseContext>(options =>
+    builder.Services.AddDbContext<EternalDatabaseContext>(options =>
         options.UseNpgsql(builder.Configuration.GetConnectionString("ProdContext")));
 }
 
