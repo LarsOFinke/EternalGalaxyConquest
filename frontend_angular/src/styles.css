@@ -128,7 +128,7 @@ a:active {
     right: 12px;
 }
 
-.btn {
+.custom-btn {
     width: fit-content;
     height: 45px;
     background: #fff;
@@ -142,7 +142,7 @@ a:active {
     font-weight: 600;
     padding: 3%;
 }
-.btn-small {
+.custom-btn-small {
     width: fit-content;
     height: fit-content;
     background: #fff;
@@ -157,7 +157,7 @@ a:active {
     padding: 1.5%;
     margin: 2%;
 }
-.btn:hover, .btn-small:hover {
+.custom-btn:hover, .custom-btn-small:hover {
     background-color: #c5c5c5;
 }
 .close-btn {
@@ -172,7 +172,7 @@ a:active {
 
 }
 
-.wrapper {
+.custom-wrapper {
     width: 420px;
     background: transparent;
     border: 2px solid rgba(255, 255, 255, .2);
@@ -182,7 +182,7 @@ a:active {
     border-radius: 10px;
     padding: 30px 40px;
 }
-.wrapper h1 {
+.custom-wrapper h1 {
     font-size: 36px;
     text-align: center;
 }
