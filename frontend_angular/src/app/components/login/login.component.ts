@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
+import { LoginService } from './auth.service';
 
 @Component({
   selector: 'app-login',
@@ -12,14 +13,28 @@ import { RouterLink } from '@angular/router';
   styleUrl: './login.component.css'
 })
 export class LoginComponent {
+  username: string = '';
   password: string = '';
   showPassword: boolean = false;
+
+  private loginService = inject(LoginService);
 
   toggleShowPasswords(event: any): void {
     // Toggle the showPassword value based on checkbox state
     this.showPassword = event.target.checked;
   };
 
+  login() {
+    this.loginService.login(this.username, this.password).subscribe({
+      next: (response) => {
+        console.log('Login successful', response);
+        // Handle the successful response, e.g., store a token or redirect
+      },
+      error: (error) => {
+        console.error('Login failed', error);
+      }
+    });
+  }
 }
 
 

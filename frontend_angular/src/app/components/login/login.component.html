@@ -1,12 +1,18 @@
 <!-- LOGIN-FORM -->
 <div class="custom-wrapper">
-    <form>
+    <form (ngSubmit)="login()">
         <br class="spacer">
         <h1>Login</h1>
         <br class="spacer">
   
         <div class="input-box">
-            <input type="text" id="username" placeholder="Nutzername" required>
+          <input 
+            [type]="'text'"
+            id="username" 
+            [(ngModel)]="username"
+            name="username"
+            placeholder="Nutzername" 
+          />
         </div>
         <div class="input-box">
           <input
