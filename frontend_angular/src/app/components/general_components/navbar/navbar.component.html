@@ -1,0 +1,38 @@
+<!-- ### NAVBAR ### -->
+<nav>
+
+    <!-- DESKTOP -->
+    <div class="desktop-nav">
+        <img src="../../../../assets/img/logo.png" alt="Das Logo der Webseite.">
+
+        <ul>
+            <!-- {% if "username" not in session %} -->
+                <li><a>Startseite</a></li>
+            <!-- {% else %} -->
+                <li><a>Hauptmenü</a></li>
+                <li><a>Logout</a></li>
+            <!-- {% endif %} -->
+        </ul>
+    </div>
+
+    <!-- MOBILE -->
+    <div class="mobile-nav">
+        <img src="../../../../assets/img/logo.png" alt="Das Logo der Webseite.">
+        
+        <div class="mobile-nav-dropdown clearfix">
+            <div class="mobile-nav-button">&equiv;</div>
+
+            <div class="mobile-nav-content clearfix">
+                <ul>
+                    <!-- {% if "username" not in session %} -->
+                        <li><a>Startseite</a></li>
+                    <!-- {% else %} -->
+                        <li><a>Hauptmenü</a></li>
+                        <li><a>Logout</a></li>
+                    <!-- {% endif %} -->
+                </ul> 
+            </div>
+        </div>
+    </div>
+    
+</nav>
