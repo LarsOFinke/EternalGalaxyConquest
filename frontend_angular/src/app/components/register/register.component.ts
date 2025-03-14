@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { ErrorBoxComponent } from '../general_components/error-box/error-box.component';
 import { RegisterService } from './register.service';
 
@@ -23,6 +23,7 @@ export class RegisterComponent {
   showPassword: boolean = false;
 
   private registerService = inject(RegisterService);
+  private router = inject(Router);
 
   toggleShowPasswords(event: any): void {
     // Toggle the showPassword value based on checkbox state
@@ -35,6 +36,7 @@ export class RegisterComponent {
         console.log('Register-API-Call successfull', response);
         // if (response.success) {
           console.log('Registration successful');
+          this.router.navigate(["/"]);
         // }
       },
       error: (error) => {

@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { LoginService } from './auth.service';
 import { ErrorBoxComponent } from '../general_components/error-box/error-box.component';
 
@@ -22,6 +22,7 @@ export class LoginComponent {
   showPassword: boolean = false;
 
   private loginService = inject(LoginService);
+  private router = inject(Router);
 
   toggleShowPasswords(event: any): void {
     // Toggle the showPassword value based on checkbox state
@@ -31,9 +32,10 @@ export class LoginComponent {
   login() {
     this.loginService.login(this.username, this.password).subscribe({
       next: (response) => {
-        console.log('Login successful', response);
+        console.log('Login-API-Call successful', response);
         // if (response.success) {
-          
+          console.log('Login successful');
+          this.router.navigate(["/main-menu"])
         // }
       },
       error: (error) => {
