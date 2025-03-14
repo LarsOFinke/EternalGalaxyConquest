@@ -6,7 +6,7 @@
         <br class="spacer">
         
         @if (hasError) {
-          <app-error-box message="{{ message }}"></app-error-box>
+          <app-error-box [message]="message"></app-error-box>
         }
   
         <div class="input-box">
