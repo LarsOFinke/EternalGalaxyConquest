@@ -1,10 +1,20 @@
 <!-- LOGIN-FORM -->
 <div class="custom-wrapper">
-    <form>
+    <form (ngSubmit)="register()">
         <h1>Registrierung</h1>
+
+        @if (hasError) {
+          <app-error-box [message]="message"></app-error-box>
+        }
   
         <div class="input-box">
-            <input type="text" id="username" placeholder="Nutzername" required>
+            <input 
+              [type]="'text'" 
+              id="username" 
+              [(ngModel)]="username"
+              name="username"
+              placeholder="Nutzername" 
+            >
         </div>
         <div class="input-box">
           <input
@@ -34,7 +44,13 @@
         <button type="submit" id="register-button" class="custom-btn">Registrieren</button>
   
         <div class="login-link">
-            <p><a [routerLink]="['/']" routerLinkActive="router-link-active" >Bereits registriert?</a></p>
+            <p>
+              <a 
+                [routerLink]="['/']" 
+                routerLinkActive="router-link-active" 
+                >Bereits registriert?
+              </a>
+            </p>
         </div>
     </form>
   </div>
