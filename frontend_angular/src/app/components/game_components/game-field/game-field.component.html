@@ -1,40 +1,69 @@
 
 
 <div class="grid centered bordered" id="game_field">
-    <div id="1" class="hex color1">
+    <div (click)="inspectTile('1')" class="hex color1">
 
     </div>
-    <div id="2" class="hex color2">
+    <div (click)="inspectTile('2')"class="hex color2">
 
     </div>
-    <div id="3" class="hex color1">
+    <div (click)="inspectTile('3')" class="hex color1">
 
     </div>
-    <div id="4" class="hex color1">
+    <div (click)="inspectTile('4')" class="hex color1">
 
     </div>
-    <div id="5" class="hex color1">
+    <div (click)="inspectTile('5')" class="hex color1">
 
     </div>
-    <div id="6" class="hex color1">
+    <div (click)="inspectTile('6')" class="hex color1">
 
     </div>
-    <div id="7" class="hex color1">
+    <div (click)="inspectTile('7')" class="hex color1">
 
     </div>
-    <div id="8" class="hex color1">
+    <div (click)="inspectTile('8')" class="hex color1">
 
     </div>
-    <div id="9" class="hex color1">
+    <div (click)="inspectTile('9')" class="hex color1">
 
     </div>
-    <div id="10" class="hex color1">
+    <div (click)="inspectTile('10')" class="hex color1">
 
     </div>
-    <div id="11" class="hex color1">
+    <div (click)="inspectTile('11')" class="hex color3">
 
     </div>
-    <div id="12" class="hex color3">
+    <div (click)="inspectTile('12')" class="hex color1">
 
     </div>
+
+    @if (show_tile_menu) {
+        <app-tile-menu [tile_id]="selected_tile" (close)="closeTileMenu()"></app-tile-menu>
+    }
+
 </div>
+
+
+
+
+
+<!-- // spawn_game_field(tile_states) {
+//   const game_field = document.getElementById("game_field");
+
+//   for (const tile_state of tile_states) {
+//       let new_tile = document.createElement("div");
+//       new_tile.id = parseInt(tile_state.id);
+//       new_tile.addEventListener("click", event => this.inspectTile(event));
+
+//       if (tile_state.owner_id !== 0) {
+//           this.spawnPlanet(new_tile, (tile_state.owner_id + 1), "home-planet-sprite", 4);
+//       } else if (tile_state.owner_id === 0 && tile_state.tile_type === "planet"){
+//           this.spawnPlanet(new_tile, 1, "center-planet-sprite", 1);
+//       }else {
+//           new_tile.classList = "hex color1";
+//       }
+        
+//       game_field.insertAdjacentElement("beforeend", new_tile);
+//   }
+// } -->

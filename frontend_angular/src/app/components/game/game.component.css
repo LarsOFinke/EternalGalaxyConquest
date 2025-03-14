@@ -15,7 +15,7 @@ h4 {
     font-size: 1rem;
 }
 
-#tile-menu-container, #found-settlement-menu-container, #settlement-menu-container, 
+#found-settlement-menu-container, #settlement-menu-container, 
 #population-menu-container, #build-menu-container, #building-menu-container, #create-new-worker-container {
     position: absolute;
     background-color: rgb(22, 22, 22);
@@ -24,7 +24,6 @@ h4 {
     width: 75%;
 }
 
-#tile-menu-container { z-index: 200; }
 #found-settlement-menu-container { z-index: 205; }
 #settlement-menu-container { z-index: 225; }
 #population-menu-container { z-index: 300; }
