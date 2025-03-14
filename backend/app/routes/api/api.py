@@ -11,19 +11,25 @@ api = Blueprint("api", __name__)
 
 @api.route("/sprite/upload", methods=["POST"])
 def upload_sprite():
-    print(data)
-    data = request.get_json()
-    file_data = data.get('sprite')
+    # data = request.get_json()
+    # print(data)
+    file_data = request.files['sprite']
+    print(file_data)
     
-    if file_data.startswith('data:'):
-        file_data = file_data.split(',')[1]
-
-    # Decode the base64 data to binary data
-    file_binary_data = base64.b64decode(file_data)
-    if add_sprite(file_binary_data):
-        return jsonify({'message': 'File uploaded successfully'})
-    
-    return jsonify({'message': 'File upload failed'})
+   
+    try:
+        # The file is already in binary format, you can directly pass it to your add_sprite function
+        # If you need to process it further (like converting it to an image object or manipulating the binary data)
+        file_binary_data = file_data.read()  # Read the file as binary data
+        
+        # Process the file binary data with the add_sprite function
+        if add_sprite(file_binary_data):
+            return jsonify({'message': 'File uploaded successfully'})
+        
+        return jsonify({'message': 'File upload failed'}), 500
+    except Exception as e:
+        print(f"Error: {e}")
+        return jsonify({'message': 'An error occurred during file upload'}), 500
 
 
 
