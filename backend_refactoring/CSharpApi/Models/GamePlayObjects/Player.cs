@@ -4,19 +4,19 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
-namespace CSharpApi.Models
+namespace CSharpApi.Models.GamePlayObjects
 {
     public class Player
     {
         private Guid Id;
         private string Name { get; set; } = string.Empty;
 
-        private List<Object> Bases { get; set; } = new List<Object>();
+        private List<object> Bases { get; set; } = new List<object>();
 
-        private List<Dictionary<string, Object>> Action { get; set; }
+        private List<Dictionary<string, object>> Action { get; set; }
 
 
-        public Player(string name, List<Object> bases)
+        public Player(string name, List<object> bases)
         {
             Id = Guid.CreateVersion7(DateTime.UtcNow);
 
@@ -32,9 +32,9 @@ namespace CSharpApi.Models
             }
         }
 
-        public Dictionary<string, Object> FetchPlayerState()
+        public Dictionary<string, object> FetchPlayerState()
         {
-            List<Object> baseState = new();
+            List<object> baseState = new();
 
             foreach (var bases in Bases)
             {
@@ -42,23 +42,23 @@ namespace CSharpApi.Models
 
             }
 
-            return new Dictionary<string, Object> {
+            return new Dictionary<string, object> {
             {"category", "player" },
-            {"name", this.Name },
-            {"player_id", this.Id },
+            {"name", Name },
+            {"player_id", Id },
             {"base_states", baseState } };
         }
 
-        public Dictionary<string, Object> MatchPayloadAction(string action, List<Object> context)
+        public Dictionary<string, object> MatchPayloadAction(string action, List<object> context)
         {
-            foreach (Dictionary<string, Object> item in Action)
+            foreach (Dictionary<string, object> item in Action)
             {
                 string lookup = item.GetValueOrDefault("name", "").ToString()!;
 
                 if (!string.IsNullOrEmpty(lookup))
                 {
                     lookup = lookup.ToString()!;
-                    return new Dictionary<string, Object>
+                    return new Dictionary<string, object>
                     {
                         { "action", lookup },
                         { "context", context }
@@ -67,26 +67,26 @@ namespace CSharpApi.Models
                 }
             }
 
-            return new Dictionary<string, Object> {
+            return new Dictionary<string, object> {
                     {"success", false},
                     {"message", $"No value for Key: NAME!"}
             };
         }
 
-        public Dictionary<string, Object> SelectBase(int target)
+        public Dictionary<string, object> SelectBase(int target)
         {
             foreach (var targetBase in Bases)
             {
                 if (targetBase.Id == target)
                 {
-                    return new Dictionary<string, Object> {
+                    return new Dictionary<string, object> {
                         {"success", true},
                         {"target", targetBase}
                     };
                 }
             }
 
-            return new Dictionary<string, Object> {
+            return new Dictionary<string, object> {
                 { "success", false },
                 { "message", $"{target} nicht gefunden!" },
                 { "target", $"{target} nicht gefunden!" }
