@@ -1,0 +1,85 @@
+
+h1 {
+    font-size: 1.45rem;
+}
+h4 {
+    margin-top: 4px;
+}
+
+
+
+#start-game, #next-round {
+    position: absolute;
+    align-self: flex-end;
+    bottom: 15px;
+    font-size: 1rem;
+}
+
+#tile-menu-container, #found-settlement-menu-container, #settlement-menu-container, 
+#population-menu-container, #build-menu-container, #building-menu-container, #create-new-worker-container {
+    position: absolute;
+    background-color: rgb(22, 22, 22);
+    opacity: .975;
+    height: 50%;
+    width: 75%;
+}
+
+#tile-menu-container { z-index: 200; }
+#found-settlement-menu-container { z-index: 205; }
+#settlement-menu-container { z-index: 225; }
+#population-menu-container { z-index: 300; }
+#build-menu-container { z-index: 300; }
+#building-menu-container { z-index: 300; }
+#create-new-worker-container { z-index: 325; height: fit-content; }
+
+#found-settlement-menu-btn {
+    position: absolute;
+    bottom: 12px;
+    align-self: center;
+}
+
+
+.game-wrapper {
+    width: 300px;
+    height: 540px;
+    /* width: 90vw;     REENABLE AFTER STYLING MOBILE DESIGN!?
+    height: 83vh; */
+    background: transparent;
+    border: 2px solid rgba(255, 255, 255, .2);
+    backdrop-filter: blur(20px);
+    box-shadow: 0 0 10px rgba(0, 0, 0, .2);
+    color: #fff;
+    border-radius: 10px;
+    padding: 10px 15px;
+}
+
+.custom-btn {
+    font-size: 1rem;
+    height: fit-content;
+    padding: 8%;
+}
+
+
+.planet {
+    height: 30px;
+    width: 30px;
+    margin: 21px 16px 21px 16px;
+    overflow: hidden;
+    z-index: 175;
+}
+.home-planet-sprite {
+    animation: moveSpriteSheet 11.55s steps(120) infinite;
+}
+
+.center-planet-sprite {
+    animation: moveSpriteSheet 4.5s steps(60) infinite;
+}
+
+@keyframes moveSpriteSheet {
+    from {
+        transform: translate3d(0px, 0, 0);
+    }
+    to {
+        transform: translate3d(0, -100%, 0);
+    }
+}
