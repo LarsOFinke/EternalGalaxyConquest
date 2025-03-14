@@ -6,8 +6,17 @@
         <h2>Sprites</h2>
         <div class="small-input-box">
             <label for="sprite-file">Sprite:</label>
-            <input type="file" accept="image/png, image/jpeg" id="sprite-file">
-            <button class="btn-small" id="sprite-upload">Hochladen</button>
+            <input 
+                [type]="'file'" 
+                accept="image/png, image/jpeg" 
+                (change)="onFileSelected($event)"
+                id="sprite-file"
+            >
+            <button 
+                [type]="'submit'" 
+                (click)="uploadSprite()"
+                >Hochladen
+            </button>
         </div>
     </form>
 </div>

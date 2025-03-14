@@ -11,8 +11,9 @@ api = Blueprint("api", __name__)
 
 @api.route("/sprite/upload", methods=["POST"])
 def upload_sprite():
+    print(data)
     data = request.get_json()
-    file_data = data.get('fileData')
+    file_data = data.get('sprite')
     
     if file_data.startswith('data:'):
         file_data = file_data.split(',')[1]
