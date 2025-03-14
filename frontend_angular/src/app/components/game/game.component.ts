@@ -13,9 +13,13 @@ export class GameComponent {
   
   constructor(private websocket: WebsocketService) {}
 
-  ngOnInit() {
-    this.websocket.getMessages().subscribe((message: any) => {
-      this.messages.push(message);
-    });
+  // ngOnInit() {
+  //   this.websocket.getMessages().subscribe((message: any) => {
+  //     this.messages.push(message);
+  //   });
+  // }
+
+  start() {
+    this.websocket.startGame("test-name");
   }
 }
