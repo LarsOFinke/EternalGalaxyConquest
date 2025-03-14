@@ -1,52 +1,24 @@
-
-
 <div class="grid centered bordered" id="game_field">
-    <div (click)="inspectTile('1')" class="hex color1">
+  <div (click)="inspectTile('1')" class="hex color1"></div>
+  <div (click)="inspectTile('2')" class="hex color2"></div>
+  <div (click)="inspectTile('3')" class="hex color1"></div>
+  <div (click)="inspectTile('4')" class="hex color1"></div>
+  <div (click)="inspectTile('5')" class="hex color1"></div>
+  <div (click)="inspectTile('6')" class="hex color1"></div>
+  <div (click)="inspectTile('7')" class="hex color1"></div>
+  <div (click)="inspectTile('8')" class="hex color1"></div>
+  <div (click)="inspectTile('9')" class="hex color1"></div>
+  <div (click)="inspectTile('10')" class="hex color1"></div>
+  <div (click)="inspectTile('11')" class="hex color3"></div>
+  <div (click)="inspectTile('12')" class="hex color1"></div>
 
-    </div>
-    <div (click)="inspectTile('2')"class="hex color2">
-
-    </div>
-    <div (click)="inspectTile('3')" class="hex color1">
-
-    </div>
-    <div (click)="inspectTile('4')" class="hex color1">
-
-    </div>
-    <div (click)="inspectTile('5')" class="hex color1">
-
-    </div>
-    <div (click)="inspectTile('6')" class="hex color1">
-
-    </div>
-    <div (click)="inspectTile('7')" class="hex color1">
-
-    </div>
-    <div (click)="inspectTile('8')" class="hex color1">
-
-    </div>
-    <div (click)="inspectTile('9')" class="hex color1">
-
-    </div>
-    <div (click)="inspectTile('10')" class="hex color1">
-
-    </div>
-    <div (click)="inspectTile('11')" class="hex color3">
-
-    </div>
-    <div (click)="inspectTile('12')" class="hex color1">
-
-    </div>
-
-    @if (show_tile_menu) {
-        <app-tile-menu [tile_id]="selected_tile" (close)="closeTileMenu()"></app-tile-menu>
-    }
-
+  @if (show_tile_menu) {
+  <app-tile-menu
+    [tile_id]="selected_tile"
+    (close)="closeTileMenu()"
+  ></app-tile-menu>
+  }
 </div>
-
-
-
-
 
 <!-- // spawn_game_field(tile_states) {
 //   const game_field = document.getElementById("game_field");

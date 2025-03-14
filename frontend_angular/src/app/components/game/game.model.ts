@@ -1,13 +1,9 @@
 import { GameService } from './game.service';
 
-
 export class GameModel {
-    constructor(private gameService: GameService) {}
+  constructor(private gameService: GameService) {}
 
-    start() {
-      this.gameService.sendMessage("start");
-    }
-
+  start() {
+    this.gameService.sendMessage('start');
+  }
 }
-
-

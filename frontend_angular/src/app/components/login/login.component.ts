@@ -6,13 +6,9 @@ import { ErrorBoxComponent } from '../general_components/error-box/error-box.com
 
 @Component({
   selector: 'app-login',
-  imports: [
-    FormsModule,
-    RouterLink,
-    ErrorBoxComponent
-  ],
+  imports: [FormsModule, RouterLink, ErrorBoxComponent],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.css'
+  styleUrl: './login.component.css',
 })
 export class LoginComponent {
   hasError: boolean = false;
@@ -27,21 +23,20 @@ export class LoginComponent {
   toggleShowPasswords(event: any): void {
     // Toggle the showPassword value based on checkbox state
     this.showPassword = event.target.checked;
-  };
+  }
 
   login() {
     this.loginService.login(this.username, this.password).subscribe({
       next: (response) => {
         console.log('Login-API-Call successful', response);
         // if (response.success) {
-          console.log('Login successful');
-          this.router.navigate(["/main-menu"])
+        console.log('Login successful');
+        this.router.navigate(['/main-menu']);
         // }
       },
       error: (error) => {
         console.error('Login failed', error);
-      }
+      },
     });
   }
 }
-

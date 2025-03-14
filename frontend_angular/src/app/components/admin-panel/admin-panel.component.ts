@@ -4,11 +4,9 @@ import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-admin-panel',
-  imports: [
-    FormsModule,
-  ],
+  imports: [FormsModule],
   templateUrl: './admin-panel.component.html',
-  styleUrl: './admin-panel.component.css'
+  styleUrl: './admin-panel.component.css',
 })
 export class AdminPanelComponent {
   private spriteService = inject(SpriteService);
@@ -21,19 +19,19 @@ export class AdminPanelComponent {
       this.sprite_file = sprite;
       console.log('Sprite selected:', sprite);
     }
-  };
+  }
 
   uploadSprite() {
     if (this.sprite_file !== null) {
       this.spriteService.upload(this.sprite_file).subscribe({
-        next: response => { console.log(response); },
-        error: error => console.error(error)
+        next: (response) => {
+          console.log(response);
+        },
+        error: (error) => console.error(error),
       });
     }
   }
 }
-
-
 
 // document.getElementById("sprite-upload").addEventListener("click", event => {
 //   event.preventDefault();
@@ -44,7 +42,7 @@ export class AdminPanelComponent {
 //   const reader = new FileReader();
 //   reader.onload = function(e) {
 //           const fileData = e.target.result;
-          
+
 //           fetch(`${api_url}/sprite/upload`, {
 //               method: "POST",
 //               headers: {
@@ -61,7 +59,7 @@ export class AdminPanelComponent {
 //               console.error('Error uploading file:', error);
 //           });
 //       };
-  
+
 //   reader.readAsDataURL(new_sprite);
 
 // })
