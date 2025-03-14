@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { GameFieldComponent } from '../game_components/game-field/game-field.component';
-import { GameModel } from './game.model';
+import { WebsocketService } from '../../services/websocket.service';
 
 @Component({
   selector: 'app-game',
@@ -9,9 +9,13 @@ import { GameModel } from './game.model';
   styleUrl: './game.component.css',
 })
 export class GameComponent {
-  constructor(private game: GameModel) {}
+  messages: string[] = [];
+  
+  constructor(private websocket: WebsocketService) {}
 
-  start() {
-    this.game.start();
+  ngOnInit() {
+    this.websocket.getMessages().subscribe((message: any) => {
+      this.messages.push(message);
+    });
   }
 }
