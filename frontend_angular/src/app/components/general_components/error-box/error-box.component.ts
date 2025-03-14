@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-error-box',
@@ -7,5 +7,6 @@ import { Component } from '@angular/core';
   styleUrl: './error-box.component.css'
 })
 export class ErrorBoxComponent {
+  @Input() message: string = '';
 
 }

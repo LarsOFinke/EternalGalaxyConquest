@@ -7,7 +7,7 @@ import { api_url } from '../../../main';
   providedIn: 'root'
 })
 export class LoginService {
-    private httpClient = inject(HttpClient)
+    private httpClient = inject(HttpClient);
   
     // This method sends the username and password to the API endpoint
     login(username: string, password: string) {

@@ -4,6 +4,10 @@
         <br class="spacer">
         <h1>Login</h1>
         <br class="spacer">
+        
+        @if (hasError) {
+          <app-error-box message="{{ message }}"></app-error-box>
+        }
   
         <div class="input-box">
           <input 
