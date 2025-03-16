@@ -2,18 +2,20 @@ import { Injectable } from '@angular/core';
 import { io } from 'socket.io-client';
 import { Observable } from 'rxjs';
 import { socket_url } from '../../../main';
+import { SocketService } from './socket.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UpdateService {
-  private socket = io(socket_url);
+  constructor(private socketService: SocketService) {}
 
-  getGameStateUpdate(): Observable<any> {
-    return new Observable((observer) => {
-      this.socket.on('game_update', (gameState) => {
-        observer.next(gameState);
-      });
+  // Use the socket service to listen for a specific event
+  listenForUpdates() {
+    this.socketService.listenToEvent('update-event');
+    this.socketService.getEventObservable().subscribe((data) => {
+      console.log('Received update event data:', data);
+      // Handle the incoming data
     });
   }
 }

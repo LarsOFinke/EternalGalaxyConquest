@@ -19,4 +19,8 @@ export class LobbyService {
   gameReady(): void {
     this.socket.emit('ready_to_start');
   }
+
+  disconnect(): void {
+    this.socket.disconnect();
+  }
 }

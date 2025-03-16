@@ -36,9 +36,10 @@ def start_game(data):
     
     game.start()
     game_state = game.fetch_game_state()
-    
+    print("starting with game-state:\n", game_state)
     emit("new_game_started", { "host": host, "game_state": game_state })
-    emit('your_turn', {'player': game.current_player})
+    print(game.current_player)
+    emit('your_turn', {'player': str(game.current_player)})
 
 
 @socketio.on('player_input')    # Handle player input (this event is triggered by frontend input)

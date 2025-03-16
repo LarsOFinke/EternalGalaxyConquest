@@ -1,20 +1,26 @@
 import { Injectable } from '@angular/core';
-import { io } from 'socket.io-client';
-import { Observable } from 'rxjs';
-import { socket_url } from '../../../main';
+import { SocketService } from './socket.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class GameService {
-  private socket = io(socket_url);
+  constructor(private socketService: SocketService) {}
+
+  registerPlayer(username: string): void {
+    this.socketService.emitEvent('register_player', { user: username });
+  }
 
   startGame(username: string): void {
-    this.socket.emit('start_game', { user: username });
+    this.socketService.emitEvent('start_game', { user: username });
   }
 
-  endGame(): void {
-    this.socket.emit('end_game');
+  // Stop listening to the event
+  stopListeningForUpdates() {
+    this.socketService.stopListeningToEvent('update-event');
   }
 
+  disconnect(): void {
+    this.socketService.disconnect();
+  }
 }

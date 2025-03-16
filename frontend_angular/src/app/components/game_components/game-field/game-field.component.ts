@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component } from '@angular/core';
 import { TileMenuComponent } from '../menus/tile-menu/tile-menu.component';
 
 

@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { GameFieldComponent } from '../game_components/game-field/game-field.component';
 import { GameService } from '../../services/websocket/game.service';
 import { PlayerService } from '../../services/websocket/player.service';
+import { TurnService } from '../../services/websocket/turn.service';
 
 @Component({
   selector: 'app-game',
@@ -11,16 +12,26 @@ import { PlayerService } from '../../services/websocket/player.service';
 })
 export class GameComponent {
   game_state: {} = {};
-  
-  constructor(private gameService: GameService, private playerService: PlayerService) {
-    this.playerService.getPlayerTurn("2")
+
+  constructor(
+    private gameService: GameService,
+    private playerService: PlayerService,
+    private turnService: TurnService
+  ) {}
+
+  ngOnInit(): void {
+    this.gameService.registerPlayer("test-name");
+    this.turnService.getPlayerTurn("2");
   }
 
-  // ngOnInit() {
-  //   this.game_state = this.gameService.getGameStart();
-  // }
+  ngOnDestroy(): void {
+    // CLEAN UP SOCKET-SERVICE CONNECTIONS //
+    this.gameService.disconnect();
+    this.playerService.disconnect();
+    this.turnService.disconnect();
+  }
 
   start() {
-    this.gameService.startGame("test-name");
+    this.gameService.startGame('test-name');
   }
 }
