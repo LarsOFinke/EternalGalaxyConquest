@@ -9,10 +9,13 @@ export class GameFieldService {
   private gameInstance: Game | null = null;
   constructor(private updateService: UpdateService) {}
 
-  spawnGameField(gameInstance: Game, tile_states: [{}]) {
+  setupService(gameInstance: Game) {
     this.gameInstance = gameInstance;
-    console.log('Spawning game-field with tile-states: ', tile_states);
+    console.log(
+      'GameFieldService set up with game-instance: ',
+      this.gameInstance
+    );
   }
 
-  updateGameField() {}
+
 }

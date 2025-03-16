@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { TileMenuComponent } from '../menus/tile-menu/tile-menu.component';
+import { GameFieldService } from '../../../services/game/game-field.service';
 
 
 @Component({
@@ -14,8 +15,11 @@ export class GameFieldComponent {
   selected_tile: string = '';
   show_tile_menu: boolean = false;
 
-  constructor() {}
+  constructor(private gameFieldService: GameFieldService) {}
 
+  spawnGameField(){
+    
+  }
 
   inspectTile(tile_id: string) {
     this.selected_tile = tile_id;

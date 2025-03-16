@@ -4,6 +4,7 @@ import { GameManagementService } from '../../services/websocket/game-management.
 import { PlayerService } from '../../services/websocket/player.service';
 import { TurnService } from '../../services/websocket/turn.service';
 import { GameService } from '../../services/game/game.service';
+import { Tile } from '../../interfaces/tile';
 
 @Component({
   selector: 'app-game',
@@ -45,7 +46,7 @@ export class GameComponent {
 
   initializeNewGame(data: {
     host: string;
-    game_state: { player_states: [{ name: string; player_id: string }], tile_states: [{}] };
+    game_state: { player_states: [{ name: string; player_id: string }], tile_states: Tile[] };
     players: [];
   }) {
     this.host = data.host;

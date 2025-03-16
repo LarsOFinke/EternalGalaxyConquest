@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { SocketService } from './socket.service';
+import { Tile } from '../../interfaces/tile';
 
 @Injectable({
   providedIn: 'root',
@@ -23,7 +24,7 @@ export class GameManagementService {
     callback: (data: {
       host: string;
       player_id: string;
-      game_state: { player_states: [{ name: string; player_id: string }], tile_states: [{}] };
+      game_state: { player_states: [{ name: string; player_id: string }], tile_states: Tile[] };
       players: [];
       player_count: number;
       current_player: string;
@@ -36,7 +37,7 @@ export class GameManagementService {
       (data: {
         host: string;
         player_id: string;
-        game_state: { player_states: [{ name: string; player_id: string }], tile_states: [{}] };
+        game_state: { player_states: [{ name: string; player_id: string }], tile_states: Tile[] };
         players: [];
         player_count: number;
         current_player: string;
