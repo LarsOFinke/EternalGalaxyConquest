@@ -11,7 +11,9 @@ import { TurnService } from '../../services/websocket/turn.service';
   styleUrl: './game.component.css',
 })
 export class GameComponent {
-  game_state: {} = {};
+  host: string = '';
+  gameStarted: boolean = false;
+  gameState: {} = {};
 
   constructor(
     private gameService: GameService,
@@ -20,9 +22,14 @@ export class GameComponent {
   ) {}
 
   ngOnInit(): void {
-    this.gameService.registerPlayer("test-name");
-    this.gameService.getNewGameStart();
-    this.turnService.getPlayerTurn("2");
+    this.gameService.registerPlayer('test-name');
+    this.gameService.getNewGameStart((data) => {
+      console.log('Game started:', this.host, this.gameState);
+      this.host = data.host;
+      this.gameState = data.game_state;
+      this.gameStarted = true;
+    });
+    this.turnService.getPlayerTurn('2');
   }
 
   ngOnDestroy(): void {

@@ -16,7 +16,10 @@ export class SocketService {
   }
 
   // Listen for an event once
-  listenToEventOnce(eventName: string, callback: (...args: any[]) => void): void {
+  listenToEventOnce(
+    eventName: string,
+    callback: (...args: any[]) => void
+  ): void {
     this.socket.once(eventName, callback); // Will trigger once and then remove the listener
   }
 

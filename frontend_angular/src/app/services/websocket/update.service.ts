@@ -1,7 +1,4 @@
 import { Injectable } from '@angular/core';
-import { io } from 'socket.io-client';
-import { Observable } from 'rxjs';
-import { socket_url } from '../../../main';
 import { SocketService } from './socket.service';
 
 @Injectable({
@@ -16,7 +13,7 @@ export class UpdateService {
     this.socketService
       .getEventObservable()
       .subscribe((data: { game_state: {} }) => {
-        console.log('Received update event data:', data);
+        console.log('Received update for game-state:', data);
       });
   }
 }
