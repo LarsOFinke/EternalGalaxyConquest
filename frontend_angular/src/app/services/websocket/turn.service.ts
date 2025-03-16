@@ -8,10 +8,8 @@ export class TurnService {
   constructor(private socketService: SocketService) {}
 
   nextTurn(host: string, playerId: string): void {
-    this.socketService.emitEvent('next_turn', {
-      host: host, 
-      player: playerId
-  });
+    console.log("Emitting next-turn event: ", { host, playerId });
+    this.socketService.emitEvent('next_turn', { host, playerId });
   }
 
   // Listen for the your-turn-event and compare the result with own Player-ID
