@@ -29,7 +29,7 @@ class Game:
     def fetch_game_state(self) -> dict:
         self.__game_state =  {
                                 "round": self.__round,
-                                "current_player": self.current_player,
+                                "current_player": str(self.current_player),
                                 "player_states": [player.fetch_player_state() for player in self.players],
                                 "tile_states": [tile.fetch_tile_state() for tile in self.__tile_states],
                                 "unclaimed_planets": [planet.fetch_base_state() for planet in self.__unclaimed_planets]

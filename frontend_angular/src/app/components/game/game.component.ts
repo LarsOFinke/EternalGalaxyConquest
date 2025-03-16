@@ -11,7 +11,9 @@ import { TurnService } from '../../services/websocket/turn.service';
   styleUrl: './game.component.css',
 })
 export class GameComponent {
+  username: string = 'test-name';
   host: string = '';
+  playerId: string = '';
   gameStarted: boolean = false;
   gameState: {} = {};
 
@@ -22,14 +24,8 @@ export class GameComponent {
   ) {}
 
   ngOnInit(): void {
-    this.gameService.registerPlayer('test-name');
-    this.gameService.getNewGameStart((data) => {
-      console.log('Game started:', this.host, this.gameState);
-      this.host = data.host;
-      this.gameState = data.game_state;
-      this.gameStarted = true;
-    });
-    this.turnService.getPlayerTurn('2');
+    this.gameService.registerPlayer(this.username);
+    this.gameService.getNewGameStart((data) => this.initializeNewGame(data));
   }
 
   ngOnDestroy(): void {
@@ -41,5 +37,22 @@ export class GameComponent {
 
   start() {
     this.gameService.startGame('test-name');
+  }
+
+  initializeNewGame(data: {host: string; game_state: {player_states: [{name: string, player_id: string}]}}) {
+    this.host = data.host;
+    data["game_state"]["player_states"].forEach(e => {
+      if (e.name === this.username) {
+        this.playerId = e.player_id;
+      }
+    });
+    this.gameState = data.game_state;
+    this.gameStarted = true;
+    console.log('Game started:', this.host, this.playerId, this.gameState);
+    this.turnService.getPlayerTurn(this.playerId);
+  }
+
+  nextRound() {
+    this.turnService.nextTurn(this.host, this.playerId);
   }
 }

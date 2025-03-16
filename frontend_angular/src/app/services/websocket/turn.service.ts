@@ -7,8 +7,11 @@ import { SocketService } from './socket.service';
 export class TurnService {
   constructor(private socketService: SocketService) {}
 
-  nextTurn(): void {
-    this.socketService.emitEvent('next_turn', {});
+  nextTurn(host: string, playerId: string): void {
+    this.socketService.emitEvent('next_turn', {
+      host: host, 
+      player: playerId
+  });
   }
 
   // Listen for the your-turn-event and compare the result with own Player-ID
@@ -17,7 +20,7 @@ export class TurnService {
     this.socketService
       .getEventObservable()
       .subscribe((data: { player: string }) => {
-        console.log('Received update event data:', data);
+        console.log('Received your-turn data:', data);
 
         if (data.player === playerId) {
           alert('Your turn');
