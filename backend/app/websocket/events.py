@@ -12,17 +12,20 @@ players: list = []
 
 @socketio.on('connect') # Handle WebSocket connection to the game (Frontend will connect to this)
 def handle_connect(): 
+    print("Connected new Player")
     emit('welcome', {'message': f'Welcome to the game!'})
 
 
 @socketio.on("register_player")
 def register_player(data):
+    print("registering...",data)
     user = data["user"]
     players.append(user)
 
 
 @socketio.on('start_game')  # Handle the start of the game (called when the game begins)
 def start_game(data):
+    print("starting...",data)
     game = Game()
     host = data["user"]
     games[host] = game

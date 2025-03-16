@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { GameFieldComponent } from '../game_components/game-field/game-field.component';
-import { WebsocketService } from '../../services/websocket.service';
+import { GameService } from '../../services/websocket/game.service';
+import { PlayerService } from '../../services/websocket/player.service';
 
 @Component({
   selector: 'app-game',
@@ -9,17 +10,17 @@ import { WebsocketService } from '../../services/websocket.service';
   styleUrl: './game.component.css',
 })
 export class GameComponent {
-  messages: string[] = [];
+  game_state: {} = {};
   
-  constructor(private websocket: WebsocketService) {}
+  constructor(private gameService: GameService, private playerService: PlayerService) {
+    this.playerService.getPlayerTurn("2")
+  }
 
   // ngOnInit() {
-  //   this.websocket.getMessages().subscribe((message: any) => {
-  //     this.messages.push(message);
-  //   });
+  //   this.game_state = this.gameService.getGameStart();
   // }
 
   start() {
-    this.websocket.startGame("test-name");
+    this.gameService.startGame("test-name");
   }
 }

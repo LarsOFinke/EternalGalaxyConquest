@@ -2,7 +2,7 @@ import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { ErrorBoxComponent } from '../general_components/error-box/error-box.component';
-import { RegisterService } from './register.service';
+import { RegisterService } from '../../services/api/register.service';
 
 @Component({
   selector: 'app-register',

@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
-import { LoginService } from './auth.service';
+import { LoginService } from '../../services/api/auth.service';
 import { ErrorBoxComponent } from '../general_components/error-box/error-box.component';
 
 @Component({
