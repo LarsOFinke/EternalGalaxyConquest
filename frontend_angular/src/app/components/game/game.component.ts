@@ -3,7 +3,7 @@ import { GameFieldComponent } from '../game_components/game-field/game-field.com
 import { GameManagementService } from '../../services/websocket/game-management.service';
 import { PlayerService } from '../../services/websocket/player.service';
 import { TurnService } from '../../services/websocket/turn.service';
-import { GameService } from '../../services/websocket/game.service';
+import { GameService } from '../../services/game/game.service';
 
 @Component({
   selector: 'app-game',
@@ -44,13 +44,8 @@ export class GameComponent {
 
   initializeNewGame(data: {
     host: string;
-    player_id: string;
     game_state: { player_states: [{ name: string; player_id: string }] };
     players: [];
-    player_count: number;
-    current_player: string;
-    tile_list: [];
-    unclaimedPlanets: [];
   }) {
     this.host = data.host;
     data['game_state']['player_states'].forEach((e) => {
