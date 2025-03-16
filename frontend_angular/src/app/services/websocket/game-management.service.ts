@@ -23,7 +23,7 @@ export class GameManagementService {
     callback: (data: {
       host: string;
       player_id: string;
-      game_state: { player_states: [{ name: string; player_id: string }] };
+      game_state: { player_states: [{ name: string; player_id: string }], tile_states: [{}] };
       players: [];
       player_count: number;
       current_player: string;
@@ -36,7 +36,7 @@ export class GameManagementService {
       (data: {
         host: string;
         player_id: string;
-        game_state: { player_states: [{ name: string; player_id: string }] };
+        game_state: { player_states: [{ name: string; player_id: string }], tile_states: [{}] };
         players: [];
         player_count: number;
         current_player: string;

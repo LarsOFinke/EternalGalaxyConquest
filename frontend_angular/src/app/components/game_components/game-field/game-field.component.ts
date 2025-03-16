@@ -14,6 +14,8 @@ export class GameFieldComponent {
   selected_tile: string = '';
   show_tile_menu: boolean = false;
 
+  constructor() {}
+
 
   inspectTile(tile_id: string) {
     this.selected_tile = tile_id;

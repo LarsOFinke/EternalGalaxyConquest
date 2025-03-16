@@ -45,7 +45,7 @@ export class GameComponent {
 
   initializeNewGame(data: {
     host: string;
-    game_state: { player_states: [{ name: string; player_id: string }] };
+    game_state: { player_states: [{ name: string; player_id: string }], tile_states: [{}] };
     players: [];
   }) {
     this.host = data.host;
