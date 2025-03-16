@@ -15,6 +15,11 @@ export class SocketService {
     this.socket = io(socket_url); // Replace with your server URL
   }
 
+  // Listen for an event once
+  listenToEventOnce(eventName: string, callback: (...args: any[]) => void): void {
+    this.socket.once(eventName, callback); // Will trigger once and then remove the listener
+  }
+
   // Method to listen to an event and emit data via the Subject
   listenToEvent(eventName: string) {
     this.socket.on(eventName, (data) => {
@@ -38,6 +43,8 @@ export class SocketService {
   }
 
   disconnect(): void {
+    this.socket.removeAllListeners();
     this.socket.disconnect();
+    console.log('Socket disconnected and all listeners removed');
   }
 }

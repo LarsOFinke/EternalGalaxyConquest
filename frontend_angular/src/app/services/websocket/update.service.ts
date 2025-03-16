@@ -10,12 +10,13 @@ import { SocketService } from './socket.service';
 export class UpdateService {
   constructor(private socketService: SocketService) {}
 
-  // Use the socket service to listen for a specific event
-  listenForUpdates() {
-    this.socketService.listenToEvent('update-event');
-    this.socketService.getEventObservable().subscribe((data) => {
-      console.log('Received update event data:', data);
-      // Handle the incoming data
-    });
+  // Listen for the game-update-event and return the game-state
+  getGameUpdate(): void {
+    this.socketService.listenToEvent('game_update');
+    this.socketService
+      .getEventObservable()
+      .subscribe((data: { game_state: {} }) => {
+        console.log('Received update event data:', data);
+      });
   }
 }

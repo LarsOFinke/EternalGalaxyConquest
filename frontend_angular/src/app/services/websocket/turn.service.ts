@@ -11,25 +11,21 @@ export class TurnService {
     this.socketService.emitEvent('next_turn', {});
   }
 
-  // Use the socket service to listen for a specific event
-  getPlayerTurn(playerId: string) {
+  // Listen for the your-turn-event and compare the result with own Player-ID
+  getPlayerTurn(playerId: string): void {
     this.socketService.listenToEvent('your_turn');
-    this.socketService.getEventObservable().subscribe((data) => {
-      console.log('Received update event data:', data);
-      // Handle the incoming data
-    });
+    this.socketService
+      .getEventObservable()
+      .subscribe((data: { player: string }) => {
+        console.log('Received update event data:', data);
+
+        if (data.player === playerId) {
+          alert('Your turn');
+        }
+      });
   }
-  // getPlayerTurn(playerId: string): void {
-  //   this.socket.on('your_turn', (data: { player: string }) => {
-  //     console.log(data);
-  //     if (data.player === playerId) {
-  //       // Notify the player that it's their turn
-  //       alert('Your turn');
-  //     }
-  //   });
-  // }
 
   disconnect(): void {
-    this.socketService.disconnect();
+    this.socketService.stopListeningToEvent('your_turn');
   }
 }

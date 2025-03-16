@@ -15,12 +15,19 @@ export class GameService {
     this.socketService.emitEvent('start_game', { user: username });
   }
 
-  // Stop listening to the event
-  stopListeningForUpdates() {
-    this.socketService.stopListeningToEvent('update-event');
+  // emit("new_game_started", { "host": host, "game_state": game_state })
+  getNewGameStart() {
+    // Listen to 'once-event' only once
+    this.socketService.listenToEventOnce(
+      'new_game_started',
+      (data: { host: string; game_state: {} }) => {
+        console.log('Received once-event:', data);
+        // Process the data
+      }
+    );
   }
 
   disconnect(): void {
-    this.socketService.disconnect();
+    // this.socketService.stopListeningToEvent();
   }
 }

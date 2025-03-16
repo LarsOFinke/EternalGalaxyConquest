@@ -21,6 +21,7 @@ export class GameComponent {
 
   ngOnInit(): void {
     this.gameService.registerPlayer("test-name");
+    this.gameService.getNewGameStart();
     this.turnService.getPlayerTurn("2");
   }
 
