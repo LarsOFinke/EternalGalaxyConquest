@@ -6,11 +6,11 @@ namespace CSharpApi.Models.AstronomicalObjects
     {
         public string Name { get; set; } = string.Empty;
 
-        private List<Object> Settlements { get; set; } = new List<Object>();
+        private List<object> Settlements { get; set; } = new List<object>();
 
         private Planet? OurPlanet {  get; set; }
 
-        public HomePlanet(string name, List<Object> settlements)  {
+        public HomePlanet(string name, List<object> settlements)  {
             Name = name;
             
             settlements == null ? Settlements = Settlements.Add(MainCity("Hauptstadt")) :

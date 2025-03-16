@@ -1,3 +1,5 @@
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using CSharpApi.Data;
 using CSharpApi.Models;
 using Microsoft.EntityFrameworkCore;
@@ -7,7 +9,6 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
@@ -21,6 +22,14 @@ else
     builder.Services.AddDbContext<EternalDatabaseContext>(options =>
         options.UseNpgsql(builder.Configuration.GetConnectionString("ProdContext")));
 }
+
+
+// Adding ENUM to String Converter with SnakeCaseLower Naming Policy
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter(JsonNamingPolicy.SnakeCaseLower));
+    });
 
 var app = builder.Build();
 

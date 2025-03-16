@@ -10,10 +10,10 @@ namespace CSharpApi.Models.GamePlayObjects
 
         private string TileType { get; set; } = string.Empty;
         private string TileName { get; set; } = string.Empty;
-        private Dictionary<string, Object> TileContent { get; set; } = [];
+        private Dictionary<string, object> TileContent { get; set; } = [];
 
 
-        public Tile(int tileId, string owner, int ownerId, string tileType, string tileName, Dictionary<string, Object> tileContent)
+        public Tile(int tileId, string owner, int ownerId, string tileType, string tileName, Dictionary<string, object> tileContent)
         {
             TileId = tileId;
             Owner = owner;
@@ -23,15 +23,15 @@ namespace CSharpApi.Models.GamePlayObjects
             TileContent = tileContent;
         }
 
-        public Dictionary<string, Object> FetchTileState() {
+        public Dictionary<string, object> FetchTileState() {
 
-            return new Dictionary<string, Object>
+            return new Dictionary<string, object    >
             {
                 { "id", TileId },
                 { "owner", Owner },
                 { "owner_id", OwnerId },
                 { "tile_type", TileType },
-                { "tile_content", TileContent.GetValueOrDefault("base", new Dictionary<string, Object>()) }
+                { "tile_content", TileContent.GetValueOrDefault("base", new Dictionary<string, object>()) }
             };
         }
     }
