@@ -70,4 +70,5 @@ def next_turn(data):
 
 @socketio.on('disconnect')
 def handle_disconnect():
+    print("Player disconnected")
     games.clear()
