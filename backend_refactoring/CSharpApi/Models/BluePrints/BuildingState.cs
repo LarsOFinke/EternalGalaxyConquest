@@ -2,8 +2,8 @@
 using System.Xml.Linq;
 using System;
 
-namespace CSharpApi.Models.Buildings
-{
+namespace CSharpApi.Models.BluePrints
+{ 
     public class BuildingState
     {
         public static int BuildingCount { get; set; } = 0;

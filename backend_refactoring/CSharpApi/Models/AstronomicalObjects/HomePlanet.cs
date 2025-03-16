@@ -12,10 +12,16 @@ namespace CSharpApi.Models.AstronomicalObjects
 
         public HomePlanet(string name, List<object> settlements)  {
             Name = name;
-            
-            settlements == null ? Settlements = Settlements.Add(MainCity("Hauptstadt")) :
-                Settlements = settlements!;
 
+
+            if (settlements == null)
+            {
+                Settlements.Add(MainCity("Hauptstadt"));
+            }
+            else
+            {
+                Settlements = settlements;
+            }
 
             OurPlanet = new Planet(name, "home_planet", 0, Settlements);
         }

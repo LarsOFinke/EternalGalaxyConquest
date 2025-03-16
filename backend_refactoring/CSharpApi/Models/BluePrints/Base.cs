@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using System.Collections.Generic;
 using System.Xml.Linq;
 
-namespace CSharpApi.Models.Buildings
+namespace CSharpApi.Models.BluePrints
 {
     public class Base
     {
@@ -26,10 +26,10 @@ namespace CSharpApi.Models.Buildings
         {
             BaseCount++;
             ActionList = [
-                new Dictionary<string, object>{ { "name", "Select Settlement" } , { Action.SelectSettlement, SelectSettlement } },
-                new Dictionary<string, object> { { "name", "Change Name" }, { Action.ChangeName, ChangeName } },
-                new Dictionary<string, object> { { "name", "Found City" }, { Action.FoundCity, FoundCity } },
-                new Dictionary<string, object> { { "name", "Found Outpost" }, { Action.FoundOutpost, FoundOutpost }} ];
+                new Dictionary<string, object>{ { "name", "Select Settlement" } , { "action", SelectSettlement } },
+                new Dictionary<string, object> { { "name", "Change Name" }, { "action", ChangeName } },
+                new Dictionary<string, object> { { "name", "Found City" }, { "action", FoundCity } },
+                new Dictionary<string, object> { { "name", "Found Outpost" }, { "action", FoundOutpost }} ];
 
             BaseId = BaseCount;
             BaseType = baseType;
