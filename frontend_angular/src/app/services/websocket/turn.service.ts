@@ -8,22 +8,22 @@ export class TurnService {
   constructor(private socketService: SocketService) {}
 
   nextTurn(host: string, playerId: string): void {
-    console.log("Emitting next-turn event: ", { host, playerId });
+    console.log('Emitting next-turn event: ', { host, playerId });
     this.socketService.emitEvent('next_turn', { host, playerId });
   }
 
   // Listen for the your-turn-event and compare the result with own Player-ID
   getPlayerTurn(playerId: string): void {
-    this.socketService.listenToEvent('your_turn');
-    this.socketService
-      .getEventObservable()
-      .subscribe((data: { player: string }) => {
+    this.socketService.listenToEvent(
+      'your_turn',
+      (data: { player: String }) => {
         console.log('Received your-turn data:', data);
 
         if (data.player === playerId) {
           alert('Your turn');
         }
-      });
+      }
+    );
   }
 
   disconnect(): void {

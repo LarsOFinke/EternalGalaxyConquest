@@ -7,15 +7,15 @@ import { SocketService } from './socket.service';
 export class GameManagementService {
   constructor(private socketService: SocketService) {}
 
-  registerPlayer(username: string): void {
-    console.log(`Trying to register: ${username}...`);
-    this.socketService.emitEvent('register_player', { user: username });
-    console.log(`${username} registered!`);
+  registerPlayer(user: string): void {
+    console.log(`Trying to register: ${user}...`);
+    this.socketService.emitEvent('register_player', { user });
+    console.log(`${user} registered!`);
   }
 
-  startGame(username: string): void {
+  startGame(user: string): void {
     console.log('Attempting to start the game...');
-    this.socketService.emitEvent('start_game', { user: username });
+    this.socketService.emitEvent('start_game', { user });
   }
 
   // This method listens for the event and calls the callback with the data when received

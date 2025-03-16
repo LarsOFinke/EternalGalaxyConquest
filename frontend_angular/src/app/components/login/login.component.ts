@@ -31,6 +31,7 @@ export class LoginComponent {
         console.log('Login-API-Call successful', response);
         // if (response.success) {
         console.log('Login successful');
+        // this.username = response.username;
         this.router.navigate(['/main-menu']);
         // }
       },

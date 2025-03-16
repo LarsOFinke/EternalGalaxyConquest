@@ -34,6 +34,7 @@ export class GameComponent {
   ngOnDestroy(): void {
     // CLEAN UP SOCKET-SERVICE CONNECTIONS //
     this.gameManagementService.disconnect();
+    this.gameService.disconnect();
     this.playerService.disconnect();
     this.turnService.disconnect();
   }

@@ -24,9 +24,10 @@ export class SocketService {
   }
 
   // Method to listen to an event and emit data via the Subject
-  listenToEvent(eventName: string) {
+  listenToEvent(eventName: string, callback: (...args: any[]) => void) {
     this.socket.on(eventName, (data) => {
       this.eventSubject.next(data); // Emit the data to subscribers
+      callback(data);
     });
   }
 

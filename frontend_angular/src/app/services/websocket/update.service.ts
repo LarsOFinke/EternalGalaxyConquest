@@ -7,13 +7,17 @@ import { SocketService } from './socket.service';
 export class UpdateService {
   constructor(private socketService: SocketService) {}
 
-  // Listen for the game-update-event and return the game-state
-  getGameUpdate(): void {
-    this.socketService.listenToEvent('game_update');
-    this.socketService
-      .getEventObservable()
-      .subscribe((data: { game_state: {} }) => {
-        console.log('Received update for game-state:', data);
-      });
+  getGameUpdate(callback: (data: { game_state: {} }) => void): void {
+    this.socketService.listenToEvent(
+      'game_update',
+      (data: { game_state: {} }) => {
+        console.log('Received game-state update: ', data.game_state);
+        callback(data);
+      }
+    );
+  }
+
+  disconnect(): void {
+    this.socketService.stopListeningToEvent('game_update');
   }
 }
