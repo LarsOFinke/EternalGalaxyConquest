@@ -148,7 +148,7 @@ class Settlement():
     def get_settlement_id(self):
         return self.__settlement_id
     
-    def get_resources(self, dump) -> dict:
+    def get_resources(self) -> dict:
         return  {
                     "success": True,
                     "resources": {
@@ -160,7 +160,7 @@ class Settlement():
                 }
     
 
-    def get_buildings(self, dump) -> dict:
+    def get_buildings(self) -> dict:
         return  { "success": True, "buildings": self.__buildings }
     
     def __set_buildings(self, building, increase: bool = True) -> None:
@@ -170,7 +170,7 @@ class Settlement():
             self.__buildings.remove(building)
     
     
-    def get_population(self, dump) -> dict:
+    def get_population(self) -> dict:
         return { "success": True, "population": self.__population }
     
     def __set_population(self, person, increase: bool = True) -> None:
@@ -188,7 +188,7 @@ class Settlement():
         return  { "success": True }
     
     
-    def get_free_workers(self, dump="dump") -> dict:
+    def get_free_workers(self) -> dict:
         return { "success": True, "free_workers": self.__free_workers }
     
     def set_free_workers(self, worker: Worker, increase: bool = True) -> None:

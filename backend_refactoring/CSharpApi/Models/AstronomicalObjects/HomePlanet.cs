@@ -1,4 +1,5 @@
 ﻿using CSharpApi.Data;
+using CSharpApi.Models.BluePrints;
 
 namespace CSharpApi.Models.AstronomicalObjects
 {
@@ -25,6 +26,5 @@ namespace CSharpApi.Models.AstronomicalObjects
 
             OurPlanet = new Planet(name, "home_planet", 0, Settlements);
         }
-
     }
 }

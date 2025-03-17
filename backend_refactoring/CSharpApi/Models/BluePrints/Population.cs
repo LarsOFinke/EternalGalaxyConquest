@@ -6,7 +6,7 @@ namespace CSharpApi.Models.BluePrints
     {
         public static int PopulationId { get; set; } = 0;
 
-        private int _populationId { get; set; };
+        private int _populationId { get; set; }
         
         private string Name { get; set; } = string.Empty;
 
@@ -14,7 +14,7 @@ namespace CSharpApi.Models.BluePrints
 
         private bool Alive { get; set; }
 
-        public Population(string name, string profession, bool alive = true)
+        public Population(string name, string profession , bool alive = true)
         {
             PopulationId++;
             _populationId = PopulationId;
@@ -33,5 +33,5 @@ namespace CSharpApi.Models.BluePrints
                 { "alive", Alive } };
         }
 
-    }
+    }    
 }
