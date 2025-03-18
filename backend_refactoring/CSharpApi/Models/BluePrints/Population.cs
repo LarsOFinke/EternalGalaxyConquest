@@ -33,5 +33,7 @@ namespace CSharpApi.Models.BluePrints
                 { "alive", Alive } };
         }
 
+        public int GetPopulationId() { return _populationId; }
+
     }    
 }

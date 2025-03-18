@@ -1,6 +1,8 @@
 ﻿using System;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Reflection.Metadata.Ecma335;
+using CSharpApi.Models.BluePrints.Beings;
 using CSharpApi.Models.BluePrints.BuildingTypes;
 using Microsoft.EntityFrameworkCore;
 
@@ -10,18 +12,31 @@ namespace CSharpApi.Models.BluePrints
     {
         public static int SettlementCount { get; set; } = 0;
 
-        private readonly int _settlementId = 0;
+        private int _settlementId = 0;
         private readonly string _settlementName = string.Empty;
         private readonly object _settlementType;
-        private readonly float _gold = 0;
-        private readonly float _food = 0;
-        private readonly float _wood = 0;
-        private readonly float _iron = 0;
+        private float _gold = 0;
+        private float _food = 0;
+        private float _wood = 0;
+        private float _iron = 0;
         private List<IBuildingList> _buildings = [];
         private List<object> _population = [];
         private List<object> _freeWorkers = [];
         private List<object> _freeBuilders = [];
         private List<Dictionary<string, object>> _actionList = [];
+
+        private readonly List<IBuildingList> _buildingList =
+                [
+                    new HeadQuarter(),
+                    new BuildersHut(),
+                    new Warehouse(),
+                    new Bakery(),
+                    new Sawmill(),
+                    new GoldMine(),
+                    new IronMine(),
+                    new Forge()
+
+                ];
 
         public Settlement(string settlementName,
             object settlementType,
@@ -62,19 +77,7 @@ namespace CSharpApi.Models.BluePrints
               new() { { "name", "Remove Free Builders" }, { "action", self.remove_free_builders } }
             ];
 
-            List<IBuildingList> buildingList =
-                [
-                    new HeadQuarter(),
-                    new BuildersHut(),
-                    new Warehouse(),
-                    new Bakery(),
-                    new Sawmill(),
-                    new GoldMine(),
-                    new IronMine(),
-                    new Forge()
-
-                ];
-
+          
             Dictionary<string, IBuildingList> buildOptions = new()
             {
                 { "Builders Hut", new BuildersHut() },
@@ -104,7 +107,7 @@ namespace CSharpApi.Models.BluePrints
                 switch (getBuilders)
                 {
                     case true:
-                        if (String.Equals(builder.Proffession, "worker", StringComparison.InvariantCultureIgnoreCase) &&
+                        if (String.Equals(builder.Profession, "worker", StringComparison.InvariantCultureIgnoreCase) &&
                             builder.working == false && String.Equals(builder.FieldOfWork, "builder", StringComparison.InvariantCultureIgnoreCase))
                         {
                             builders.Add(builder);
@@ -113,7 +116,7 @@ namespace CSharpApi.Models.BluePrints
                         break;
 
                     case false:
-                        if (String.Equals(builder.Proffession, "worker", StringComparison.InvariantCultureIgnoreCase) &&
+                        if (String.Equals(builder.Profession, "worker", StringComparison.InvariantCultureIgnoreCase) &&
                             builder.working == false) builders.Add(builder);
                         break;
 
@@ -149,7 +152,7 @@ namespace CSharpApi.Models.BluePrints
         public List<object> GetBuildingState()
         {
             var buildingStates = new List<object>();
-            foreach (var buildingState in _building)
+            foreach (var buildingState in _buildings)
             {
                 buildingStates.Add(buildingState.FetchBuildingState);
             }
@@ -225,7 +228,7 @@ namespace CSharpApi.Models.BluePrints
         /// </summary>
         /// <param name="person"></param>
         /// <param name="addPerson"></param>
-        /// <returns>Reurns a Dictionary with string as key and bool as value</returns>
+        /// <returns>Returns a Dictionary with string as key and bool as value</returns>
         public Dictionary<string, bool> AddOrRemoveInstancePopulation(object person, bool addPerson = true)
         {
             SetInstancePopulation(person, addPerson);
@@ -274,28 +277,100 @@ namespace CSharpApi.Models.BluePrints
             return new() { { "success", false }, { "message", $"Person mit ID: {populationId} nicht gefunden!" } };
         }
 
-        public Dictionary<string, object> ConstructBuilding(string buildingName)
+        public Dictionary<string, object> ConstructBuilding(IBuildingList building)
         {
-            var hasBuildersHut = CheckHasBuildersHut();
-            var matchingBuidingName = String.Equals(buildingName, "Builders Hut", StringComparison.InvariantCultureIgnoreCase);
-            var availableBuilders = CheckIfBuilderAvailable();
+            var hasBuilding = _buildings.Contains(building);
+            var matchingBuidingName = building is BuildersHut;
+            var availableBuilders = _freeBuilders.Count > 0;
 
-            if (!matchingBuidingName && !hasBuildersHut)
+            if (!hasBuilding && (!availableBuilders || !hasBuilding))
             {
-                return new() { { "success", false }, { "message", "Zuerst eine Bauhütte bauen!" } };
+                return new() { 
+                    { "success", false }, 
+                    { "message", "Zuerst eine Bauhütte bauen!" },
+                    { "available_builders", availableBuilders },
+                    { "available_builders_hut", hasBuilding }
+                };
             }
+
+            if (hasBuilding) return new() { { "success", false }, { "message", $"{building.Name} bereits vorhanden!" } };
+
+            var result = CheckResources(building.Costs["costs"]);
+
+            if (!(bool)result["success"])
+            {
+                return result;
+            }
+
+            SetInstanceBuildings(building, increase: true);
+
+            return new() { { "success", true }, { "message", $"{building.Name} erfolgreich gebaut!"} };
+
         }
 
-        private bool CheckIfBuilderAvailable()
+        public Dictionary<string, object> CreateInstanceWorker(string name)
         {
-            throw new NotImplementedException();
-        }
+            Dictionary<string, float> workerCosts = new()
+            {
 
-        private bool CheckHasBuildersHut()
+                { "gold", 100},
+                { "food", 200 },
+                { "wood", 50 },
+                { "iron", 0 }
+            };
+
+            var result = CheckResources(workerCosts);
+
+            if (!(bool)result["success"]) return result;
+
+            var newWorker = new Worker(name);
+
+            SetInstancePopulation(newWorker);
+            _freeWorkers.Add(newWorker);
+
+            return new()
+            {
+                { "success", true},
+                { "message", "Neuer Arbeiter erfolgreich angeheuert!"},
+                { "update", new Dictionary<string, object> {
+                    { "action", "Create Worker" },
+                    { "settlement_id",_settlementId },
+                    { "population_id", newWorker.GetPopulationId()},
+                    { "name", name },
+                    { "profession", newWorker.profession },
+                    { "alive", newWorker.alive },
+                    { "employed", newWorker.employed },
+                    { "field_of_work", newWorker.field_of_work },
+                    { "working", newWorker.working },
+                    { "production", newWorker.production } } }
+                };
+
+    }
+
+        public Dictionary<string, object> CheckResources(Dictionary<string, float> keyValuePairs)
         {
-            throw new NotImplementedException();
-        }
+            foreach ((string resource, float value) in keyValuePairs.AsEnumerable())
+            {
+                if (value - keyValuePairs[resource] < 0)
+                {
+                    return new() {
+                    { "success", false },
+                      { "message", $"Nicht genug {resource}" }
+                    };
+                }
 
+            }
+
+            _gold -= keyValuePairs["gold"];
+            _food -= keyValuePairs["food"];
+            _wood -= keyValuePairs["wood"];
+            _iron -= keyValuePairs["iron"];
+
+
+            return new() { {"success", true } };
+
+        }
+      
         
     }
 }
