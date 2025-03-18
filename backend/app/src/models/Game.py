@@ -16,6 +16,13 @@ class Game:
         self.__tile_states: list[dict] = []
         self.__unclaimed_planets: list = []
         self.running: bool = False
+        
+    def get_player_id(self) -> list[tuple[str]]:
+        player_details: list = []
+        for player in self.players:
+            player_details.append((player.name, player.player_id))
+        
+        return player_details
 
     def set_tile_states(self, tile_states: list[dict]):
         self.__tile_states = tile_states
@@ -110,6 +117,8 @@ class Game:
         self.__tile_states = self.spawn_game_field()
         self.running = True
         self.ai_turn()
+        
+        return self.fetch_game_state()
 
     def end(self) -> None:
         self.running = False

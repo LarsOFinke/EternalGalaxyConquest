@@ -9,20 +9,33 @@ import { Tile } from '../../interfaces/tile';
 })
 export class GameService {
   private gameInstance: Game | null = null;
-  constructor(private updateService: UpdateService, private gameFieldService: GameFieldService) {}
+  constructor(
+    private updateService: UpdateService
+  ) {}
 
-  createGameInstance(data: { host: string; game_state: {tile_states: Tile[]} }) {
+  createGameInstance(data: {
+    host: string;
+    game_state: { tile_states: Tile[] };
+  }) {
     console.log('Attempting to generate Game-Instance...');
     this.gameInstance = new Game(data.host, data.game_state);
     console.log('Game-Instance created: ', this.gameInstance);
 
-    this.gameFieldService.setupService(this.gameInstance);
+    // this.gameFieldService.assingGameInstance(this.gameInstance);
 
-    this.updateService.getGameUpdate((data: { game_state: {} }) => {
-      if (this.gameInstance !== null) {
-        this.gameInstance.updateGameState(data);
+    this.updateService.getGameUpdate(
+      (data: { game_state: { tile_states: Tile[] } }) => {
+        if (this.gameInstance !== null) {
+          this.gameInstance.updateGameState(data);
+          // this.gameFieldService.updateTileStates();
+        }
       }
-    });
+    );
+  }
+
+  getTileStates() { //: Tile[]
+    // console.log("CALLING GET TILESTATES",this.gameInstance!.getGameTileStates());
+    // return this.gameInstance!.getGameTileStates();
   }
 
   // Get the current game instance (if it exists)
@@ -34,8 +47,5 @@ export class GameService {
     this.updateService.disconnect();
   }
 
-  disconnect() {
-    
-  }
-  
+  disconnect() {}
 }

@@ -34,11 +34,16 @@ def start_game(data):
         game.add_player(player)
     players.clear()
     
-    game.start()
-    game_state = game.fetch_game_state()
+    game_state = game.start()
     print("starting with game-state:\n", game_state)
+    print("host", host)
+    player_details: list[tuple[str]] = game.get_player_id()
+    for username, player_id in player_details:
+        print("username: ",username, "player_id: ", player_id)
+        emit("your_player_id", { "host": host, username: player_id })
+        
     emit("new_game_started", { "host": host, "game_state": game_state })
-    print(game.current_player)
+    print("current_player: ", game.current_player)
     emit('your_turn', {'player': str(game.current_player)})
 
 

@@ -1,5 +1,12 @@
 <div class="grid centered bordered" id="game_field">
-  <div (click)="inspectTile('1')" class="hex color1"></div>
+  @for (tileState of tileStates; track tileState.id) {
+  <app-tile [tileState]="tileState"></app-tile>
+  } @empty {
+GAME NOT STARTED YET
+  }
+</div>
+
+<!-- <div (click)="inspectTile('1')" class="hex color1"></div>
   <div (click)="inspectTile('2')" class="hex color2"></div>
   <div (click)="inspectTile('3')" class="hex color1"></div>
   <div (click)="inspectTile('4')" class="hex color1"></div>
@@ -17,8 +24,7 @@
     [tile_id]="selected_tile"
     (close)="closeTileMenu()"
   ></app-tile-menu>
-  }
-</div>
+  } -->
 
 <!-- // spawn_game_field(tile_states) {
 //   const game_field = document.getElementById("game_field");

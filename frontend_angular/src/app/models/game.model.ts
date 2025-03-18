@@ -5,7 +5,10 @@ export class Game implements GameInterface {
   
   constructor(public host: string, public gameState: {tile_states:Tile[]}) {}
 
-  getTileStates(): Tile[] {
+  getGameTileStates(): Tile[] {
+    if (!this.gameState.tile_states){
+      this.gameState.tile_states = []
+    }
     return this.gameState.tile_states;
   }
 

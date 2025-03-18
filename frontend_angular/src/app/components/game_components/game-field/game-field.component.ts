@@ -1,32 +1,29 @@
-import { Component } from '@angular/core';
-import { TileMenuComponent } from '../menus/tile-menu/tile-menu.component';
+import { Component, inject } from '@angular/core';
 import { GameFieldService } from '../../../services/game/game-field.service';
-
+import { TileComponent } from '../tile/tile.component';
+import { Tile } from '../../../interfaces/tile';
 
 @Component({
   selector: 'app-game-field',
-  imports: [
-    TileMenuComponent
-  ],
+  imports: [TileComponent],
   templateUrl: './game-field.component.html',
-  styleUrl: './game-field.component.css'
+  styleUrl: './game-field.component.css',
 })
 export class GameFieldComponent {
-  selected_tile: string = '';
-  show_tile_menu: boolean = false;
-
+  public tileStates: Tile[] | null = null;
   constructor(private gameFieldService: GameFieldService) {}
 
-  spawnGameField(){
-    
-  }
-
-  inspectTile(tile_id: string) {
-    this.selected_tile = tile_id;
-    this.show_tile_menu = true;
-  }
-  closeTileMenu(): void {
-    this.show_tile_menu = false;
-    this.selected_tile = '';
+  ngOnInit() {
+    this.tileStates = this.gameFieldService.getTileStates();
   }
 }
+
+// id 2
+// owner "AI"
+// owner_id 1
+
+// tile_content
+// :
+// base_id 1
+// planet_name "AI's Planet"
+// tile_type "planet"
