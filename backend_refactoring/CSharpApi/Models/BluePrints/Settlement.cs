@@ -1,6 +1,8 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.Reflection.Metadata.Ecma335;
 using CSharpApi.Models.BluePrints.BuildingTypes;
+using Microsoft.EntityFrameworkCore;
 
 namespace CSharpApi.Models.BluePrints
 {
@@ -15,10 +17,11 @@ namespace CSharpApi.Models.BluePrints
         private readonly float _food = 0;
         private readonly float _wood = 0;
         private readonly float _iron = 0;
-        private readonly List<IBuildingList> _buildings = [];
-        private readonly List<object> _population = [];
-        private readonly List<object> _freeWorkers = [];
-        private readonly List<object> _freeBuilders = [];
+        private List<IBuildingList> _buildings = [];
+        private List<object> _population = [];
+        private List<object> _freeWorkers = [];
+        private List<object> _freeBuilders = [];
+        private List<Dictionary<string, object>> _actionList = [];
 
         public Settlement(string settlementName,
             object settlementType,
@@ -40,8 +43,8 @@ namespace CSharpApi.Models.BluePrints
 
             SettlementCount++;
 
-            List<Dictionary<string, object>> ActionList = new List<Dictionary<string, object>> 
-            { new() { { "name", "Select Building" }, { "action", SelectBuilding } },
+            _actionList =
+            [ new() { { "name", "Select Building" }, { "action", SelectBuilding } },
               new() { { "name", "Select Population" }, { "action", SelectPopulation} },
               new() { { "name", "Build" }, { "action", Build } },
               new() { { "name",  "Create Worker" }, { "action", CreateWorker } },
@@ -57,7 +60,7 @@ namespace CSharpApi.Models.BluePrints
               new() { { "name", "Get Free Builders" }, { "action", self.get_free_builders } },
               new() { { "name", "Add Free Builders" }, { "action", self.add_free_builders } },
               new() { { "name", "Remove Free Builders" }, { "action", self.remove_free_builders } }
-            };
+            ];
 
             List<IBuildingList> buildingList =
                 [
@@ -99,15 +102,15 @@ namespace CSharpApi.Models.BluePrints
             foreach (var builder in _population)
             {
                 switch (getBuilders)
-                {               
+                {
                     case true:
                         if (String.Equals(builder.Proffession, "worker", StringComparison.InvariantCultureIgnoreCase) &&
                             builder.working == false && String.Equals(builder.FieldOfWork, "builder", StringComparison.InvariantCultureIgnoreCase))
-                            { 
-                                builders.Add(builder);
-                            }
+                        {
+                            builders.Add(builder);
+                        }
 
-                         break;
+                        break;
 
                     case false:
                         if (String.Equals(builder.Proffession, "worker", StringComparison.InvariantCultureIgnoreCase) &&
@@ -161,7 +164,7 @@ namespace CSharpApi.Models.BluePrints
             foreach (var element in elements)
             {
                 objectNameId[0] = new() { { "name", element.Name }, { "population_id", element.PopulationId } };
-            }   
+            }
             return objectNameId;
         }
 
@@ -175,8 +178,8 @@ namespace CSharpApi.Models.BluePrints
                     { "gold", _gold },
                     { "food", _food },
                     { "wood", _wood },
-                    {"iron", _iron } } 
-                } 
+                    {"iron", _iron } }
+                }
             };
         }
 
@@ -192,7 +195,7 @@ namespace CSharpApi.Models.BluePrints
             {
                 case true:
                     _buildings.Add(building); break;
-                case false: 
+                case false:
                     _buildings.Remove(building); break;
             }
             return;
@@ -216,5 +219,83 @@ namespace CSharpApi.Models.BluePrints
             return;
         }
 
+        /// <summary>
+        /// Add Or Remove a Person from this Instance Population.
+        /// <br>Defaults to Adding a Person.</br>
+        /// </summary>
+        /// <param name="person"></param>
+        /// <param name="addPerson"></param>
+        /// <returns>Reurns a Dictionary with string as key and bool as value</returns>
+        public Dictionary<string, bool> AddOrRemoveInstancePopulation(object person, bool addPerson = true)
+        {
+            SetInstancePopulation(person, addPerson);
+
+            return new() { { "succcess", true } };
+        }
+
+        public Dictionary<string, object> MatchPayLoad(string action, List<object> context)
+        {
+            foreach (var act in _actionList)
+            {
+                if (String.Equals(act["name"] as string, action, StringComparison.InvariantCultureIgnoreCase))
+                {
+                    return new() { { "success", context } };
+                }
+            }
+
+            return new() { { "success", false }, { "message", $"Inexistent Action: {action}" } };
+        }
+
+        public Dictionary<string, object> SelectBuilding(string target)
+        {
+            foreach (var building in _buildings)
+            {
+                if (String.Equals(building.Name, target, StringComparison.InvariantCultureIgnoreCase))
+                {
+                    return new() { { "success", true }, { "target", building } };
+
+                    
+                }
+            }
+
+            return new() { { "success", false }, { "message", $"Target: {target} nicht gefunden!" } };
+        }
+
+        public Dictionary<string, object> SelectInstancePopulation(int populationId)
+        {
+            foreach (var person in _population)
+            {
+                if (populationId == person.Id)
+                {
+                    return new() { { "success", true }, { "target", person } };
+                }
+            }
+
+            return new() { { "success", false }, { "message", $"Person mit ID: {populationId} nicht gefunden!" } };
+        }
+
+        public Dictionary<string, object> ConstructBuilding(string buildingName)
+        {
+            var hasBuildersHut = CheckHasBuildersHut();
+            var matchingBuidingName = String.Equals(buildingName, "Builders Hut", StringComparison.InvariantCultureIgnoreCase);
+            var availableBuilders = CheckIfBuilderAvailable();
+
+            if (!matchingBuidingName && !hasBuildersHut)
+            {
+                return new() { { "success", false }, { "message", "Zuerst eine Bauhütte bauen!" } };
+            }
+        }
+
+        private bool CheckIfBuilderAvailable()
+        {
+            throw new NotImplementedException();
+        }
+
+        private bool CheckHasBuildersHut()
+        {
+            throw new NotImplementedException();
+        }
+
+        
     }
 }
