@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace CSharpApi.Models.BluePrints
+namespace CSharpApi.Models.BluePrints.Beings
 {
     public class Population
     {

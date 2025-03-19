@@ -1,11 +1,13 @@
 ﻿
+using CSharpApi.Models.BluePrints.Beings;
+
 namespace CSharpApi.Models.BluePrints.BuildingTypes
 {
-    public class BuildersHut : IBuildingList
+    public class BuildersHut : Factory, IBuildingList 
     {
-        public string Name => "Builders Hut";
+        public static readonly string Name = "Builders Hut";
 
-        public Dictionary<string, Dictionary<string, float>> Costs => new()
+        public static readonly Dictionary<string, Dictionary<string, float>> Costs = new()
         {
             {
                 "costs", new()
@@ -17,5 +19,30 @@ namespace CSharpApi.Models.BluePrints.BuildingTypes
                 }
             }
         };
+
+        private List<Worker> _workers;     
+
+        public BuildersHut(List<Worker> workers = null) : base(Name, true, 2, workers ?? [])
+        {
+            _workers = workers ?? [];
+        }
+
+        public object MatchPayLoadAction(string action, List<object> context)
+        {
+            return action switch
+            {
+                "Get Workers" => _workers,
+                "Convert Worker To Builder" => GetWorker(),
+                _ => new Dictionary<string, object>()
+                    {
+                        { "success", false }, { "message", "Non Executable Action" }
+                    },
+            };
+        }
+
+        public Dictionary<string, object> ConvertWorkerToBuilder(int workerId, object settlement)
+        {
+            return ConvertWorkerToCraftsman(Name, workerId, settlement);
+        }
     }
 }

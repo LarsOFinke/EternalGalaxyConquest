@@ -1,21 +1,41 @@
 ﻿
+using System;
+using CSharpApi.Models.BluePrints.Beings;
+using Microsoft.EntityFrameworkCore;
+
 namespace CSharpApi.Models.BluePrints.BuildingTypes
 {
-    public class Forge() : IBuildingList
+    public class Forge : Factory, IBuildingList
     {
-        public string Name => "Forge";
+        
+
+        public static readonly string Name = "Forge";
 
 
-        public Dictionary<string, Dictionary<string, float>> Costs => new() {
+        public static readonly Dictionary<string, Dictionary<string, float>> Costs = new() {
             { "costs", new()
                 {
                     { "gold", 300 },
                     { "food", 200 },
                     { "wood", 150 },
-                    { "iron", 200 }
-                }
+                { "iron", 200 }
+            }
             }
         };
+
+        private List<Worker> _workers;
+
+        public Forge(List<Worker> workers = null)  
+           : base(Name, true, 2, workers ?? [])
+        {
+            _workers ??= workers ?? [];
+        }
+
+        public bool ConvertWorkerToBlacksmith(int workerId, object location)
+        {
+            return (bool)ConvertWorkerToCraftsman(Name, workerId, location)["success"];
+        }
+
     }
 }
 

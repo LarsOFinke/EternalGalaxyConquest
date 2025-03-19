@@ -1,11 +1,13 @@
 ﻿
+using CSharpApi.Models.BluePrints.Beings;
+
 namespace CSharpApi.Models.BluePrints.BuildingTypes
 {
-    public class GoldMine : IBuildingList
+    public class GoldMine : Mine, IBuildingList
     {
-        public string Name => "Gold Mine";
+        public static readonly string Name = "Gold Mine";
 
-        public Dictionary<string, Dictionary<string, float>> Costs => new() {
+        public static readonly Dictionary<string, Dictionary<string, float>> Costs = new() {
             { "costs", new()
                 {
                     { "gold", 200 },
@@ -15,5 +17,18 @@ namespace CSharpApi.Models.BluePrints.BuildingTypes
                 }
             }
         };
+
+        private List<Worker> _workers;
+
+        public GoldMine(List<Worker> workers = null)
+           : base(Name, true, 2, workers ?? [])
+        {
+            _workers ??= workers ?? [];
+        }
+
+        public bool ConvertWorkerToMiner(int workerId, object location)
+        {
+            return (bool)ConvertWorkerToCraftsman(Name, workerId, location)["success"];
+        }
     }
 }

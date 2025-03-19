@@ -1,4 +1,6 @@
-﻿namespace CSharpApi.Models.BluePrints
+﻿using CSharpApi.Models.BluePrints.Beings;
+
+namespace CSharpApi.Models.BluePrints
 {
     public class Factory : BuildingState
     {
@@ -11,12 +13,12 @@
             { "Iron Mine", new Miner() },
             { "Forge", new Blacksmith() }
         };
-
+        
         private int WorkerSlots { get; set; }
 
-        private List<Object> Workers { get; set; } = new List<Object>();
+        private List<Worker> Workers { get; set; } = new List<Worker>();
 
-        public Factory(string buildingName, bool active = true, int workerSlots = 0, List<object> workers = null) : base(buildingName, active)
+        public Factory(string buildingName, bool active = true, int workerSlots = 0, List<Worker> workers = null) : base(buildingName, active)
         {
             WorkerSlots = workerSlots;
             Workers = workers;
@@ -31,7 +33,7 @@
             return buildingState;
         }
 
-        public Dictionary<string, object> ConvertWorkerToCraftsman(string buildingName, int workerId, Object settlement)
+        public Dictionary<string, object> ConvertWorkerToCraftsman(string buildingName, int workerId, object settlement)
         {
             var worker = settlement.SelectPopulation(workerId)["target"];
 
@@ -74,14 +76,6 @@
             };
         }
 
-        /// <summary>
-        /// Does what the name suggests AddOrRemoveWorkers.
-        /// Defaults to Adding a Worker.
-        /// To Remove a Worker set <paramref name="increase"/> false.
-        /// </summary>
-        /// <param name="worker">The type of Worker to Add or Remove.</param>
-        /// <param name="increase">The operation to perform.</param>
-        /// <returns>Returns Dictionary @string, @bool</returns>
         public Dictionary<string, object> GetWorker()
         {
             return new Dictionary<string, object> { { "success", true }, { "workers", Workers } };
@@ -89,7 +83,7 @@
 
 
         /// <summary>
-        /// Does what the name suggests "M:AddOrRemoveWorkers".
+        /// Does what the name suggests "AddOrRemoveWorkers".
         /// Defaults to Adding a Worker.
         /// To Remove a Worker set <paramref name="increase"/> false.
         /// </summary>

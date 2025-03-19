@@ -1,11 +1,11 @@
 ﻿
 namespace CSharpApi.Models.BluePrints.BuildingTypes
 {
-    public class ResidentialArea : IBuildingList
+    public class ResidentialArea : CivilianBuilding, IBuildingList
     {
-        public string Name => "Residential Area";
+        public static readonly string Name = "Residential Area";
 
-        public Dictionary<string, Dictionary<string, float>> Costs => new() {
+        public static readonly Dictionary<string, Dictionary<string, float>> Costs = new() {
             { "costs", new()
                 {
                     { "gold", 0 },
@@ -15,5 +15,9 @@ namespace CSharpApi.Models.BluePrints.BuildingTypes
                 }
             }
         };
+
+        public ResidentialArea() : base(Name, true)
+        {
+        }
     }
 }

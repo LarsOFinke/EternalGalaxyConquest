@@ -2,7 +2,7 @@
 {
     public interface IBuildingList
     {
-        public string Name { get; }
-        public Dictionary<string, Dictionary<string, float>> Costs { get; }
+        public static string Name { get; set; }
+        public static Dictionary<string, Dictionary<string, float>> Costs { get; set; }
     }
 }
