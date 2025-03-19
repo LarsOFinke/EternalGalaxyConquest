@@ -17,6 +17,7 @@ export class GameComponent {
   host: string = '';
   playerId: string = '';
   gameStarted: boolean = false;
+  tileStates: Tile[] | null = null;
 
   constructor(
     private gameManagementService: GameManagementService,

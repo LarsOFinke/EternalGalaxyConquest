@@ -5,14 +5,14 @@
     <h2 id="welcome-msg"></h2>
   </div>
 
-  <app-game-field></app-game-field>
-
   @if (!gameStarted) {
     <button class="custom-btn-small" id="start-game" (click)="start()">
       Start!
     </button>
   }
   @else {
+    <app-game-field [data]="tileStates"></app-game-field>
+
     <button class="custom-btn-small" id="next-round" (click)="nextRound()">
       Next round!
     </button>

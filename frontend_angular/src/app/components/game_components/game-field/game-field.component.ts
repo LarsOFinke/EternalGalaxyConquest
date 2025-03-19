@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { GameFieldService } from '../../../services/game/game-field.service';
 import { TileComponent } from '../tile/tile.component';
 import { Tile } from '../../../interfaces/tile';
@@ -11,6 +11,7 @@ import { Tile } from '../../../interfaces/tile';
 })
 export class GameFieldComponent {
   public tileStates: Tile[] | null = null;
+  public data = input.required()
   constructor(private gameFieldService: GameFieldService) {}
 
   ngOnInit() {
