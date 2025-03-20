@@ -1,5 +1,6 @@
 ﻿
 using CSharpApi.Models.BluePrints.Beings;
+using CSharpApi.Models.BluePrints.Locations;
 
 namespace CSharpApi.Models.BluePrints.BuildingTypes
 {

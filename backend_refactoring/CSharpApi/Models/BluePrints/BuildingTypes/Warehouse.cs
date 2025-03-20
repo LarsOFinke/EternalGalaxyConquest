@@ -1,5 +1,6 @@
 ﻿
 using CSharpApi.Models.BluePrints.Beings;
+using CSharpApi.Models.BluePrints.Locations;
 
 namespace CSharpApi.Models.BluePrints.BuildingTypes
 {
@@ -24,12 +25,12 @@ namespace CSharpApi.Models.BluePrints.BuildingTypes
 
         private Dictionary<string, int> _currentCapacity;
 
-        public Warehouse(Dictionary<string, int> storageCapacity, Dictionary<string, int> currentCapacity, List<Worker> workers = null)
+        public Warehouse(List<Worker> workers = null)
            : base(Name, true, 2, workers ?? [])
         {
             _workers ??= workers ?? [];
-            StorageCapacity ??= storageCapacity ?? new() { { "gold", 2000 }, { "food", 2000 }, { "wood", 2000 }, { "iron", 2000 } };
-            _currentCapacity ??= currentCapacity ?? new() { { "gold", 0 }, { "food", 0 }, { "wood", 0 }, { "iron", 0 } }
+            StorageCapacity = new() { { "gold", 2000 }, { "food", 2000 }, { "wood", 2000 }, { "iron", 2000 } };
+            _currentCapacity = new() { { "gold", 0 }, { "food", 0 }, { "wood", 0 }, { "iron", 0 } }
         }
 
         public Dictionary<string, int> GetCurrentCapacity() { return _currentCapacity; }

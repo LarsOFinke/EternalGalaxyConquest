@@ -1,6 +1,6 @@
 ﻿using CSharpApi.Models.BluePrints.Beings;
 
-namespace CSharpApi.Models.BluePrints
+namespace CSharpApi.Models.BluePrints.Locations
 {
     public class Factory : BuildingState
     {

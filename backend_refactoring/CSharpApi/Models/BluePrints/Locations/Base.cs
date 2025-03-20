@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using System.Collections.Generic;
 using System.Xml.Linq;
 
-namespace CSharpApi.Models.BluePrints
+namespace CSharpApi.Models.BluePrints.Locations
 {
     public class Base
     {
@@ -17,7 +17,7 @@ namespace CSharpApi.Models.BluePrints
         private int TileId { get; set; }
 
 
-        private List<Dictionary<string, object>> ActionList { get; set; } = [];
+        private List<Dictionary<string, object>> ActionList;
 
         private List<object> Settlements { get; set; } = new List<object>();
 

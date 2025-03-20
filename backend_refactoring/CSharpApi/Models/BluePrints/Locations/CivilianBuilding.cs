@@ -1,4 +1,4 @@
-﻿namespace CSharpApi.Models.BluePrints
+﻿namespace CSharpApi.Models.BluePrints.Locations
 {
     public class CivilianBuilding : BuildingState
     {

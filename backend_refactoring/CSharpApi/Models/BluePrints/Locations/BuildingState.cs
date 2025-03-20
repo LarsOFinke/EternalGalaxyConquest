@@ -2,7 +2,7 @@
 using System.Xml.Linq;
 using System;
 
-namespace CSharpApi.Models.BluePrints
+namespace CSharpApi.Models.BluePrints.Locations
 { 
     public class BuildingState
     {

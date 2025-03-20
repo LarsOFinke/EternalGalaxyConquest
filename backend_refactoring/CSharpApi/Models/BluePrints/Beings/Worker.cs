@@ -2,17 +2,21 @@
 {
     public class Worker : Human
     {
-        private string _workerName { get; set; } = string.Empty;
-        private bool _employed { get; set; } = false;
-        private string _fieldOfWork { get; set; } = string.Empty;
+        public string WorkerName { get; set; } = string.Empty;
+        public bool Employed { get; set; } = false;
+        public string FieldOfWork { get; set; } = string.Empty;
 
-        private bool _working = false;
+        public bool Working = false;
 
-        private int production = 0;
+        public bool Alive = true;
 
-        private string _profession { get; set; } = "worker";
+
+        public int Production = 0;
+
+        public string Profession { get; set; } = "worker";
 
         public Worker(string workerName,
+            bool employed = false,
             string profession = "worker",
             bool alive = true,
             string fieldOfWork = "unskilled",
@@ -20,11 +24,12 @@
             int production = 0) 
             : base(workerName, profession, alive)
         {
-            _workerName = workerName;
-            _profession = profession;
-            _employed = alive;
-            _fieldOfWork = fieldOfWork;
-            _working = working;
+            WorkerName = workerName;
+            Profession = profession;
+            Employed = employed;
+            Alive = alive;
+            FieldOfWork = fieldOfWork;
+            Working = working;
 
         }
     }

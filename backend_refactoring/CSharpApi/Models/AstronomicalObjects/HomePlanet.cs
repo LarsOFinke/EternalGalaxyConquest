@@ -1,5 +1,7 @@
 ﻿using CSharpApi.Data;
 using CSharpApi.Models.BluePrints;
+using CSharpApi.Models.BluePrints.Locations;
+
 
 namespace CSharpApi.Models.AstronomicalObjects
 {
@@ -7,22 +9,14 @@ namespace CSharpApi.Models.AstronomicalObjects
     {
         public string Name { get; set; } = string.Empty;
 
-        private List<object> Settlements { get; set; } = new List<object>();
+        public List<object> Settlements { get; set; }
 
-        private Planet? OurPlanet {  get; set; }
+        public Planet OurPlanet {  get; set; }
 
         public HomePlanet(string name, List<object> settlements)  {
             Name = name;
 
-
-            if (settlements == null)
-            {
-                Settlements.Add(MainCity("Hauptstadt"));
-            }
-            else
-            {
-                Settlements = settlements;
-            }
+            Settlements ??= settlements ?? [new MainCity("Hauptstadt")];
 
             OurPlanet = new Planet(name, "home_planet", 0, Settlements);
         }

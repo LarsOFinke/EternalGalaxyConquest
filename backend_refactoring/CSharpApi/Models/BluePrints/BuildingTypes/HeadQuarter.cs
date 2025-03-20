@@ -1,4 +1,5 @@
-﻿
+﻿using CSharpApi.Models.BluePrints.Locations;
+
 namespace CSharpApi.Models.BluePrints.BuildingTypes
 {
     public class HeadQuarter : MilitaryBuilding, IBuildingList

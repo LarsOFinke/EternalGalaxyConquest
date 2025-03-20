@@ -1,6 +1,7 @@
 ﻿
 using System;
 using CSharpApi.Models.BluePrints.Beings;
+using CSharpApi.Models.BluePrints.Locations;
 using Microsoft.EntityFrameworkCore;
 
 namespace CSharpApi.Models.BluePrints.BuildingTypes

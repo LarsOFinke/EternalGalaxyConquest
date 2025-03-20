@@ -14,7 +14,7 @@ namespace CSharpApi.Models.BluePrints
 
         private int _settlementId = 0;
         private readonly string _settlementName = string.Empty;
-        private readonly object _settlementType;
+        private readonly string _settlementType;
         private float _gold = 0;
         private float _food = 0;
         private float _wood = 0;
@@ -39,7 +39,7 @@ namespace CSharpApi.Models.BluePrints
                 ];
 
         public Settlement(string settlementName,
-            object settlementType,
+            string settlementType,
             float gold,
             float food,
             float wood,
@@ -154,7 +154,7 @@ namespace CSharpApi.Models.BluePrints
             var buildingStates = new List<object>();
             foreach (var buildingState in _buildings)
             {
-                buildingStates.Add(buildingState.FetchBuildingState);
+                buildingStates.Add(buildingState.FetchBuildingState());
             }
             return buildingStates;
         }
@@ -336,13 +336,13 @@ namespace CSharpApi.Models.BluePrints
                     { "action", "Create Worker" },
                     { "settlement_id",_settlementId },
                     { "population_id", newWorker.GetPopulationId()},
-                    { "name", name },
-                    { "profession", newWorker.profession },
-                    { "alive", newWorker.alive },
-                    { "employed", newWorker.employed },
-                    { "field_of_work", newWorker.field_of_work },
-                    { "working", newWorker.working },
-                    { "production", newWorker.production } } }
+                    { "name", newWorker.WorkerName },
+                    { "profession", newWorker.Profession },
+                    { "alive", newWorker.Alive },
+                    { "employed", newWorker.Employed },
+                    { "field_of_work", newWorker.FieldOfWork },
+                    { "working", newWorker.Working },
+                    { "production", newWorker.Production } } }
                 };
 
     }
