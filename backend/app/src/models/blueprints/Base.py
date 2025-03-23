@@ -15,7 +15,7 @@ class Base():
                                             { "name": "Found Outpost", "action": self.found_outpost }
                                         ]
         self.__base_id: int = Base.base_count
-        self.base_type = base_type
+        self.base_type: str = base_type
         self.name: str = name
         self.__tile_id: int = tile_id
         self.__settlements: list = settlements
