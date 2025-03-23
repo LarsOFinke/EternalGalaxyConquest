@@ -4,15 +4,18 @@ namespace CSharpApi.Models.BluePrints.Locations
 {
     public class Factory : BuildingState
     {
-        public static Dictionary<string, object> BuildOptions = new Dictionary<string, object> {
-            { "Builders Hut", new Builder() },
-            { "Warehouse", new WarehouseWorker() },
-            { "Bakery", new Baker() },
-            { "Sawmill", new Woodcutter() },
-            { "Gold Mine", new Miner() },
-            { "Iron Mine", new Miner() },
-            { "Forge", new Blacksmith() }
-        };
+        public Worker? BuildOptions(string buildingType, string name)
+        { return buildingType switch {
+             "Builders Hut" => new Builder(name),
+             "Warehouse" => new WarehouseWorker(name),
+             "Bakery" => new Baker(name),
+             "Sawmill"=> new WoodCutter(name),
+             "Gold Mine" => new Miner(name),
+             "Iron Mine" => new Miner(name),
+             "Forge" => new BlackSmith(name),
+             _ => null
+            };
+        }
         
         private int WorkerSlots { get; set; }
 
@@ -33,31 +36,32 @@ namespace CSharpApi.Models.BluePrints.Locations
             return buildingState;
         }
 
-        public Dictionary<string, object> ConvertWorkerToCraftsman(string buildingName, int workerId, object settlement)
+        public Dictionary<string, object> ConvertWorkerToCraftsman(string buildingName, int workerId, Settlement settlement)
         {
-            var worker = settlement.SelectPopulation(workerId)["target"];
+            Worker? worker = (Worker) settlement.SelectInstancePopulation(workerId)["target"];
 
-            if (worker is Worker)
+            if (worker is not null)
             {
-                var newCraftsman = BuildOptions[buildingName](worker.name);
-                settlement.RemovePopulation(worker);
-                settlement.SetFreeWorkers(worker, false);
+                var newCraftsman = BuildOptions(buildingName, worker.Name);
+                settlement.Population.Remove(worker);
+                settlement.SetInstancePopulation(worker, false);
                 worker = null;
-                settlement.AddPopulation(newCraftsman);
+                if (newCraftsman is null) return new() { { "success", false}, { "reason", "Building Option Not Found" } };
+                settlement.Population.Add(newCraftsman);
 
                 if (buildingName.Equals("Builders Hut"))
                 {
-                    settlement.AddFreeBuilder(newCraftsman);
+                    settlement.FreeBuilders.Add((Builder)newCraftsman);
                 }
 
                 return new Dictionary<string, object> {
                     { "success", true },
-                    { "message", $"{newCraftsman.name} wurde zum Baumeister!" },
+                    { "message", $"{newCraftsman.Name} wurde zum Baumeister!" },
                     {"update", new Dictionary<string, object> {
                         {"action", "Convert Worker" },
                         { "settlement_id",  settlement.SettlementId },
                         { "old_population_id", workerId },
-                        { "population_id", newCraftsman.PopulationId },
+                        { "population_id", newCraftsman.Id },
                         { "name", newCraftsman.Name },
                         {"profession", newCraftsman.Profession },
                         { "alive", newCraftsman.Alive },

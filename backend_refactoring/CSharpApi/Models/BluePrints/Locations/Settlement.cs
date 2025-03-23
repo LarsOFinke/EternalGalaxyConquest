@@ -1,31 +1,51 @@
-﻿using System;
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
-using System.Reflection.Metadata.Ecma335;
+﻿// Ignore Spelling: Api
+
 using CSharpApi.Models.BluePrints.Beings;
 using CSharpApi.Models.BluePrints.BuildingTypes;
-using Microsoft.EntityFrameworkCore;
 
-namespace CSharpApi.Models.BluePrints
+namespace CSharpApi.Models.BluePrints.Locations
 {
     public class Settlement
     {
         public static int SettlementCount { get; set; } = 0;
 
-        private int _settlementId = 0;
+        public int SettlementId { get; set; } = 0;
         private readonly string _settlementName = string.Empty;
         private readonly string _settlementType;
         private float _gold = 0;
         private float _food = 0;
         private float _wood = 0;
         private float _iron = 0;
-        private List<IBuildingList> _buildings = [];
-        private List<object> _population = [];
-        private List<object> _freeWorkers = [];
-        private List<object> _freeBuilders = [];
-        private List<Dictionary<string, object>> _actionList = [];
+        private List<BuildingState> BuildingStates = [];
+        public List<Population> Population = [];
+        public List<Worker> FreeWorkers = [];
+        public List<Builder> FreeBuilders = [];
 
-        private readonly List<IBuildingList> _buildingList =
+        public object MatchPayLoad(string action, object context)
+        {
+            return action switch
+            {
+                "Select Population" => SelectInstancePopulation((int)context),
+                "Select Building" => SelectBuilding((string)context),
+                "Build" => ConstructBuilding((IBuildingList)context),
+                "Create Worker" => CreateInstanceWorker((string)context),
+                "Remove Building" => SetInstanceBuildings((IBuildingList)context, false),
+                "Get Resources" => GetResources(),
+                "Get Buildings" => GetInstanceBuildings(),
+                "Get Population" => GetInstancePopulation(),
+                "Add Population" => AddOrRemoveInstancePopulation((Population)context, true),
+                "Remove Population" => AddOrRemoveInstancePopulation((Population)context, false),
+                "Get Free Workers" => GetFreeBuildersOrWorkers(false),
+                "Add Free Worker" => () => { FreeWorkers.Add((Worker) context); return FreeWorkers; },
+                "Remove Free Worker" => () => { FreeWorkers.Remove((Worker)context); return FreeWorkers; },
+                "Get Free Builder" => GetFreeBuildersOrWorkers(true),
+                "Add Free Builder" => () => { FreeBuilders.Add((Builder)context); return FreeBuilders; } ,
+                "Remove Free Builder" => () => { FreeBuilders.Remove((Builder)context); return FreeBuilders; },
+                _ =>  new Dictionary<string, object> { { "success", false }, { "message", $"Inexistent Action: {action}" } }
+            };
+        }
+
+private readonly List<IBuildingList> _buildingList =
                 [
                     new HeadQuarter(),
                     new BuildersHut(),
@@ -35,7 +55,6 @@ namespace CSharpApi.Models.BluePrints
                     new GoldMine(),
                     new IronMine(),
                     new Forge()
-
                 ];
 
         public Settlement(string settlementName,
@@ -44,12 +63,12 @@ namespace CSharpApi.Models.BluePrints
             float food,
             float wood,
             float iron,
-            List<IBuildingList> buildings = null,
-            List<object> population = null
+            List<BuildingState> buildings = null,
+            List<Population> population = null
             )
         {
-            _buildings = buildings ??= [];
-            _population = population ??= [];
+            BuildingStates = buildings ?? [];
+            Population = population ?? [];
             _settlementName = settlementName;
             _food = food;
             _wood = wood;
@@ -57,26 +76,6 @@ namespace CSharpApi.Models.BluePrints
             _gold = gold;
 
             SettlementCount++;
-
-            _actionList =
-            [ new() { { "name", "Select Building" }, { "action", SelectBuilding } },
-              new() { { "name", "Select Population" }, { "action", SelectPopulation} },
-              new() { { "name", "Build" }, { "action", Build } },
-              new() { { "name",  "Create Worker" }, { "action", CreateWorker } },
-              new() { { "name", "Remove Building" }, { "action", RemoveBuilding } },
-              new() { { "name", "Get Resources" }, { "action", GetResources } },
-              new() { { "name", "Get Buildings" }, { "action", GetBuildings } },
-              new() { { "name", "Get Population" }, { "action", GetPopulation } },
-              new() { { "name", "Add_population" }, { "action", AddPopulation } },
-              new() { { "name", "Remove_population" }, { "action", RemovePopulation } },
-              new() { { "name", "Get Free Workers" }, { "action", GetFreeWorkers } },
-              new() { { "name", "Add Free Worker" }, { "action", self.set_free_workers } },
-              new() { { "name", "Remove Free Worker" }, { "action", SetFreeWorkers } },
-              new() { { "name", "Get Free Builders" }, { "action", self.get_free_builders } },
-              new() { { "name", "Add Free Builders" }, { "action", self.add_free_builders } },
-              new() { { "name", "Remove Free Builders" }, { "action", self.remove_free_builders } }
-            ];
-
           
             Dictionary<string, IBuildingList> buildOptions = new()
             {
@@ -90,25 +89,25 @@ namespace CSharpApi.Models.BluePrints
                 { "Forge", new Forge() },
             };
 
-            _settlementId = SettlementCount;
+            SettlementId = SettlementCount;
 
             _settlementType = settlementType;
 
-            _freeBuilders = GetFreeBuildersOrWorkers(true);
-            _freeWorkers = GetFreeBuildersOrWorkers(false);
+            FreeBuilders = GetFreeBuildersOrWorkers(true) as List<Builder> ?? [];
+            FreeWorkers = GetFreeBuildersOrWorkers(false) as List<Worker> ?? [];
 
         }
 
-        private List<object> GetFreeBuildersOrWorkers(bool getBuilders)
+        private dynamic GetFreeBuildersOrWorkers(bool getBuilders)
         {
-            var builders = new List<object>();
-            foreach (var builder in _population)
+            var builders = new List<dynamic>();
+            foreach (var builder in Population)
             {
                 switch (getBuilders)
                 {
                     case true:
-                        if (String.Equals(builder.Profession, "worker", StringComparison.InvariantCultureIgnoreCase) &&
-                            builder.working == false && String.Equals(builder.FieldOfWork, "builder", StringComparison.InvariantCultureIgnoreCase))
+                        if (string.Equals(builder.Profession, "worker", StringComparison.InvariantCultureIgnoreCase) &&
+                            builder.Working == false && string.Equals(builder.FieldOfWork, "builder", StringComparison.InvariantCultureIgnoreCase))
                         {
                             builders.Add(builder);
                         }
@@ -116,53 +115,53 @@ namespace CSharpApi.Models.BluePrints
                         break;
 
                     case false:
-                        if (String.Equals(builder.Profession, "worker", StringComparison.InvariantCultureIgnoreCase) &&
-                            builder.working == false) builders.Add(builder);
+                        if (string.Equals(builder.Profession, "worker", StringComparison.InvariantCultureIgnoreCase) &&
+                            builder.Working == false) builders.Add(builder);
                         break;
-
                 }
             }
             return builders;
         }
 
+        
+
         public Dictionary<string, object> FetchSettlementState()
         {
             return new Dictionary<string, object> {
                 { "category", "settlement" },
-                { "settlement_id", _settlementId },
+                { "settlement_id", SettlementId },
                 { "settlement_type", _settlementType },
                 { "name", _settlementName },
                 { "resources", GetResources()["resources"] },
                 { "building_states", GetBuildingState() },
                 { "population_states", GetPopulationState() },
-                { "free_workers", GetWorkersOrBuildersDetails(_freeWorkers) },
-                { "free_builders", GetWorkersOrBuildersDetails(_freeBuilders) } };
+                { "free_workers", GetWorkersOrBuildersDetails(FreeWorkers) },
+                { "free_builders", GetWorkersOrBuildersDetails(FreeBuilders) } };
         }
 
         private List<object> GetPopulationState()
         {
             var populationStates = new List<object>();
-            foreach (var state in _population)
+            foreach (var state in Population)
             {
                 populationStates.Add(state.FetchPopulationState());
             }
             return populationStates;
         }
 
-        public List<object> GetBuildingState()
+        public List<Dictionary<string, object>> GetBuildingState()
         {
-            var buildingStates = new List<object>();
-            foreach (var buildingState in _buildings)
+            var buildingStates = new List<Dictionary<string, object>>();
+            foreach (var buildingState in BuildingStates)
             {
                 buildingStates.Add(buildingState.FetchBuildingState());
             }
             return buildingStates;
         }
 
-        public List<Dictionary<string, object>> GetWorkersOrBuildersDetails(List<object> elements)
+        public List<Dictionary<string, object>> GetWorkersOrBuildersDetails(dynamic elements)
         {
             var objectNameId = new List<Dictionary<string, object>>();
-            int i = 0;
 
             foreach (var element in elements)
             {
@@ -189,35 +188,37 @@ namespace CSharpApi.Models.BluePrints
         public Dictionary<string, object> GetInstanceBuildings() => new Dictionary<string, object>
         {
             { "success", true },
-            { "buildings", _buildings },
+            { "buildings", _buildingList },
         };
 
-        public void SetInstanceBuildings(IBuildingList building, bool increase = true)
+        public List<IBuildingList> SetInstanceBuildings(IBuildingList building, bool increase = true)
         {
             switch (increase)
             {
                 case true:
-                    _buildings.Add(building); break;
+                    _buildingList.Add(building); break;
                 case false:
-                    _buildings.Remove(building); break;
+                    _buildingList.Remove(building); break;
             }
-            return;
+            return _buildingList;
         }
 
         public Dictionary<string, object> GetInstancePopulation() => new()
         {
             { "success", true },
-            { "population", _population },
+            { "population", Population },
         };
 
-        public void SetInstancePopulation(object person, bool increase = true)
+        public void SetInstancePopulation(Population person, bool increase = true)
         {
             switch (increase)
             {
                 case true:
-                    _population.Add(person); break;
+                    Population.Add(person); 
+                    break;
                 case false:
-                    _population.Remove(person); break;
+                    Population.Remove(person); 
+                    break;
             }
             return;
         }
@@ -229,31 +230,19 @@ namespace CSharpApi.Models.BluePrints
         /// <param name="person"></param>
         /// <param name="addPerson"></param>
         /// <returns>Returns a Dictionary with string as key and bool as value</returns>
-        public Dictionary<string, bool> AddOrRemoveInstancePopulation(object person, bool addPerson = true)
+        public Dictionary<string, bool> AddOrRemoveInstancePopulation(Population person, bool addPerson = true)
         {
             SetInstancePopulation(person, addPerson);
 
             return new() { { "succcess", true } };
         }
 
-        public Dictionary<string, object> MatchPayLoad(string action, List<object> context)
-        {
-            foreach (var act in _actionList)
-            {
-                if (String.Equals(act["name"] as string, action, StringComparison.InvariantCultureIgnoreCase))
-                {
-                    return new() { { "success", context } };
-                }
-            }
-
-            return new() { { "success", false }, { "message", $"Inexistent Action: {action}" } };
-        }
 
         public Dictionary<string, object> SelectBuilding(string target)
         {
-            foreach (var building in _buildings)
+            foreach (var building in BuildingStates)
             {
-                if (String.Equals(building.Name, target, StringComparison.InvariantCultureIgnoreCase))
+                if (string.Equals(building.BuildingName, target, StringComparison.InvariantCultureIgnoreCase))
                 {
                     return new() { { "success", true }, { "target", building } };
 
@@ -266,9 +255,9 @@ namespace CSharpApi.Models.BluePrints
 
         public Dictionary<string, object> SelectInstancePopulation(int populationId)
         {
-            foreach (var person in _population)
+            foreach (var person in Population)
             {
-                if (populationId == person.Id)
+                if (populationId == person.GetPopulationId())
                 {
                     return new() { { "success", true }, { "target", person } };
                 }
@@ -279,9 +268,9 @@ namespace CSharpApi.Models.BluePrints
 
         public Dictionary<string, object> ConstructBuilding(IBuildingList building)
         {
-            var hasBuilding = _buildings.Contains(building);
+            var hasBuilding = _buildingList.Contains(building);
             var matchingBuidingName = building is BuildersHut;
-            var availableBuilders = _freeBuilders.Count > 0;
+            var availableBuilders = FreeBuilders.Count > 0;
 
             if (!hasBuilding && (!availableBuilders || !hasBuilding))
             {
@@ -326,7 +315,7 @@ namespace CSharpApi.Models.BluePrints
             var newWorker = new Worker(name);
 
             SetInstancePopulation(newWorker);
-            _freeWorkers.Add(newWorker);
+            FreeWorkers.Add(newWorker);
 
             return new()
             {
@@ -334,7 +323,7 @@ namespace CSharpApi.Models.BluePrints
                 { "message", "Neuer Arbeiter erfolgreich angeheuert!"},
                 { "update", new Dictionary<string, object> {
                     { "action", "Create Worker" },
-                    { "settlement_id",_settlementId },
+                    { "settlement_id",SettlementId },
                     { "population_id", newWorker.GetPopulationId()},
                     { "name", newWorker.WorkerName },
                     { "profession", newWorker.Profession },

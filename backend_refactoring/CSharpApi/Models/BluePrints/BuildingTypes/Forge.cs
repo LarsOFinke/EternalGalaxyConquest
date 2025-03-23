@@ -10,10 +10,10 @@ namespace CSharpApi.Models.BluePrints.BuildingTypes
     {
         
 
-        public static readonly string Name = "Forge";
+        public string Name { get; set; } = "Forge";
 
 
-        public static readonly Dictionary<string, Dictionary<string, float>> Costs = new() {
+        public Dictionary<string, Dictionary<string, float>> Costs { get; set; } = new() {
             { "costs", new()
                 {
                     { "gold", 300 },
@@ -27,7 +27,7 @@ namespace CSharpApi.Models.BluePrints.BuildingTypes
         private List<Worker> _workers;
 
         public Forge(List<Worker> workers = null)  
-           : base(Name, true, 2, workers ?? [])
+           : base("Forge", true, 2, workers ?? [])
         {
             _workers ??= workers ?? [];
         }

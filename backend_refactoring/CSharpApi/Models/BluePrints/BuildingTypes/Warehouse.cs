@@ -6,11 +6,11 @@ namespace CSharpApi.Models.BluePrints.BuildingTypes
 {
     public class Warehouse : Factory, IBuildingList
     {
-        public static readonly string Name = "Warehouse";
+        public string Name { get; set; } = "Warehouse";
 
         private List<Worker> _workers;
 
-        public static readonly Dictionary<string, Dictionary<string, float>> Costs = new() {
+        public Dictionary<string, Dictionary<string, float>> Costs { get; set; } = new() {
             { "costs", new()
                 {
                     { "gold", 200 },
@@ -26,11 +26,11 @@ namespace CSharpApi.Models.BluePrints.BuildingTypes
         private Dictionary<string, int> _currentCapacity;
 
         public Warehouse(List<Worker> workers = null)
-           : base(Name, true, 2, workers ?? [])
+           : base("Warehouse", true, 2, workers ?? [])
         {
             _workers ??= workers ?? [];
             StorageCapacity = new() { { "gold", 2000 }, { "food", 2000 }, { "wood", 2000 }, { "iron", 2000 } };
-            _currentCapacity = new() { { "gold", 0 }, { "food", 0 }, { "wood", 0 }, { "iron", 0 } }
+            _currentCapacity = new() { { "gold", 0 }, { "food", 0 }, { "wood", 0 }, { "iron", 0 } };
         }
 
         public Dictionary<string, int> GetCurrentCapacity() { return _currentCapacity; }

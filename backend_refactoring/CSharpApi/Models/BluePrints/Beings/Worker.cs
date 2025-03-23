@@ -6,14 +6,13 @@
         public bool Employed { get; set; } = false;
         public string FieldOfWork { get; set; } = string.Empty;
 
-        public bool Working = false;
+        // public bool Working = false;
 
-        public bool Alive = true;
+        public bool Alive { get; set; } = true;
 
+        public int Production { get; set; } = 0;
 
-        public int Production = 0;
-
-        public string Profession { get; set; } = "worker";
+        // public string Profession { get; set; } = "worker";
 
         public Worker(string workerName,
             bool employed = false,

@@ -6,11 +6,11 @@ namespace CSharpApi.Models.BluePrints.BuildingTypes
 {
     public class IronMine : Mine, IBuildingList
     {
-        public static readonly string Name = "Iron Mine";
+        public string Name { get; set; } = "Iron Mine";
 
         private List<Worker> _workers;
 
-        public static readonly Dictionary<string, Dictionary<string, float>> Costs = new() {
+        public Dictionary<string, Dictionary<string, float>> Costs { get; set; } = new() {
             { "costs", new()
                 {
                     { "gold", 200 },
@@ -22,7 +22,7 @@ namespace CSharpApi.Models.BluePrints.BuildingTypes
         };
 
         public IronMine(List<Worker> workers = null)
-           : base(Name, true, 2, workers ?? [])
+           : base("Iron Mine", true, 2, workers ?? [])
         {
             _workers ??= workers ?? [];
         }

@@ -7,11 +7,11 @@ namespace CSharpApi.Models.BluePrints.BuildingTypes
 {
     public class Sawmill : Factory, IBuildingList
     {
-        public static readonly string Name = "Sawmill";
+        public string Name { get; set; } = "Sawmill";
 
         private List<Worker> _workers;
 
-        public static readonly Dictionary<string, Dictionary<string, float>> Costs = new() {
+        public Dictionary<string, Dictionary<string, float>> Costs { get; set; } = new() {
             { "costs", new()
                 {
                     { "gold", 300 },
@@ -23,7 +23,7 @@ namespace CSharpApi.Models.BluePrints.BuildingTypes
         };
 
         public Sawmill(List<Worker> workers = null)
-           : base(Name, true, 2, workers ?? [])
+           : base("Sawmill", true, 2, workers ?? [])
         {
             _workers ??= workers ?? [];
         }
