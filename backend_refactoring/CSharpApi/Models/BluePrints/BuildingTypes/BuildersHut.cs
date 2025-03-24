@@ -41,7 +41,7 @@ namespace CSharpApi.Models.BluePrints.BuildingTypes
             };
         }
 
-        public Dictionary<string, object> ConvertWorkerToBuilder(int workerId, object settlement)
+        public Dictionary<string, object> ConvertWorkerToBuilder(int workerId, Settlement settlement)
         {
             return ConvertWorkerToCraftsman(Name, workerId, settlement);
         }

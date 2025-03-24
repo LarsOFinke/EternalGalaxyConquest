@@ -30,7 +30,7 @@ namespace CSharpApi.Models.GamePlayObjects
             }
             else
             {
-                Bases.Add(new HomePlanet("Heimatplanet", []));
+                Bases.Add(new HomePlanet("Heimatplanet", 1, []));
             }
         }
 

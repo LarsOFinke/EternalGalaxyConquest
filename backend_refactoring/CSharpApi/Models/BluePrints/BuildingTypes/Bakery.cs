@@ -21,7 +21,7 @@ namespace CSharpApi.Models.BluePrints.BuildingTypes
                                                                                         };
 
         private List<Worker> _workers { get; set; } = [];
-        public bool ConvertWorkerToBaker(int workerId, object location)
+        public bool ConvertWorkerToBaker(int workerId, Settlement location)
         {
             return (bool)ConvertWorkerToCraftsman(Name, workerId, location)["success"];
         }

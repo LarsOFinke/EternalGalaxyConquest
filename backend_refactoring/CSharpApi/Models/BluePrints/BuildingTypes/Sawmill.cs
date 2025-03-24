@@ -28,7 +28,7 @@ namespace CSharpApi.Models.BluePrints.BuildingTypes
             _workers ??= workers ?? [];
         }
 
-        public bool ConvertWorkerToWoodcutter(int workerId, object location)
+        public bool ConvertWorkerToWoodcutter(int workerId, Settlement location)
         {
             return (bool)ConvertWorkerToCraftsman(Name, workerId, location)["success"];
         }

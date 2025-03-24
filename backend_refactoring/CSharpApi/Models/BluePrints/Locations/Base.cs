@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using CSharpApi.Models.BluePrints.Beings;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using System.Collections.Generic;
 using System.Xml.Linq;
@@ -99,8 +100,8 @@ namespace CSharpApi.Models.BluePrints.Locations
             float food = 250,
             float wood = 500,
             float iron = 50,
-            List<IBuildingList> buildings = null,
-            List<object> population = null)
+            List<BuildingState> buildings = null,
+            List<Population> population = null)
         {
             buildings ??= [];
             population ??= [];
@@ -134,8 +135,8 @@ namespace CSharpApi.Models.BluePrints.Locations
             float food = 500,
             float wood = 750,
             float iron = 200,
-            List<IBuildingList> buildings = null,
-            List<object> population = null)
+            List<BuildingState> buildings = null,
+            List<Population> population = null)
         {
             buildings ??= [];
             population ??= [];

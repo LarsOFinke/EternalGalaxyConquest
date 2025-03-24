@@ -19,7 +19,7 @@ namespace CSharpApi.Models.BluePrints.Locations
         
         private int WorkerSlots { get; set; }
 
-        private List<Worker> Workers { get; set; } = new List<Worker>();
+        private List<Worker> Workers { get; set; } = [];
 
         public Factory(string buildingName, bool active = true, int workerSlots = 0, List<Worker> workers = null) : base(buildingName, active)
         {
@@ -76,7 +76,7 @@ namespace CSharpApi.Models.BluePrints.Locations
             return new Dictionary<string, object>
             {
                 { "success", false },
-                { "message", $"{worker.Name} konnte nicht zum Baumeister werden!" }
+                { "message", $"Worker mit ID: {workerId} konnte nicht zum Baumeister werden!" }
             };
         }
 

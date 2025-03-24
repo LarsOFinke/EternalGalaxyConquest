@@ -32,7 +32,7 @@ namespace CSharpApi.Models.BluePrints.BuildingTypes
             _workers ??= workers ?? [];
         }
 
-        public bool ConvertWorkerToBlacksmith(int workerId, object location)
+        public bool ConvertWorkerToBlacksmith(int workerId, Settlement location)
         {
             return (bool)ConvertWorkerToCraftsman(Name, workerId, location)["success"];
         }

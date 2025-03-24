@@ -35,7 +35,7 @@ namespace CSharpApi.Models.BluePrints.BuildingTypes
 
         public Dictionary<string, int> GetCurrentCapacity() { return _currentCapacity; }
 
-        public bool ConvertWorkerToWarehouseWorker(int workerId, object location)
+        public bool ConvertWorkerToWarehouseWorker(int workerId, Settlement location)
         {
             return (bool)ConvertWorkerToCraftsman(Name, workerId, location)["success"];
         }

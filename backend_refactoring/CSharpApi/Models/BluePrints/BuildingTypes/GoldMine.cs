@@ -1,5 +1,6 @@
 ﻿
 using CSharpApi.Models.BluePrints.Beings;
+using CSharpApi.Models.BluePrints.Locations;
 
 namespace CSharpApi.Models.BluePrints.BuildingTypes
 {
@@ -26,7 +27,7 @@ namespace CSharpApi.Models.BluePrints.BuildingTypes
             _workers ??= workers ?? [];
         }
 
-        public bool ConvertWorkerToMiner(int workerId, object location)
+        public bool ConvertWorkerToMiner(int workerId, Settlement location)
         {
             return (bool)ConvertWorkerToCraftsman(Name, workerId, location)["success"];
         }

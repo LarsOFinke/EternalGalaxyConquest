@@ -20,6 +20,8 @@ namespace CSharpApi.Models.BluePrints.Locations
         public List<Population> Population = [];
         public List<Worker> FreeWorkers = [];
         public List<Builder> FreeBuilders = [];
+        public List<IBuildingList> BuildingList { get; set; } = [];
+
 
         public object MatchPayLoad(string action, object context)
         {
@@ -45,8 +47,22 @@ namespace CSharpApi.Models.BluePrints.Locations
             };
         }
 
-private readonly List<IBuildingList> _buildingList =
-                [
+                
+
+        public Settlement(string settlementName,
+            string settlementType,
+            float gold,
+            float food,
+            float wood,
+            float iron,
+            List<BuildingState> buildingStates = null,
+            List<Population> population = null,
+            List<IBuildingList> buildingLists = null
+            )
+        {
+            BuildingStates = buildingStates ?? [];
+            Population = population ?? [];
+            BuildingList = buildingLists ?? [
                     new HeadQuarter(),
                     new BuildersHut(),
                     new Warehouse(),
@@ -56,19 +72,6 @@ private readonly List<IBuildingList> _buildingList =
                     new IronMine(),
                     new Forge()
                 ];
-
-        public Settlement(string settlementName,
-            string settlementType,
-            float gold,
-            float food,
-            float wood,
-            float iron,
-            List<BuildingState> buildings = null,
-            List<Population> population = null
-            )
-        {
-            BuildingStates = buildings ?? [];
-            Population = population ?? [];
             _settlementName = settlementName;
             _food = food;
             _wood = wood;
@@ -188,7 +191,7 @@ private readonly List<IBuildingList> _buildingList =
         public Dictionary<string, object> GetInstanceBuildings() => new Dictionary<string, object>
         {
             { "success", true },
-            { "buildings", _buildingList },
+            { "buildings", BuildingList },
         };
 
         public List<IBuildingList> SetInstanceBuildings(IBuildingList building, bool increase = true)
@@ -196,11 +199,11 @@ private readonly List<IBuildingList> _buildingList =
             switch (increase)
             {
                 case true:
-                    _buildingList.Add(building); break;
+                    BuildingList.Add(building); break;
                 case false:
-                    _buildingList.Remove(building); break;
+                    BuildingList.Remove(building); break;
             }
-            return _buildingList;
+            return BuildingList;
         }
 
         public Dictionary<string, object> GetInstancePopulation() => new()
@@ -268,7 +271,7 @@ private readonly List<IBuildingList> _buildingList =
 
         public Dictionary<string, object> ConstructBuilding(IBuildingList building)
         {
-            var hasBuilding = _buildingList.Contains(building);
+            var hasBuilding = BuildingList.Contains(building);
             var matchingBuidingName = building is BuildersHut;
             var availableBuilders = FreeBuilders.Count > 0;
 
