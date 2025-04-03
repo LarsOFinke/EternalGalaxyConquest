@@ -1,30 +1,25 @@
-﻿using CSharpApi.Data;
-using CSharpApi.Models.BluePrints;
+﻿using CSharpApi.Models.BluePrints.Locations;
+
 
 namespace CSharpApi.Models.AstronomicalObjects
 {
-    public class HomePlanet : ICelestialObject
+    public class HomePlanet : Base, ICelestialObject
     {
         public string Name { get; set; } = string.Empty;
 
-        private List<object> Settlements { get; set; } = new List<object>();
+        public List<Settlement> Settlements { get; set; }
 
-        private Planet? OurPlanet {  get; set; }
+        public Planet OurPlanet { get; set; }
 
-        public HomePlanet(string name, List<object> settlements)  {
-            Name = name;
-
-
-            if (settlements == null)
+        public HomePlanet(string name, int tileId, List<Settlement> settlements) : base(name, "homeplanet", tileId, settlements)
+        {
             {
-                Settlements.Add(MainCity("Hauptstadt"));
-            }
-            else
-            {
-                Settlements = settlements;
-            }
+                Name = name;
 
-            OurPlanet = new Planet(name, "home_planet", 0, Settlements);
+                Settlements ??= settlements ?? [new MainCity("Hauptstadt")];
+
+                OurPlanet = new Planet(name, "home_planet", 0, Settlements);
+            }
         }
     }
 }

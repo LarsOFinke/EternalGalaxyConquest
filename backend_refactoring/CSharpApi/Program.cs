@@ -40,6 +40,8 @@ if (app.Environment.IsDevelopment())
     app.sca
 }
 
+app.MapStaticAssets();
+
 app.UseHttpsRedirection();
 
 app.UseAuthorization();

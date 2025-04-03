@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using CSharpApi.Models.AstronomicalObjects;
+using CSharpApi.Models.BluePrints.Locations;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Any;
 using System;
 using System.Collections;
@@ -11,12 +13,12 @@ namespace CSharpApi.Models.GamePlayObjects
         private Guid Id;
         private string Name { get; set; } = string.Empty;
 
-        private List<object> Bases { get; set; } = new List<object>();
+        private List<Base> Bases { get; set; } = [];
 
         private List<Dictionary<string, object>> Action { get; set; }
 
 
-        public Player(string name, List<object> bases)
+        public Player(string name, List<Base> bases)
         {
             Id = Guid.CreateVersion7(DateTime.UtcNow);
 
@@ -28,7 +30,7 @@ namespace CSharpApi.Models.GamePlayObjects
             }
             else
             {
-                Bases.Add(new HomePlanet("Heimatplanet"));
+                Bases.Add(new HomePlanet("Heimatplanet", 1, []));
             }
         }
 
@@ -77,7 +79,7 @@ namespace CSharpApi.Models.GamePlayObjects
         {
             foreach (var targetBase in Bases)
             {
-                if (targetBase.Id == target)
+                if (targetBase.BaseId == target)
                 {
                     return new Dictionary<string, object> {
                         {"success", true},

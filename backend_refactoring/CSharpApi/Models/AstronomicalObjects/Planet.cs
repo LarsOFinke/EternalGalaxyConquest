@@ -1,5 +1,6 @@
 ﻿using CSharpApi.Data;
 using CSharpApi.Models.BluePrints;
+using CSharpApi.Models.BluePrints.Locations;
 using Microsoft.EntityFrameworkCore;
 using System.Runtime.InteropServices;
 using System.Xml.Linq;
@@ -16,9 +17,9 @@ namespace CSharpApi.Models.AstronomicalObjects
 
         private int TileId { get; set; } = 0;
 
-        private List<object> Settlements { get; set; } = new List<object>();
+        private List<Settlement> Settlements { get; set; } = [];
 
-        public Planet(string name, string baseType, int tileId, List<object> settlements) {
+        public Planet(string name, string baseType, int tileId, List<Settlement> settlements) {
             Name = name;
             BaseType = baseType;
             TileId = tileId;

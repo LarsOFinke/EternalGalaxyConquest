@@ -1,23 +1,30 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace CSharpApi.Models.BluePrints
+namespace CSharpApi.Models.BluePrints.Beings
 {
     public class Population
     {
         public static int PopulationId { get; set; } = 0;
 
-        private int _populationId { get; set; }
+        public int Id { get; set; }
         
-        private string Name { get; set; } = string.Empty;
+        public string Name { get; set; } = string.Empty;
 
-        private string Profession {  get; set; } = string.Empty;
+        public string Profession { get; set; } = string.Empty;
 
-        private bool Alive { get; set; }
+        public bool Alive { get; set; }
+
+        public bool Working { get; set; }
+
+        public string FieldOfWork { get; set; } = string.Empty;
+
+        public bool Employed { get; set; }
+
 
         public Population(string name, string profession , bool alive = true)
         {
             PopulationId++;
-            _populationId = PopulationId;
+            Id = PopulationId;
             Name = name;
             Profession = profession;
             Alive = alive;
@@ -26,12 +33,14 @@ namespace CSharpApi.Models.BluePrints
         public Dictionary<string, object> FetchPopulationState()
         {
             return new Dictionary<string, object> {
-                { "population_id", _populationId},
+                { "population_id", Id},
                 { "category", "population" },
                 { "name", Name },
                 { "profession", Profession },
                 { "alive", Alive } };
         }
+
+        public int GetPopulationId() { return Id; }
 
     }    
 }

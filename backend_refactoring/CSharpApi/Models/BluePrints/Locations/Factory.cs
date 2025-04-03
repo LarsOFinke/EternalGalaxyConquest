@@ -1,22 +1,27 @@
-﻿namespace CSharpApi.Models.BluePrints
+﻿using CSharpApi.Models.BluePrints.Beings;
+
+namespace CSharpApi.Models.BluePrints.Locations
 {
     public class Factory : BuildingState
     {
-        public static Dictionary<string, object> BuildOptions = new Dictionary<string, object> {
-            { "Builders Hut", new Builder() },
-            { "Warehouse", new WarehouseWorker() },
-            { "Bakery", new Baker() },
-            { "Sawmill", new Woodcutter() },
-            { "Gold Mine", new Miner() },
-            { "Iron Mine", new Miner() },
-            { "Forge", new Blacksmith() }
-        };
-
+        public Worker? BuildOptions(string buildingType, string name)
+        { return buildingType switch {
+             "Builders Hut" => new Builder(name),
+             "Warehouse" => new WarehouseWorker(name),
+             "Bakery" => new Baker(name),
+             "Sawmill"=> new WoodCutter(name),
+             "Gold Mine" => new Miner(name),
+             "Iron Mine" => new Miner(name),
+             "Forge" => new BlackSmith(name),
+             _ => null
+            };
+        }
+        
         private int WorkerSlots { get; set; }
 
-        private List<Object> Workers { get; set; } = new List<Object>();
+        private List<Worker> Workers { get; set; } = [];
 
-        public Factory(string buildingName, bool active = true, int workerSlots = 0, List<object> workers = null) : base(buildingName, active)
+        public Factory(string buildingName, bool active = true, int workerSlots = 0, List<Worker> workers = null) : base(buildingName, active)
         {
             WorkerSlots = workerSlots;
             Workers = workers;
@@ -31,31 +36,32 @@
             return buildingState;
         }
 
-        public Dictionary<string, object> ConvertWorkerToCraftsman(string buildingName, int workerId, Object settlement)
+        public Dictionary<string, object> ConvertWorkerToCraftsman(string buildingName, int workerId, Settlement settlement)
         {
-            var worker = settlement.SelectPopulation(workerId)["target"];
+            Worker? worker = (Worker) settlement.SelectInstancePopulation(workerId)["target"];
 
-            if (worker is Worker)
+            if (worker is not null)
             {
-                var newCraftsman = BuildOptions[buildingName](worker.name);
-                settlement.RemovePopulation(worker);
-                settlement.SetFreeWorkers(worker, false);
+                var newCraftsman = BuildOptions(buildingName, worker.Name);
+                settlement.Population.Remove(worker);
+                settlement.SetInstancePopulation(worker, false);
                 worker = null;
-                settlement.AddPopulation(newCraftsman);
+                if (newCraftsman is null) return new() { { "success", false}, { "reason", "Building Option Not Found" } };
+                settlement.Population.Add(newCraftsman);
 
                 if (buildingName.Equals("Builders Hut"))
                 {
-                    settlement.AddFreeBuilder(newCraftsman);
+                    settlement.FreeBuilders.Add((Builder)newCraftsman);
                 }
 
                 return new Dictionary<string, object> {
                     { "success", true },
-                    { "message", $"{newCraftsman.name} wurde zum Baumeister!" },
+                    { "message", $"{newCraftsman.Name} wurde zum Baumeister!" },
                     {"update", new Dictionary<string, object> {
                         {"action", "Convert Worker" },
                         { "settlement_id",  settlement.SettlementId },
                         { "old_population_id", workerId },
-                        { "population_id", newCraftsman.PopulationId },
+                        { "population_id", newCraftsman.Id },
                         { "name", newCraftsman.Name },
                         {"profession", newCraftsman.Profession },
                         { "alive", newCraftsman.Alive },
@@ -70,18 +76,10 @@
             return new Dictionary<string, object>
             {
                 { "success", false },
-                { "message", $"{worker.Name} konnte nicht zum Baumeister werden!" }
+                { "message", $"Worker mit ID: {workerId} konnte nicht zum Baumeister werden!" }
             };
         }
 
-        /// <summary>
-        /// Does what the name suggests AddOrRemoveWorkers.
-        /// Defaults to Adding a Worker.
-        /// To Remove a Worker set <paramref name="increase"/> false.
-        /// </summary>
-        /// <param name="worker">The type of Worker to Add or Remove.</param>
-        /// <param name="increase">The operation to perform.</param>
-        /// <returns>Returns Dictionary @string, @bool</returns>
         public Dictionary<string, object> GetWorker()
         {
             return new Dictionary<string, object> { { "success", true }, { "workers", Workers } };
@@ -89,7 +87,7 @@
 
 
         /// <summary>
-        /// Does what the name suggests "M:AddOrRemoveWorkers".
+        /// Does what the name suggests "AddOrRemoveWorkers".
         /// Defaults to Adding a Worker.
         /// To Remove a Worker set <paramref name="increase"/> false.
         /// </summary>

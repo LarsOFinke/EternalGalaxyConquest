@@ -1,12 +1,17 @@
 ﻿
 
+using CSharpApi.Models.BluePrints.Beings;
+using CSharpApi.Models.BluePrints.Locations;
+
 namespace CSharpApi.Models.BluePrints.BuildingTypes
 {
-    public class IronMine : IBuildingList
+    public class IronMine : Mine, IBuildingList
     {
-        public string Name => "Iron Mine";
+        public string Name { get; set; } = "Iron Mine";
 
-        public Dictionary<string, Dictionary<string, float>> Costs => new() {
+        private List<Worker> _workers;
+
+        public Dictionary<string, Dictionary<string, float>> Costs { get; set; } = new() {
             { "costs", new()
                 {
                     { "gold", 200 },
@@ -16,5 +21,16 @@ namespace CSharpApi.Models.BluePrints.BuildingTypes
                 }
             }
         };
+
+        public IronMine(List<Worker> workers = null)
+           : base("Iron Mine", true, 2, workers ?? [])
+        {
+            _workers ??= workers ?? [];
+        }
+
+        public bool ConvertWorkerToMiner(int workerId, Settlement location)
+        {
+            return (bool)ConvertWorkerToCraftsman(Name, workerId, location)["success"];
+        }
     }
 }

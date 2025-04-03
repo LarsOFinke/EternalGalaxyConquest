@@ -12,17 +12,20 @@ players: list = []
 
 @socketio.on('connect') # Handle WebSocket connection to the game (Frontend will connect to this)
 def handle_connect(): 
+    print("Connected new Player")
     emit('welcome', {'message': f'Welcome to the game!'})
 
 
 @socketio.on("register_player")
 def register_player(data):
+    print("registering...",data)
     user = data["user"]
     players.append(user)
 
 
 @socketio.on('start_game')  # Handle the start of the game (called when the game begins)
 def start_game(data):
+    print("starting...",data)
     game = Game()
     host = data["user"]
     games[host] = game
@@ -31,11 +34,17 @@ def start_game(data):
         game.add_player(player)
     players.clear()
     
-    game.start()
-    game_state = game.fetch_game_state()
-    
+    game_state = game.start()
+    print("starting with game-state:\n", game_state)
+    print("host", host)
+    player_details: list[tuple[str]] = game.get_player_id()
+    for username, player_id in player_details:
+        print("username: ",username, "player_id: ", player_id)
+        emit("your_player_id", { "host": host, username: player_id })
+        
     emit("new_game_started", { "host": host, "game_state": game_state })
-    emit('your_turn', {'player': game.current_player})
+    print("current_player: ", game.current_player)
+    emit('your_turn', {'player': str(game.current_player)})
 
 
 @socketio.on('player_input')    # Handle player input (this event is triggered by frontend input)
@@ -43,25 +52,28 @@ def handle_player_input(data):
     host = data.get("host")
     game = games.get(host)
     
-    player = data.get("player")
+    player = int(data["playerId"])
     if player == game.current_player:
         action = data.get('action')
         result: dict = game.process_player_action(player, action)
         emit('result_player_action', result)
 
 
-@socketio.on("next_round")
-def next_round(data):
+@socketio.on("next_turn")
+def next_turn(data):
+    print("received next-turn request:", data)
     game = games[data["host"]]
-    player = int(data["player"])
+    player = int(data["playerId"])
     
     if game.current_player == player:
         game.next_turn()
         game_state: dict = game.fetch_game_state()
+        print("New game state: \n", game_state)
         emit('game_update', game_state)
-        emit('your_turn', {'player': game.current_player})
+        emit('your_turn', {'player': str(game.current_player)})
 
 
 @socketio.on('disconnect')
 def handle_disconnect():
+    print("Player disconnected")
     games.clear()

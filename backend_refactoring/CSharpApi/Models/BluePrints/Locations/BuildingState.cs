@@ -2,13 +2,13 @@
 using System.Xml.Linq;
 using System;
 
-namespace CSharpApi.Models.BluePrints
+namespace CSharpApi.Models.BluePrints.Locations
 { 
     public class BuildingState
     {
         public static int BuildingCount { get; set; } = 0;
 
-        private string BuildingName { get; set; } = string.Empty;
+        public string BuildingName { get; set; } = string.Empty;
 
         private bool Active { get; set; }
 

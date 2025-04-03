@@ -1,0 +1,36 @@
+/* ### REGISTER-FORM ### */
+.custom-wrapper {
+  min-height: 500px;
+}
+
+#register-button {
+  width: 100%;
+}
+
+#show-password {
+  display: flex;
+  justify-content: flex-end;
+  font-size: 14.5px;
+  margin: -15px 0 15px;
+}
+
+#show-password label input {
+  accent-color: #fff;
+  margin-right: 3px;
+}
+
+.login-link {
+  font-size: 14.5px;
+  text-align: center;
+  margin: 20px 0 15px;
+}
+
+.login-link p a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.login-link p a:hover {
+  text-decoration: underline;
+}

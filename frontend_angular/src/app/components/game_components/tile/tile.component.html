@@ -1,0 +1,26 @@
+<div (click)="inspectTile('{{tileState.id}}')" class="hex color1"></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@if (show_tile_menu) {
+<app-tile-menu
+  [tile_id]="selected_tile"
+  (close)="closeTileMenu()"
+></app-tile-menu>
+}

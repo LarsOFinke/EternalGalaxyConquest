@@ -1,11 +1,12 @@
-﻿
+﻿using CSharpApi.Models.BluePrints.Locations;
+
 namespace CSharpApi.Models.BluePrints.BuildingTypes
 {
-    public class HeadQuarter : IBuildingList
+    public class HeadQuarter : MilitaryBuilding, IBuildingList
     {
-        public string Name => "Headquarter";
+        public string Name { get; set; } = "Headquarter";
 
-        public Dictionary<string, Dictionary<string, float>> Costs => new() {
+        public Dictionary<string, Dictionary<string, float>> Costs { get; set; } = new() {
             { "costs", new()
                 {
                     { "gold", 0 },
@@ -15,5 +16,10 @@ namespace CSharpApi.Models.BluePrints.BuildingTypes
                 }
             }
         };
+
+        public HeadQuarter()
+           : base("Headquarter", true)
+        {
+        }
     }
 }
