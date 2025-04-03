@@ -1,5 +1,6 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using CSharpApi.Controllers.WebSocketController;
 using CSharpApi.Data;
 using CSharpApi.Models;
 using Microsoft.EntityFrameworkCore;
@@ -11,6 +12,10 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
+
+builder.Services.AddSignalR();
+
+builder.Services.AddCors();
 
 if (builder.Environment.IsDevelopment())
 {
@@ -39,6 +44,13 @@ if (app.Environment.IsDevelopment())
     app.MapOpenApi();
 }
 
+app.UseCors(options =>
+{
+    options.AllowAnyHeader();
+    options.AllowAnyMethod();
+    options.AllowAnyOrigin();
+});
+
 app.MapStaticAssets();
 
 app.UseHttpsRedirection();
@@ -46,5 +58,7 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.MapHub<WebSocketEndpoints>("/we-test");
 
 app.Run();
