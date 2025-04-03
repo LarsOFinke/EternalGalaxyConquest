@@ -5,19 +5,19 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CSharpApi.Routes
 {
-    public class TestController : Controller
-    {
-        private DbContext _dbContext;
+    //public class TestController : Controller
+    //{
+    //    private DbContext _dbContext;
 
-        public TestController(DbContext dbContext)
-        {
-            _dbContext = dbContext;
-        }
+    //    public TestController(DbContext dbContext)
+    //    {
+    //        _dbContext = dbContext;
+    //    }
 
-        [HttpGet("/")]
-        public IActionResult Index()
-        {
-            return View("Index.html");
-        }
-    }
+    //    [HttpGet("/")]
+    //    public IActionResult Index()
+    //    {
+    //        return View("Index.html");
+    //    }
+    //}
 }
